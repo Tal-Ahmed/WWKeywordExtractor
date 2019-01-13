@@ -14,18 +14,15 @@ struct ClassifiedToken {
 };
 
 void read_data(string file_name, vector<ClassifiedToken> &classified_tokens){
-    ifstream *fs;
+    ifstream fs(file_name.c_str());
     
-    try {
-        fs = new ifstream(file_name.c_str());
-        fs->exceptions(ios_base::failbit);
-    } catch (ios_base::failure){
+    if (!fs){
         error("could not open " + file_name);
     }
 
     log("start reading " + file_name);
     string line;
-    while (getline(*fs, line)){
+    while (getline(fs, line)){
         istringstream iss(line);
 
         // train.txt/test.txt row format: <word> <pos_tag> <keyword/not>
@@ -36,8 +33,6 @@ void read_data(string file_name, vector<ClassifiedToken> &classified_tokens){
         classified_tokens.push_back(cw);
     }
     log("finished reading " + file_name);
-
-    delete fs;
 }
 
 ME_Sample generate_sample(vector<ClassifiedToken> & classified_words, int i){
@@ -93,11 +88,10 @@ void test(){
     ME_Model extractor_model;
     extractor_model.load_from_file("extractor.model");
 
-/*
     log("loading postagger model");
     ME_Model postagger_model;
     postagger_model.load_from_file("postagger.model");
-*/
+
     vector<ClassifiedToken> testing_data;
     read_data("data/test.txt", testing_data);
 
