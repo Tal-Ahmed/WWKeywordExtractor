@@ -4,16 +4,11 @@
 #include <sstream>
 #include <stdio.h>
 #include "maxent/maxent.h"
+#include "postagger_model.h"
 
 using namespace std;
 
-struct Token {
-    string str;
-    string pos;
-    Token(const string & str, const string & pos) : str(str), pos(pos) {}
-};
-
-ME_Sample sample(const vector<Token> & vt, int i){
+ME_Sample sample(const vector<Postagger_Model::Token> & vt, int i){
     ME_Sample sample;
 
     sample.label = vt[i].pos;
@@ -49,31 +44,32 @@ ME_Sample sample(const vector<Token> & vt, int i){
     return sample;
 }
 
-vector<Token> read_line(const string & line){
-    vector<Token> vs;
+vector<Postagger_Model::Token> read_line(const string & line){
+    vector<Postagger_Model::Token> vs;
     istringstream is(line);
     string w;
 
     while (is >> w){
         string::size_type d = w.find_last_of('/');
-        vs.push_back(Token(w.substr(0, d), w.substr(d + 1)));
+        vs.push_back(Postagger_Model::Token(w.substr(0, d), w.substr(d + 1)));
     }
 
     return vs;
 }
 
-void train(ME_Model & model, const string & filename){
-    ifstream ifile(filename.c_str());
+void Postagger_Model::train(){
+    ME_Model model;
+    ifstream ifile(train_file.c_str());
 
     if (!ifile) {
-        cerr << "error: cannot open " << filename << endl; 
+        cerr << "error: cannot open " << train_file << endl; 
         exit(1); 
     }
 
     string line;
     int n = 0;
     while (getline(ifile, line)){
-        vector<Token> vs = read_line(line);
+        vector<Postagger_Model::Token> vs = read_line(line);
         for (int j = 0; j < (int)vs.size(); j++){
             ME_Sample mes = sample(vs, j);
             model.add_training_sample(mes);
@@ -86,14 +82,19 @@ void train(ME_Model & model, const string & filename){
     //  model.use_SGD();
     model.set_heldout(100);
     model.train();
+
+    postagger_model = model;
+    postagger_model_loaded = true;
+
     model.save_to_file("model");
 }
 
-void test(const ME_Model & model, const string & filename){
-    ifstream ifile(filename.c_str());
+void Postagger_Model::test(){
+    ME_Model model = get_postagger_model();
+    ifstream ifile(test_file.c_str());
 
     if (!ifile){
-        cerr << "error: cannot open " << filename << endl; 
+        cerr << "error: cannot open " << test_file << endl; 
         exit(1);
     }
 
@@ -101,7 +102,7 @@ void test(const ME_Model & model, const string & filename){
     int num_tokens = 0;
     string line;
     while (getline(ifile, line)){
-        vector<Token> vs = read_line(line);
+        vector<Postagger_Model::Token> vs = read_line(line);
         for (int j = 0; j < (int)vs.size(); j++){
             ME_Sample mes = sample(vs, j);
             model.classify(mes);
@@ -112,11 +113,4 @@ void test(const ME_Model & model, const string & filename){
 
     cout << "accuracy = " << num_correct << " / " << num_tokens << " = ";
     cout << (double) num_correct / num_tokens << endl;
-}
-
-int main(){
-    ME_Model m;
-
-    train(m, "./sample_data/train.pos");
-    test(m, "./sample_data/dev.pos");
 }

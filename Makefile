@@ -4,7 +4,7 @@ OBJS = maxent/maxent.o maxent/lbfgs.o maxent/owlqn.o maxent/sgd.o
 all: keyword_extractor postagger
 
 keyword_extractor: keyword_extr_model.o $(OBJS)
-	g++ -o bicycle $(CFLAGS) $(OBJS) keyword_ext_model.o
+	g++ -o extractor $(CFLAGS) $(OBJS) keyword_ext_model.o
 postagging: postagger_model.o $(OBJS)
 	g++ -o postagging $(CFLAGS) $(OBJS) postagger_model.o
 clean:
