@@ -78,15 +78,15 @@ void Postagger_Model::train(){
     }
 
     model.use_l1_regularizer(1.0);
-    //  model.use_l2_regularizer(1.0);
-    //  model.use_SGD();
+    // model.use_l2_regularizer(1.0);
+    // model.use_SGD();
     model.set_heldout(100);
     model.train();
 
     postagger_model = model;
     postagger_model_loaded = true;
 
-    model.save_to_file("model");
+    model.save_to_file("postagger.model");
 }
 
 void Postagger_Model::test(){
@@ -113,4 +113,24 @@ void Postagger_Model::test(){
 
     cout << "accuracy = " << num_correct << " / " << num_tokens << " = ";
     cout << (double) num_correct / num_tokens << endl;
+}
+
+vector<Postagger_Model::Token> Postagger_Model::classify_line(const string & line){
+    ME_Model model = get_postagger_model();
+
+    vector<Postagger_Model::Token> vs;
+    istringstream iss{line};
+    string word;
+
+    while (iss >> word){
+        vs.push_back(Token(word, "n/a"));
+    }
+
+    for (int j = 0; j < (int) vs.size(); j++){
+        ME_Sample mes = sample(vs, j);
+        model.classify(mes);
+        vs[j].pos = mes.label;
+    }
+
+    return vs;
 }

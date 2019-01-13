@@ -19,11 +19,12 @@ class Postagger_Model {
         struct Token {
             string str;
             string pos;
-            Token(const string & str, const string & pos) : str(str), pos(pos) {}
+            Token(const string & str, const string & pos): str(str), pos(pos) {}
         };
 
         void test();
         void train();
+        vector<Token> classify_line(const string & str);
 
         ME_Model get_postagger_model(){
             if (!postagger_model_loaded){
