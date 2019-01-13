@@ -9,7 +9,7 @@ using namespace std;
 
 void error(string err){
     cerr << "ERROR: " << err << endl;
-    exit(EXIT_FAILURE);
+    exit(1);
 }
 
 void log(string msg){

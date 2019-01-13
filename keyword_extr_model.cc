@@ -13,28 +13,6 @@ struct ClassifiedToken {
         word(w), pos_tag(pos), type(t) {}
 };
 
-void read_data(string file_name, vector<ClassifiedToken> &classified_tokens){
-    ifstream fs(file_name.c_str());
-    
-    if (!fs){
-        error("could not open " + file_name);
-    }
-
-    log("start reading " + file_name);
-    string line;
-    while (getline(fs, line)){
-        istringstream iss(line);
-
-        // train.txt/test.txt row format: <word> <pos_tag> <keyword/not>
-        string word, pos_tag, type;
-        iss >> word >> pos_tag >> type;
-
-        ClassifiedToken cw(word, pos_tag, type);
-        classified_tokens.push_back(cw);
-    }
-    log("finished reading " + file_name);
-}
-
 ME_Sample generate_sample(vector<ClassifiedToken> & classified_words, int i){
     ME_Sample sample;
     sample.label = classified_words[i].type;
@@ -58,18 +36,37 @@ ME_Sample generate_sample(vector<ClassifiedToken> & classified_words, int i){
     return sample;
 }
 
+vector<ClassifiedToken> read_line(const string & str){
+    vector<ClassifiedToken> classified_tokens;
+    istringstream iss(str);
+    string word, pos_tag, type;
+
+    while (iss >> word >> pos_tag >> type){
+        classified_tokens.push_back(ClassifiedToken(word, pos_tag, type));
+    }
+
+    return classified_tokens;
+}
+
 void train(){
     ME_Model model;
-
-    vector<ClassifiedToken> training_data;
-    read_data("data/train.txt", training_data);
-
-    int num_samples = training_data.size();
-
-    for (int i = 0; i < num_samples; i += 1){
-        ME_Sample sample = generate_sample(training_data, i);
-        model.add_training_sample(sample);
+    ifstream fs("data/train.txt");
+    
+    if (!fs){
+        error("could not open data/train.txt");
     }
+
+    log("start reading data/train.txt");
+    string line;
+    while (getline(fs, line)){
+        vector<ClassifiedToken> classified_tokens = read_line(line);
+
+        for (int i = 0; i < classified_tokens.size(); i += 1){
+            ME_Sample sample = generate_sample(classified_tokens, i);
+            model.add_training_sample(sample);
+        }
+    }
+    log("finished reading data/train.txt");
 
     // model.use_l1_regularizer(1.0);
     // model.use_l2_regularizer(1.0);
@@ -88,23 +85,36 @@ void test(){
     ME_Model extractor_model;
     extractor_model.load_from_file("extractor.model");
 
+    /*
     log("loading postagger model");
     ME_Model postagger_model;
     postagger_model.load_from_file("postagger.model");
+    */
 
-    vector<ClassifiedToken> testing_data;
-    read_data("data/test.txt", testing_data);
-
-    int num_samples = testing_data.size();
-    int num_correct = 0;
-
-    for (int i = 0; i < num_samples; i += 1){
-        ME_Sample sample = generate_sample(testing_data, i);
-        extractor_model.classify(sample);
-        if (sample.label == testing_data[i].type) num_correct += 1;
+    ifstream fs("data/test.txt");
+    
+    if (!fs){
+        error("could not open data/test.txt");
     }
 
-    cout << "accuracy = " << num_correct << " / " << num_samples << " = ";
+    int num_samples = 0;
+    int num_correct = 0;
+
+    log("start reading data/test.txt");
+    string line;
+    while (getline(fs, line)){
+        vector<ClassifiedToken> testing_data = read_line(line);
+
+        for (int i = 0; i < testing_data.size(); i += 1){
+            ME_Sample sample = generate_sample(testing_data, i);
+            extractor_model.classify(sample);
+            if (sample.label == testing_data[i].type) num_correct += 1;
+            num_samples += 1;
+        }
+    }
+    log("finished reading data/test.txt");  
+
+    cout << "Extractor model accuracy = " << num_correct << " / " << num_samples << " = ";
     cout << (double) num_correct / num_samples << endl;
 }
 
