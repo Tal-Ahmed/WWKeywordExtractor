@@ -8,6 +8,6 @@ keyword_extractor: keyword_extr_model.o $(OBJS)
 postagging: postagger_model.o $(OBJS)
 	g++ -o postagging $(CFLAGS) $(OBJS) postagger_model.o
 clean:
-	rm -f $(OBJS) a.out extractor.model postagger.model
+	rm -f $(OBJS) *.o a.out extractor.model postagger.model
 .cpp.o:
 	g++ -c $(CFLAGS) $<

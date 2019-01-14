@@ -8,7 +8,7 @@
 
 using namespace std;
 
-ME_Sample sample(const vector<Postagger_Model::Token> & vt, int i){
+ME_Sample Postagger_Model::sample(const vector<Postagger_Model::Token> & vt, int i){
     ME_Sample sample;
 
     sample.label = vt[i].pos;
@@ -44,7 +44,7 @@ ME_Sample sample(const vector<Postagger_Model::Token> & vt, int i){
     return sample;
 }
 
-vector<Postagger_Model::Token> read_line(const string & line){
+vector<Postagger_Model::Token> Postagger_Model::read_line(const string & line){
     vector<Postagger_Model::Token> vs;
     istringstream is(line);
     string w;
@@ -119,7 +119,7 @@ vector<Postagger_Model::Token> Postagger_Model::classify_line(const string & lin
     ME_Model model = get_postagger_model();
 
     vector<Postagger_Model::Token> vs;
-    istringstream iss{line};
+    istringstream iss(line);
     string word;
 
     while (iss >> word){

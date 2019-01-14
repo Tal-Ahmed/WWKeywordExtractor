@@ -8,7 +8,8 @@
 
 using namespace std;
 
-ME_Sample generate_sample(vector<Keyword_Extractor_Model::ClassifiedToken> & classified_words, int i){
+ME_Sample Keyword_Extractor_Model::generate_sample(vector<Keyword_Extractor_Model::ClassifiedToken> 
+    & classified_words, int i){
     ME_Sample sample;
     sample.label = classified_words[i].type;
 
@@ -31,7 +32,7 @@ ME_Sample generate_sample(vector<Keyword_Extractor_Model::ClassifiedToken> & cla
     return sample;
 }
 
-vector<Keyword_Extractor_Model::ClassifiedToken> read_line(const string & str){
+vector<Keyword_Extractor_Model::ClassifiedToken> Keyword_Extractor_Model::read_line(const string & str){
     vector<Keyword_Extractor_Model::ClassifiedToken> classified_tokens;
     istringstream iss(str);
     string word, pos_tag, type;
@@ -80,7 +81,6 @@ void Keyword_Extractor_Model::train(){
 
 void Keyword_Extractor_Model::test(){
     ME_Model extr_model = get_extractor_model();
-    ME_Model pos_model = postagger_model.get_postagger_model();
 
     ifstream fs(test_file);
     
@@ -95,7 +95,7 @@ void Keyword_Extractor_Model::test(){
     string line;
     while (getline(fs, line)){
         vector<Keyword_Extractor_Model::ClassifiedToken> testing_data = read_line(line);
-        vector<Postagger_Model::Token> testing_data_tr = postagger_model.classify_line(line);
+        vector<Postagger_Model::Token> testing_data_tr = postagger_model->classify_line(line);
 
         for (int i = 0; i < (int) testing_data.size(); i += 1){
             testing_data[i].pos_tag = testing_data_tr[i].pos;

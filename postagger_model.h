@@ -8,13 +8,13 @@ using namespace std;
 
 class Postagger_Model {
     ME_Model postagger_model;
-    bool postagger_model_loaded = false;
+    bool postagger_model_loaded;
 
     string train_file, test_file;
 
     public:
         Postagger_Model(string train_file, string test_file):
-            train_file(train_file), test_file(test_file) {}
+            postagger_model_loaded(false), train_file(train_file), test_file(test_file) {}
 
         struct Token {
             string str;
@@ -36,6 +36,9 @@ class Postagger_Model {
             return postagger_model;
         }
 
+    private:
+        ME_Sample sample(const vector<Token> & vt, int i);
+        vector<Token> read_line(const string & line);
 };
 
 #endif

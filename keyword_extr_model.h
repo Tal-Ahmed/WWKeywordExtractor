@@ -9,16 +9,22 @@
 using namespace std;
 
 class Keyword_Extractor_Model {
-    Postagger_Model postagger_model{"maxent/sample_data/train.pos", "maxent/sample_data/dev.pos"};
+    Postagger_Model *postagger_model;
 
     ME_Model extractor_model;
-    bool extractor_model_loaded = false;
+    bool extractor_model_loaded;
 
     string train_file, test_file;
 
     public:
         Keyword_Extractor_Model(string train_file, string test_file): 
-            train_file(train_file), test_file(test_file) {}
+            extractor_model_loaded(false), train_file(train_file), test_file(test_file) {
+                postagger_model = new Postagger_Model("maxent/sample_data/train.pos", "maxent/sample_data/dev.pos");
+            }
+
+        ~Keyword_Extractor_Model(){
+            delete postagger_model;
+        }
 
         struct ClassifiedToken {
             string word, pos_tag, type;
@@ -40,8 +46,9 @@ class Keyword_Extractor_Model {
             return extractor_model;
         }
 
+    private:
+        ME_Sample generate_sample(vector<ClassifiedToken> & classified_words, int i);
+        vector<ClassifiedToken> read_line(const string & str);
 };
-
-
 
 #endif
