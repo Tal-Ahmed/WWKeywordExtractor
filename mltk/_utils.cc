@@ -1,9 +1,7 @@
-
 #include <string>
 #include <algorithm>
 
-#include "../ext/murmur3.c"
-
+#include "murmur3.c"
 
 /**
     Define an interface for the taggers/chunkers/parsers/etc.

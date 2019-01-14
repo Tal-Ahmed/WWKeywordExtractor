@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -8,7 +7,6 @@
 #include <functional>
 
 #include "_utils.cc"
-
 
 /**
 perceptron tagger implemented as follows
