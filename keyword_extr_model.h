@@ -19,7 +19,7 @@ class Keyword_Extractor_Model {
     public:
         Keyword_Extractor_Model(string train_file, string test_file): 
             extractor_model_loaded(false), train_file(train_file), test_file(test_file) {
-                postagger_model = new Postagger_Model("maxent/sample_data/train.pos", "maxent/sample_data/dev.pos");
+                postagger_model = new Postagger_Model("data/train.txt", "data/test.txt");
             }
 
         ~Keyword_Extractor_Model(){

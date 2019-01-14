@@ -98,7 +98,7 @@ void Keyword_Extractor_Model::test(){
         vector<Postagger_Model::Token> testing_data_tr = postagger_model->classify_line(line);
 
         for (int i = 0; i < (int) testing_data.size(); i += 1){
-            testing_data[i].pos_tag = testing_data_tr[i].pos;
+//            testing_data[i].pos_tag = testing_data_tr[i].pos;
 
             ME_Sample sample = generate_sample(testing_data, i);
             extr_model.classify(sample);

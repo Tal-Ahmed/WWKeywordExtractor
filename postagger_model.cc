@@ -47,11 +47,10 @@ ME_Sample Postagger_Model::sample(const vector<Postagger_Model::Token> & vt, int
 vector<Postagger_Model::Token> Postagger_Model::read_line(const string & line){
     vector<Postagger_Model::Token> vs;
     istringstream is(line);
-    string w;
+    string word, pos_tag, type;
 
-    while (is >> w){
-        string::size_type d = w.find_last_of('/');
-        vs.push_back(Postagger_Model::Token(w.substr(0, d), w.substr(d + 1)));
+    while (is >> word >> pos_tag >> type){
+        vs.push_back(Postagger_Model::Token(word, pos_tag));
     }
 
     return vs;
