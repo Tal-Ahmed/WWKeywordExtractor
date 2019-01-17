@@ -4,11 +4,12 @@
 #include <iostream>
 #include <vector>
 #include "maxent/maxent.h"
+#include "postagger_model.h"
 
 using namespace std;
 
 class Keyword_Extractor_Model {
-    PerceptronTagger *tagger;
+    Postagger_Model postagger_model;
 
     ME_Model extractor_model;
     bool extractor_model_loaded;
@@ -17,13 +18,7 @@ class Keyword_Extractor_Model {
 
     public:
         Keyword_Extractor_Model(string train_file, string test_file): 
-            extractor_model_loaded(false), train_file(train_file), test_file(test_file) {
-                tagger = new PerceptronTagger();
-            }
-
-        ~Keyword_Extractor_Model(){
-
-        }
+            extractor_model_loaded(false), train_file(train_file), test_file(test_file) {}
 
         struct ClassifiedToken {
             string word, pos_tag, type;

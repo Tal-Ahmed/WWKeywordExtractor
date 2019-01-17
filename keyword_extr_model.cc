@@ -96,9 +96,10 @@ void Keyword_Extractor_Model::test(){
     string line;
     while (getline(fs, line)){
         vector<Keyword_Extractor_Model::ClassifiedToken> testing_data = read_line(line);
+        vector<pair<string, string> > tagged_data = postagger_model.tag_sentence(line);
 
         for (int i = 0; i < (int) testing_data.size(); i += 1){
-//            testing_data[i].pos_tag = testing_data_tr[i].pos;
+            testing_data[i].pos_tag = tagged_data[i].second;
 
             ME_Sample sample = generate_sample(testing_data, i);
             extr_model.classify(sample);
