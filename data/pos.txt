@@ -1,0 +1,36 @@
+CC	coordinating conjunction
+CD	cardinal digit
+DT	Determiner. Words which come beginning of a noun phrase. Ex. the, my, your, his, this, that, these, which
+EX	existential there (like: "there is" ... think of it like "there exists")
+FW	foreign word
+IN	preposition/subordinating conjunction. Preposition: location or location in time. Ex. above, since, near. Subordinating conjunction: Non-complete
+                                           thought. Ex. If, as, for
+JJ	adjective. Describe a noun or a pronoun. Can specify the quality, the size, and the number of nouns or pronouns. Ex. big, two, huge
+JJR	adjective. Comparative. Ex. bigger
+JJS	adjective. Superlative. Ex. biggest
+LS	list marker	Ex. 1)
+MD	modal. Verb that is used to express ability, possibility, permission or obligation. Ex. could, will
+NN	noun, singular. Person, place, things, animals, places, ideas, events. Ex. Tom Hanks, dogs, birthday
+NNS	noun plural	'desks'
+NNP	proper noun. Always start with a capital letter and refers to specific names of persons, places, or things. Ex. Game of Thrones
+NNPS	proper noun, plural	'Americans'
+PDT	predeterminer	'all the kids'
+POS	possessive ending Ex. parent's
+PRP	personal pronoun. Ex. I, he, she, we
+PRP$	possessive pronoun	my, his, hers
+RB	adverb.	Describe adjectives, verbs. Ex. danced gracefully.
+RBR	adverb. Comparative. Ex. ran better
+RBS	adverb. Superlative. Ex. ran best
+RP	particle	give up
+TO	to	go 'to' the store.
+UH	interjection	errrrrrrrm
+VB	verb. Shows action (physical or mental). Ex. missed, think, run
+VBD	verb. Past tense. Ex. took
+VBG	verb. -ing. Ex. taking
+VBN	verb. Past participle. -en. Ex. taken
+VBP	verb. Present, non-3d. Ex. take
+VBZ	verb. 3rd person present. Ex. takes
+WDT	wh-determiner	which
+WP	wh-pronoun	who, what
+WP$	possessive wh-pronoun	whose
+WRB	wh-abverb	where, when

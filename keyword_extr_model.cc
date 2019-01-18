@@ -37,7 +37,20 @@ vector<Keyword_Extractor_Model::ClassifiedToken> Keyword_Extractor_Model::read_l
     istringstream iss(str);
     string word, pos_tag, type;
 
-    while (iss >> word >> pos_tag >> type){
+    while (iss >> word){
+        while (iss >> pos_tag && pos_tag != "(" && pos_tag != "," && pos_tag != ")" && pos_tag != "." && pos_tag != ":" && pos_tag != ";" && pos_tag != "CC" && pos_tag != "CD" && pos_tag != "DT" && 
+                pos_tag != "EX" && pos_tag != "FW" && pos_tag != "IN" && pos_tag != "JJ" && pos_tag != "JJR" && 
+                pos_tag != "JJS" && pos_tag != "LS" && pos_tag != "MD" && pos_tag != "NN" && 
+                pos_tag != "NNS" && pos_tag != "NNP" && pos_tag != "NNPS" && pos_tag != "PDT" && 
+                pos_tag != "POS" && pos_tag != "PRP" && pos_tag != "PRP$" && pos_tag != "RB" && 
+                pos_tag != "RBR" && pos_tag != "RBS" && pos_tag != "RP" && pos_tag != "TO" && 
+                pos_tag != "UH" && pos_tag != "VB" && pos_tag != "VBD" && pos_tag != "VBG" && 
+                pos_tag != "VBN" && pos_tag != "VBP" && pos_tag != "VBZ" && pos_tag != "WDT" && 
+                pos_tag != "WP" && pos_tag != "WP$" && pos_tag != "WRB"){
+            word = word + " " + pos_tag;
+        }
+
+        iss >> type;
         classified_tokens.push_back(Keyword_Extractor_Model::ClassifiedToken(word, pos_tag, type));
     }
 
@@ -67,10 +80,10 @@ void Keyword_Extractor_Model::train(){
     }
     cout << "finished reading " + train_file << endl;
 
-    // model.use_l1_regularizer(1.0);
-    // model.use_l2_regularizer(1.0);
-    // model.use_SGD();
-    // model.set_heldout(100);
+    //model.use_l1_regularizer(1.0);
+    //model.use_l2_regularizer(1.0);
+    //model.use_SGD();
+    //model.set_heldout(100);
     model.train();
 
     extractor_model = model;
@@ -96,15 +109,23 @@ void Keyword_Extractor_Model::test(){
 
     int num_samples = 0;
     int num_correct = 0;
-
+        int x = 0;
+        int y = 0;
     cout << "start reading " + test_file << endl;
     string line;
     while (getline(fs, line)){
         vector<Keyword_Extractor_Model::ClassifiedToken> testing_data = read_line(line);
-        vector<pair<string, string> > tagged_data = postagger_model.tag_sentence(line);
+
+        ostringstream oss;
+        for (int i = 0; i < testing_data.size(); i += 1){
+            oss << testing_data[i].word << " ";
+        }
+
+        vector<pair<string, string> > tagged_data = postagger_model.tag_sentence(oss.str());
 
         for (int i = 0; i < (int) testing_data.size(); i += 1){
-            testing_data[i].pos_tag = tagged_data[i].second;
+            if (testing_data[i].pos_tag != tagged_data[i].second) x += 1;
+            testing_data[i].pos_tag = tagged_data[i].second; y += 1;
 
             ME_Sample sample = generate_sample(testing_data, i);
             extr_model.classify(sample);
@@ -113,9 +134,9 @@ void Keyword_Extractor_Model::test(){
         }
     }
     cout << "finished reading " + test_file << endl;
-
+cout << "X: " << x << " Y: " << y << endl; 
     cout << "Extractor model accuracy = " << num_correct << " / " << num_samples << " = ";
-    cout << (double) num_correct / num_samples << endl;
+    cout << 100 * ((double) num_correct / num_samples) << "%" << endl;
     cout << "finish testing keyword extractor" << endl;
 }
 
