@@ -4,36 +4,24 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "mltk/_ctagger.cc"
 
 using namespace std;
 
+class PerceptronTagger;
+
 class Postagger_Model {
-    PerceptronTagger *postagger;
+    PerceptronTagger *postagger = nullptr;
 
     void load_pos_tagger();
 
     public:
-        Postagger_Model(): postagger(nullptr) {}
         ~Postagger_Model(){
             if (postagger != nullptr){
                 delete postagger;
             }
         }
 
-        vector<pair<string, string> > tag_sentence(string str){            
-            vector<string> sentence;
-            istringstream iss(str);
-            string word;
-
-            while (iss >> word){
-                sentence.push_back(word);
-            }
-
-            vector<tag_t> tagged_words = postagger->tag_sentence(sentence);
-
-            return tagged_words;
-        }
+        vector<pair<string, string> > tag_sentence(string str);
 
         PerceptronTagger* get_pos_tagger(){
             if (postagger == nullptr){

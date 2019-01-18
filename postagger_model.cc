@@ -2,11 +2,15 @@
 #include <fstream>
 #include <sstream>
 #include <map>
+#include "util.h"
 #include "postagger_model.h"
+#include "mltk/_ctagger.cc"
 
 using namespace std;
 
 void Postagger_Model::load_pos_tagger(){
+    cout << "start loading pos tagger" << endl;
+
     tagmap_in_t specified_tags;
     ifstream st_fs("data/specified_tags.txt");
     string k, v;
@@ -14,6 +18,8 @@ void Postagger_Model::load_pos_tagger(){
     while (st_fs >> k >> v){
         specified_tags[k] = v;
     }
+
+    cout << "finish reading data/specified_tags.txt" << endl;
 
     class_weights_in_t bias_weights;
     ifstream bw_fs("data/bias_weights.txt");
@@ -23,6 +29,8 @@ void Postagger_Model::load_pos_tagger(){
     while (bw_fs >> k2 >> v2){
         bias_weights.push_back(make_pair(k2, v2));
     }
+
+    cout << "finish reading data/bias_weights.txt" << endl;
 
     weights_in_t weights;
     ifstream w_fs("data/weights.txt");
@@ -50,5 +58,22 @@ void Postagger_Model::load_pos_tagger(){
         }
     }
 
+    cout << "finish reading data/weights.txt" << endl;
+
     postagger = new PerceptronTagger(weights, bias_weights, specified_tags);
+    cout << "finish loading pos tagger" << endl;
+}
+
+vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
+    vector<string> sentence;
+    istringstream iss(str);
+    string word;
+
+    while (iss >> word){
+        sentence.push_back(word);
+    }
+
+    vector<tag_t> tagged_words = get_pos_tagger()->tag_sentence(sentence);
+
+    return tagged_words;
 }
