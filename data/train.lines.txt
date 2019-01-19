@@ -1,0 +1,268 @@
+Knowledge of CSS , AJAX and PHP would be an asset . 
+Works primarily in Java , C++ , and Python . 
+Also uses Linux , Redis , nginx , Lua , SQL/DB2 , REST , protobuf , C# , MT4 , Perl , Windows , Solaris , and more . 
+Create system prototypes and applications using Oracle database , C# , JSON , JavaScript , XML , RDF . 
+You will help develop software using technologies preferred in the financial services industry , such as Visual Studio .Net , C# , Java , ASP.NET , SOA , WCF , SQL Server , Oracle . 
+Proficient in Java and/or Scala . 
+Frequent meetups on big data , scala , hadoop hosted at the office . 
+Native Application Development : iOS and Android . 
+We are looking for an Android Developer . 
+Design and build advanced applications for the Android platform . 
+Strong knowledge of Android SDK , different versions of Android sizes . 
+Native Application Development : iOS and Android . 
+We are looking for an iOS Developer . 
+Strong knowledge of Cocoa Touch , Swift , and the iOS SDK in general . 
+Native Application Development : iOS and Android . 
+We are looking for a Full Stack Developer with experience in mobile ( Android and/or iOS ) , backend services , and databases ( SQL and NoSQL ) . 
+Experience with leading web frameworks like Node.js or Tornado and designing RESTful APIs . 
+Experience with either Android or iOS development . 
+Software Skills : C/C++ , Python , Java , Shell Scripting , Makefiles , Tkl - Object Oriented programming principles and C++ programming language . 
+Working knowledge of SQL , SQL Server , MYSQL . 
+Experience with version control software and job execution tools , preferably Git/SVN and Jenkins . 
+Our Core Engineering team builds the end-to-end platform components of our MediaVoice product - from client-side JavaScript ( Django4 ) , to a Django web app management portal , to backend data Django8 systems . 
+Write high quality software across multiple code bases and languages Python and Django JavaScript , CoffeeScript , Gears , Grunt MySQL , Redis , Thrift , Resque , Greenlets , Tornado , Beanstalk , Celery , GitHub , Jira , Jenkins , Chef & Knife , Vagrant , VMWare , VirtualBox . 
+Write unit tests for Python/Django and Javascript Applications , Java and Selenium Python . 
+In this role , you will be responsible for integrating Polar 's platform on our customer 's websites by writing front-end code using JavaScript , HTML and CSS . 
+You will use Polar 's JavaScript API , jQuery . 
+Write high-quality web software using JavaScript , jQuery framework , HTML and CSS JavaScript , HTML , CSS , jQuery Python , Django . 
+Knowledge of Java , Python , and/or Ruby programming . 
+Knowledge of the following technologies : virtualization technology ( e.g VMware ESX , VMware Workstation , Virtual Box ) , Java , PHP , MySQL , MySQL3 , TCP/IP . 
+Experience in Scala or Java programming languages . 
+Experience in Python would be an asset . 
+Knowledge of a source management system is an asset Preferably Git . 
+Familiar with one of the Linux distributions as a development platform . 
+Minimum 2 years software development experience HTML5 , CSS3 , ES2015 React , Redux , Webpack and Node.js . 
+Knowledge of & Experience with C# .NET programming languages & methodologies . 
+Knowledge of database theory ; experience with high performance SQL . 
+Fix bugs fast in unfamiliar code in Javascript , Ajax , CSS , HTML5 . 
+jQuery , Knockout.js , Bootstrap . 
+Expert level skills in Windows Server OS and Linux systems . 
+Familiarity with Oracle Developer and general Oracle/database expertise . 
+Familiarity with XML , HTML . 
+Gain experience working on a large scale Javascript project . 
+Build skills writing server side logic in Javascript and/or implementing browser based user interfaces in Javascript . 
+Build a strong foundation in relational database concepts . 
+Experience with Javascript , CSS and HTML . 
+Knowledge of SQL and relational database concepts . 
+Experience with Node.js . 
+Experience with any of Git , Gerrit , JQuery , SAP UI5 . 
+Gain experience programming in C++ . 
+Strong programming skills in C or C++ . 
+Experience with a scripting language such as Perl or Python . 
+Experienced with JavaScript and HTML5 Knowledgeable with SQL scripting , data modeling and database design . 
+Analysis design and development of scripts using UNIX , Perl & PHP . 
+Develop using various tools such as Eclipse , PL/SQL Developer , Tortoise SVN . 
+Work with a Version Control system such as Apache Subversion . 
+Previous experience with relational database systems such as Oracle , SQL Server , Sybase . 
+Working knowledge of PL/SQL stored procedures , UNIX shell scripting , database modeling . 
+Programming experience in Java or similar language . 
+Familiarity with the Spring Java framework . 
+Gain working knowledge of the Hadoop ecosystem . 
+Experience with at least one programming language ( Python , Java or C++ preferred ) . 
+Database knowledge ( Sybase or Oracle ) . 
+Basic knowledge in Programming Languages ( like Java , C , C++ etc ) . 
+At least 6 months experience in Programming Languages ( Java / C/C++ ) . 
+Good programming skills in Java , Scala , or C# . 
+Familiar with Unix/Linux environment and shell scripting . 
+Good knowledge in databases such as Oracle and Sybase . 
+Experience with full stack web development including front-end languages and frameworks ( e.g HTML , CSS , Javascript , AJAX , JQuery , Bootstrap ) , back-end languages ( e.g ASP , C# , PHP , Visual Basic ) and SQL is preferred . 
+Familiarity and experience with relational databases such as Microsoft Access or SQL Server is an asset . 
+Knowledge of Linux/Windows ( including shell scripting ) . 
+Working Knowledge of at least one programing language such as Java/C++ or a functional language such as Scala . 
+Working knowledge of Puppet/Git and/or Docker would be an asset . 
+Knowledge and experience with SQL and relational database structures . 
+Specific experience with Oracle and Sybase would be an asset . 
+Prior experience in one/more of C++ , Java , SQL and C# . 
+Our current technology stack includes React7 ( Django ) , JavaScript ( ES6/ES7 , React , Flux , Node ) , PostgreSQL , ObjectiveC , and Swift . 
+Experience with developing iOS or Mac apps in ObjectiveC and/or Swift . 
+Familiarity with UIKit and Cocoa design patterns . 
+Functional programming experience ( Scala , Lisp , Haskell , Swift , etc ) . 
+Experience with Python and SQL ( preferably Postgres ) . 
+We 're using Django familiarity with this or another Django8 framework is a big plus . 
+Experience working in an AWS auto- scaled environment a plus . 
+The development will be in Lua programming language . 
+Interest and some experience in programming , preferably in dynamically-typed languages like Python , Ruby or Lua . 
+Willingness to learn and program in Lua . 
+Implement and test new application tools Administer SQL Server and UNIDATA databases . 
+Experience with ASP.NET , C# , VB.NET , JavaScript . 
+Experience with packages such as R , MATLAB , etc . 
+Comfort with SQL , Excel , and data visualization tools . 
+Fluency in SQL , Excel , and Python . 
+You will work mostly with AngularJS and NodeJS , but may also be involved with ElasticSearch , Amazon Web Services , Redis , Java , and C# . 
+Experience with AngularJS , HTML , CSS , Javascript . 
+Bonus points for experience with NodeJS and C# . 
+Creating functional prototypes of your ideas in Javascript , CSS3 , HTML5 , Angular , FramerJS . 
+3+ years of extensive experience with HTML/HTML5 , PHP , CSS/CSS3 , Javascript , AJAX , AngularJS , Ionic , React , Meteor . 
+Experience with Linux , server set-up , bash-scripting , and server side caching mechanisms ( Redis ) . 
+Experience with Amazon EC2 or other cloud computing services , Git , New Relic , as well as automation and deployment tools ( e.g. , Docker , Vagrant , Chef ) . 
+Experience with MySQL , query optimization . 
+Bonus points if youre familiar with Cassandra , Redshift , and other big data/data warehouse technologies . 
+Experience with web and server security ( e.g. , SSL , XSS , SQL injection ) . 
+Experience in web application development using some or all of the following technologies : HTML , CSS , ASPX/.NET , Java , JSP , Spring , WebLogic , Eclipse IDE , Oracle Database and UNIX environments . 
+The ideal candidate will have complementary ( ASP.Net ) . 
+Exposure to relational databases ( MS SQL Server ) . 
+The ideal candidate will have complementary Microsoft ( ASP.Net ) and JSP development experience . 
+Experience in PL1 , COBOL , SAS , JCL would be an asset . 
+General experience in development on the Java platform would be an asset . 
+Knowledge of structured query language ( SQL ) and relational databases . 
+Deepen your knowledge of .NET , JAVA and SQL technologies . 
+Develop , code , test , and debug programs for straight-forward or small projects - Java , J2EE , DB2 , Unix , Apache Ant , Eclipse , WebLogic , VB , VB Script , HTML , ASP . 
+Experience with PHP Experience with MySQL . 
+Proficient understanding of web markup , including HTML5 , CSS3 , client-side scripting and JavaScript frameworks , including jQuery . 
+Basic understanding of server-side CSS pre-processing platforms , such as LESS and SASS . 
+Experience with Git . 
+Experience with Linux . 
+Proficient using Git source control . 
+Web Technologies : HTML5 , JavaScript , CSS , HTML-DOM , AJAX an asset . 
+Development tools : Android Studio , Gradle , Ant/Maven , Stash , GIT . 
+Some of the technologies currently used to develop our applications are : Python , SQL , Javascript , Django . 
+SQL and database design ( with any major RDBMS ) . 
+The developer will be creating java applications that would interface with the HP Nonstop SQL/MX database , develop PL/SQL for the Oracle database . 
+Knowledge of SQL , PL/SQL Experience with Java , XML and Web Services . 
+Experiences with Weblogic , Webmethods , Oracle . 
+Exposure to J2EE , service oriented architecture ( SOA ) , Google Web Toolkit ( GWT ) , Struts , jUnit , Maven , Ant . 
+You are comfortable with Operating Systems such as Unix , Dos , Windows , and Linux . 
+Intermediate to advanced knowledge of Windows XP/7/8 . 
+Software development experience in C++ . 
+Exposure to object oriented techniques , multithreading , socket programming , Windows . 
+Exposure to scripting languages Perl and Ruby . 
+Produce scripts in various languages such as perl , python , ruby , VBA . 
+Working knowledge of C . 
+Familiarity with a scripting language such as Perl , Python , Ruby , and/or VBA an asset . 
+Software development experience in C++ . 
+Exposure to scripting languages Perl and Ruby . 
+Produce scripts and SW tools in various languages such as perl , python , ruby , VBA , and C . 
+Knowledge of software development environments ( such as Linux/Unix , Windows ) . 
+Familiarity with a scripting language such as Perl , Python , Ruby , and/or VBA an asset . 
+Exposure to scripting languages Perl and Ruby . 
+Versatile user of a variety of mathematical packages with a mix of proficiency across : SAS , SPSS , R , SQL , Matlab , VBA , C++ , Java . 
+Interested in Ruby on Rails and other cutting edge technologies . 
+Proficient in Ruby 2 and Rails $ B-KEYWORD 3 . 
+Experienced in Ember.js ( or Angular.js , or Backbone.js ) . 
+Knowledge of relational databases PostgreSQL preferred . 
+Experience with Ruby on Rails , Rails2 , or React/Flux , will be a plus . 
+Experience working in agile in a web environment , code refactoring HTML dashboard Ops HTML dashboard Marketing / Analytics / KPIs HTML5 controllers Refactoring current communications stack to Android Ruby on Rails development experience . 
+Experience with client side technologies HTML5 , CSS3 , JavaScript , JQuery , React . 
+Experience or knowledge of .NET $ B-KEYWORD 2.0 development using C# , Java Script . 
+Experience using Visual Basic Version 6.0 and/or ASP , VBA . 
+Knowledge of how to implement .Net or Visual Basic applications . 
+Experience or knowledge of .NET $ B-KEYWORD 2.0 development using C# , Java Script . 
+Experience using Visual Basic Version 6.0 and/or ASP , VBA within MS Access 2010 & Excel 2010 is a definite asset . 
+Write clear , concise , and well-tested code in Scala , Java , Python , and occasionally other languages . 
+Implement and maintain TunnelBear 's internal API that currently runs on the Java/Scala Play ! framework . 
+Have worked and made friends with either MySQL or Postgres . 
+Bonus points for Redis/MongoDB . 
+A passion for iOS and macOS technologies . 
+Experience with Underscore.js , Lodash.js , Lazy.js or functional programming is a plus . 
+The ability to work on individual tasks as part of a larger team goal - AngularJS , JavaScript , CSS , LESS , HTML5 , Lodash . 
+Programming will mostly be in Java , but other languages like Scala are also used . 
+Built projects/applications using Java The ideal candidate is self-driven and has experience in machine learning and image processing techniques . 
+Robust knowledge of C++ , Python , and/or MATLAB . 
+Experience with database technologies such as Redis and Postgres . 
+Experience with machine learning fundamentals and frameworks such as TensorFlow . 
+Experience with image processing techniques and libraries like OpenCV . 
+Languages : C# , Android and iOS Development , HTML5 , React3 frameworks ( JQuery , RequireJS , React1 , React ) , CSS3 , .NET Technologies . 
+Databases : SQL , Oracle , Redshift . 
+Testing : NUnit , Selenium , Specflow . 
+AWS Services : Virtual Servers , Load Balancing , Lambda , S3 , Redshift , and many others . 
+Working knowledge of and familiarity with various statistical machine learning models ( SVM , Neural Networks , Bayesian , etc ) and Natural Language Processing are key . 
+Create a custom PDF parser utilizing Natural Language Processing paradigms to extract high-value data from unstructured sources . 
+Create and improve an Elasticsearch API layer on top of our MongoDB database . 
+Our Tech Stack : Python including NLTK and scikit-learn , Nutch , Django , MongoDB , Hadoop , MapReduce , Flask2 , Django1 and Bootstrap 3 . 
+We also use Tessaract , Flask4 , Sphinx , Flask and Git . 
+We 've recently moved the bulk of our frontend application to a server rendered application written in JavaScript on top of node , express , backbone and a suite of supporting frameworks and utilities . 
+We use git for version control . 
+Ample experience with Javascript , HTML and CSS . 
+Experience working with Javascript frameworks ( backbone , angular , react ) . 
+Experience using Git and Jira with a Kanban workflow . 
+Highly proficient in Java - iOS or backend PHP experience is a bonus . 
+Develop for iOS using Objective-C . 
+Knowledge of Objective-C and iOS development . 
+Ability to write high-quality code in a programming language ( bonus if it 's in Python or Go ) . 
+Experience with batch processing and streaming systems like Hive , Pig , Spark and Kafka is a plus . 
+We are aggressively transitioning to a microservices architecture using Go in order to handle this scale more efficiently . 
+Writing new microservices in Go . 
+Maintaining the existing system in PHP . 
+Working with client teams ( web , Android , iOS ) to develop support for new features . 
+Experience developing distributed systems in Go , Go3 or similar languages . 
+Experience with various data stores , such as MySQL , Redis , Memcached and Cassandra . 
+Experience working with Amazon Web Services or similar - Tools we use include Selenium , Python , Appium , Jenkins AWS - Code automation test cases for Web , Android , iOS and our API . 
+Solid experience with source control packages ( e.g . 
+SVN , Git ) . 
+We work with big data storage technologies like MongoDB , ElasticSearch , Cassandra , Hadoop , and other NoSQL stores . 
+Doing high-throughput data processing with RabbitMQ , Apache Storm , and Apache Kafka and create powerful RESTful APIs with Node.JS and Ruby web frameworks . 
+Have solid programming skills in C++ , Python or Ruby Nice to have : Experience working with scripting languages , Python or Ruby preferred . 
+Experience with Django or Node.js web frameworks . 
+Experience with NoSQL stores like MongoDB , CouchDB , ES , Apache Solr , Cassandra , HBase , Hadoop . 
+Experience with messaging middleware or stream processors like RabbitMQ , Apache Storm , or Apache Kafka . 
+Understanding of the concepts of Linux containers . 
+Have experience with scripting languages , preferably Perl , Python Have skills in Linux , preferably Ubuntu/Debian . 
+Have experience with PostgreSQL Have database programming experience including SQL and data analytics experience . 
+Have solid programming skills in Node.js and/or Python Experience with Python or Node.js web frameworks . 
+Experience working with Docker . 
+Nice to have : Working experience with Amazon Web Services or Azure . 
+Experience working with GO8 , GO7 or GO an advantage . 
+Experience with NoSQL stores like MongoDB , CouchDB , ES , Apache Solr , Cassandra , HBase , Hadoop . 
+Experience with messaging middleware or stream processors like RabbitMQ , Apache Storm , or Apache Kafka . 
+You should have familiarity with some of the below and should have a specific focus in at least one of the below . 
+- HTML5 , CSS - JS , JQuery , ReactJS , AngularJS - bootstrap , foundation - npm , grunt , Sass - Python , Django - MySQL , PostgreSQL - source control ( git ) - a Unix environment . 
+Programming skills in any of these languages ( Python , Java , HTML ) . 
+Experience in mobile app development ( Android or iOS ) . 
+Using your knowledge of PL/SQL and Oracle . 
+Must have extensive experience with PL/SQL queries , and stored processes . 
+Knowledge of Java or any other programming language is an asset . 
+Proficiency in Unix and SQL . 
+Develop database queries using SQL . 
+Develop scripts using UNIX , Perl and PHP . 
+Previous knowledge of SQL and Relational Databases such as Oracle , SQL Server , or Sybase . 
+Working knowledge of UNIX shell scripting , PHP and Perl . 
+Knowledge of Linux/Windows ( including shell scripting ) . 
+Working Knowledge of at least one programing language such as Java/C++ or a functional language such as Scala . 
+Working knowledge of Puppet/Git and/or Docker would be an asset . 
+Knowledge and experience with SQL and relational database structures . 
+Specific experience with Oracle and Sybase would be an asset . 
+Experience in Python , R and SQL . 
+Knowledge of SAS is a plus . 
+Familiarity with Hadoop ecosystem is a plus . 
+Learn and participate in development tasks on internal self-service/ automation/ mobile application , using PHP , Java Script , JSON , Java . 
+Hands on experience with Java & .Net . 
+Using current programming language and technologies , analyze , design , develop , debug , and modify web applications , software tools and software integration solutions ( Ruby on Rails , Rails0 , Python , HTML and Java ) . 
+Software development , scripting experience with Ruby on Rails , Rails0 , Python and Java . 
+Working knowledge of HTML , Cascading Style Sheets ( CSS ) , Python and Node.js . 
+Experience with databases ( Cloudant , MongoDB ) , data warehousing , and big data analytics ( Hadoop , Datameer ) . 
+Selected enhancements of test target , written in C++ . 
+Ability to script in one or more languages ( shell , python , perl , Javascript , etc ) . 
+Familiarity with C++ and Web Design are a plus . 
+Programming : SQL , Java , Python , Excel . 
+Good programming skills , which may include R , Python , SQL , Java , C++ . 
+Experience with data visualization ( such as D3 , Tableau , R and Python packages ) is an asset . 
+Programming skills in Java , C++ or Python . 
+Some experience with common machine Learning libraries in R , Python , Spark . 
+Experience with UNIX tools and shell scripting . 
+Solid SQL skills for querying relational databases ( e.g. , SQL Server , DB2 , MySQL ) . 
+Strong programming capabilities ( e.g . 
+Java , VB , .NET , HTML , MySql ) . 
+A minimum of 1 year of Objective C or Android development experience . 
+Understanding of relational databases , including a working knowledge of SQLite and/or SQL Server 2014 C++ or Java expertise would be advantageous . 
+The student will gain experience with a variety of programming technologies : C# , .net , VBA , SQL , AXIS and Matlab . 
+Knowledge of programming languages ( VBA , SQL , C# , .net ) and software ( Excel , Access , AXIS , Matlab ) . 
+Knowledge on C# .Net and SQL queries is desirable . 
+Programming languages such as Python , C# 4 , JavaScript , ASP.NET and/or HTML , Visual Basic , SQL , etc . 
+Knowledge of css , ajax and php would be an asset . 
+Works primarily in java , c++ , and python . 
+Also uses linux , redis , nginx , lua , sql/db2 , rest , protobuf , c# , mt4 , perl , windows , solaris , and more . 
+Create system prototypes and applications using oracle NNp B-KEYWORD database , c# , json , javascript , xml , rdf . 
+You will help develop software using technologies preferred in the financial services industry , such as visual studio .net , c# , java , asp.net , soa , wcf , sql server , oracle . 
+Proficient in java and/or scala . 
+Native Application Development : iOS and android . 
+We are looking for an android Developer . 
+Design and build advanced applications for the android platform . 
+Strong knowledge of android SDK , different versions of android sizes . 
+Native Application Development : iOS and android . 
+We are looking for an iOS Developer . 
+Strong knowledge of cocoa touch , swift , and the iOS SDK in general . 
+Native Application Development : iOS and android . 
+We are looking for a Full Stack Developer with experience in mobile ( android and/or iOS ) , backend services , and databases ( sql and nosql ) . 
+Experience with leading web frameworks like node.js or tornado and designing restful apis . 
+Experience with either android or iOS development . 
+Software Skills : c/c++ , python , java , shell scripting , makefiles , tkl - Object Oriented programming principles and c++ programming language . 

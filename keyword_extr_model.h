@@ -29,7 +29,7 @@ class Keyword_Extractor_Model {
         void test();
         void train();
 
-        void classify_line(vector<ClassifiedToken> words);
+        vector<Keyword_Extractor_Model::ClassifiedToken> classify_line(string str);
         ME_Model get_extractor_model(){
             if (!extractor_model_loaded){
                 if (!extractor_model.load_from_file("extractor.model")){

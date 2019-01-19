@@ -109,8 +109,9 @@ void Keyword_Extractor_Model::test(){
 
     int num_samples = 0;
     int num_correct = 0;
-        int x = 0;
-        int y = 0;
+    int num_pos_samples = 0;
+    int num_correct_pos_samples = 0;
+
     cout << "start reading " + test_file << endl;
     string line;
     while (getline(fs, line)){
@@ -124,8 +125,9 @@ void Keyword_Extractor_Model::test(){
         vector<pair<string, string> > tagged_data = postagger_model.tag_sentence(oss.str());
 
         for (int i = 0; i < (int) testing_data.size(); i += 1){
-            if (testing_data[i].pos_tag != tagged_data[i].second) x += 1;
-            testing_data[i].pos_tag = tagged_data[i].second; y += 1;
+            num_pos_samples += 1;
+            if (testing_data[i].pos_tag == tagged_data[i].second) num_correct_pos_samples += 1;
+            testing_data[i].pos_tag = tagged_data[i].second;
 
             ME_Sample sample = generate_sample(testing_data, i);
             extr_model.classify(sample);
@@ -134,12 +136,30 @@ void Keyword_Extractor_Model::test(){
         }
     }
     cout << "finished reading " + test_file << endl;
-cout << "X: " << x << " Y: " << y << endl; 
+
     cout << "Extractor model accuracy = " << num_correct << " / " << num_samples << " = ";
     cout << 100 * ((double) num_correct / num_samples) << "%" << endl;
+
+    cout << "Percentage of POS Tags correct = " << num_correct_pos_samples << " / " << num_pos_samples << " = ";
+    cout << 100 * ((double) num_correct_pos_samples / num_pos_samples) << "%" << endl;
+
     cout << "finish testing keyword extractor" << endl;
 }
 
-void Keyword_Extractor_Model::classify_line(classified_tokens_t words){
+classified_tokens_t Keyword_Extractor_Model::classify_line(string str){
+    vector<pair<string, string> > tagged_str = postagger_model.tag_sentence(str);
+    classified_tokens_t classified_words;
 
+    for (int i = 0; i < tagged_str.size; i += 1){
+        classified_words.push_back(Keyword_Extractor_Model::ClassifiedToken(
+            tagged_str[i].first, tagged_str[i].second, ""));
+    }
+
+    ME_Model extr_model = get_extractor_model();
+    for (int i = 0; i < classified_words.size(); i += 1){
+        ME_Sample sample = generate_sample(classified_words, i);
+        extr_model.classify(sample);
+    }
+
+    return classified_words;
 }
