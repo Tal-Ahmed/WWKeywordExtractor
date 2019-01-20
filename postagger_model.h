@@ -10,11 +10,12 @@ using namespace std;
 class PerceptronTagger;
 
 class Postagger_Model {
-    PerceptronTagger *postagger = nullptr;
+    PerceptronTagger *postagger;
 
     void load_pos_tagger();
 
     public:
+        Postagger_Model(): postagger(nullptr) {}
         ~Postagger_Model(){
             if (postagger != nullptr){
                 delete postagger;

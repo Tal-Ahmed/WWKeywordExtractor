@@ -1,12 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <map>
-#include "util.h"
+#include <unordered_map>
+#include <regex>
 #include "postagger_model.h"
 #include "mltk/_ctagger.cc"
 
 using namespace std;
+
+extern unordered_map<string, unordered_map<string, string> > keywords;
 
 void Postagger_Model::load_pos_tagger(){
     cout << "start loading pos tagger" << endl;
@@ -64,12 +66,48 @@ void Postagger_Model::load_pos_tagger(){
     cout << "finish loading pos tagger" << endl;
 }
 
+string make_regex(string keyword){
+    ostringstream oss;
+    oss << "[\\s|(|,|-|/](";
+    oss << keyword;
+    oss << ")[\\s|)|,|-|.|/]";
+    return oss.str();
+}
+
 vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
-    vector<string> sentence;
+    unordered_map<int, unordered_map<int, string> > history;
+    for (unordered_map<string, unordered_map<string, string> >::iterator iter = keywords.begin(); iter != keywords.end(); ++iter){
+        string keyword = iter->first;
+        regex e(make_regex(keyword), regex_constants::icase);
+        smatch m;
+        regex_search(str, m, e);
+
+        // if match
+        if (m.str(1) != ""){            
+            int start_index = m.position(1);
+            int end_index = m.position(1) + m.str(1).length() - 1;
+            history[start_index][end_index] = keyword;
+
+            for (int i = start_index; i <= end_index; i += 1){
+                str[i] = '#';
+            }
+        }
+    }
+
     istringstream iss(str);
+    vector<string> sentence;
     string word;
+    int start_index = 0, end_index = -1;
 
     while (iss >> word){
+        start_index = end_index + 1;
+        end_index = start_index + word.length() - 1;
+
+        if (history.find(start_index) != history.end() && 
+            history[start_index].find(end_index) != history[start_index].end()){
+            word = history[start_index][end_index];
+        }
+
         sentence.push_back(word);
     }
 

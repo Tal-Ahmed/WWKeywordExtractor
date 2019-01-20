@@ -26,10 +26,17 @@ class Keyword_Extractor_Model {
                 word(w), pos_tag(pos), type(t) {}
         };
 
+        struct KeywordToken {
+            string word, keywords, types;
+            bool is_keyword;
+            KeywordToken(const string & w, bool isk, const string & k, const string & t):
+                word(w), is_keyword(isk), keywords(k), types(t) {}
+        };
+
         void test();
         void train();
 
-        vector<Keyword_Extractor_Model::ClassifiedToken> classify_line(string str);
+        vector<Keyword_Extractor_Model::KeywordToken> classify_line(string str);
         ME_Model get_extractor_model(){
             if (!extractor_model_loaded){
                 if (!extractor_model.load_from_file("extractor.model")){

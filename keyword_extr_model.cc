@@ -2,12 +2,15 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 #include "keyword_extr_model.h"
 #include "maxent/maxent.h"
 
 using namespace std;
 
 typedef vector<Keyword_Extractor_Model::ClassifiedToken> classified_tokens_t;
+
+extern unordered_map<string, unordered_map<string, string> > keywords;
 
 ME_Sample Keyword_Extractor_Model::generate_sample(classified_tokens_t & classified_words, int i){
     ME_Sample sample;
@@ -146,13 +149,14 @@ void Keyword_Extractor_Model::test(){
     cout << "finish testing keyword extractor" << endl;
 }
 
-classified_tokens_t Keyword_Extractor_Model::classify_line(string str){
+vector<Keyword_Extractor_Model::KeywordToken> Keyword_Extractor_Model::classify_line(string str){
     vector<pair<string, string> > tagged_str = postagger_model.tag_sentence(str);
     classified_tokens_t classified_words;
 
-    for (int i = 0; i < tagged_str.size; i += 1){
+    for (int i = 0; i < tagged_str.size(); i += 1){
         classified_words.push_back(Keyword_Extractor_Model::ClassifiedToken(
-            tagged_str[i].first, tagged_str[i].second, ""));
+            tagged_str[i].first, tagged_str[i].second, "")
+        );
     }
 
     ME_Model extr_model = get_extractor_model();
@@ -161,5 +165,24 @@ classified_tokens_t Keyword_Extractor_Model::classify_line(string str){
         extr_model.classify(sample);
     }
 
-    return classified_words;
+    vector<Keyword_Extractor_Model::KeywordToken> ret;
+    for (int i = 0; i < classified_words.size(); i += 1){
+        if (classified_words[i].type == "B-KEYWORD"){
+            ret.push_back(Keyword_Extractor_Model::KeywordToken(
+                classified_words[i].word, 
+                true,
+                keywords[classified_words[i].word]["keyword"],
+                keywords[classified_words[i].word]["type"]
+            ));
+        } else {
+            ret.push_back(Keyword_Extractor_Model::KeywordToken(
+                classified_words[i].word, 
+                false,
+                "",
+                ""
+            ));
+        }
+    }
+
+    return ret;
 }
