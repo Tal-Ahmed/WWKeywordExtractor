@@ -8,6 +8,8 @@
 
 using namespace std;
 
+extern unordered_map<string, unordered_map<string, string> > keywords;
+
 class Keyword_Extractor_Model {
     Postagger_Model postagger_model;
 
@@ -27,8 +29,9 @@ class Keyword_Extractor_Model {
         };
 
         struct KeywordToken {
-            string word, keywords, types;
+            string word;
             bool is_keyword;
+            string keywords, types;
             KeywordToken(const string & w, bool isk, const string & k, const string & t):
                 word(w), is_keyword(isk), keywords(k), types(t) {}
         };

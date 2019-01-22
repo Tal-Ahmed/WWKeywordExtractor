@@ -4,10 +4,12 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
 class PerceptronTagger;
+extern unordered_map<string, unordered_map<string, string> > keywords;
 
 class Postagger_Model {
     PerceptronTagger *postagger;
@@ -16,11 +18,7 @@ class Postagger_Model {
 
     public:
         Postagger_Model(): postagger(nullptr) {}
-        ~Postagger_Model(){
-            if (postagger != nullptr){
-                delete postagger;
-            }
-        }
+        ~Postagger_Model();
 
         vector<pair<string, string> > tag_sentence(string str);
 

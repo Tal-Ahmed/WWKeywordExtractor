@@ -208,7 +208,7 @@ class PerceptronTagger : public TaggerBase<std::string, tag_t>
     public:
         PerceptronTagger(weights_in_t weights, class_weights_in_t bias_weights,
             tagmap_in_t specified_tags);
-        ~PerceptronTagger();
+        virtual ~PerceptronTagger();
 
         /// tags a single sentence
         std::vector<tag_t> tag_sentence(

@@ -137,16 +137,16 @@ Familiarity with a scripting language such as Perl , Python , Ruby , and/or VBA 
 Exposure to scripting languages Perl and Ruby . 
 Versatile user of a variety of mathematical packages with a mix of proficiency across : SAS , SPSS , R , SQL , Matlab , VBA , C++ , Java . 
 Interested in Ruby on Rails and other cutting edge technologies . 
-Proficient in Ruby 2 and Rails $ B-KEYWORD 3 . 
+Proficient in Ruby 2 and Rails on Rails. 
 Experienced in Ember.js ( or Angular.js , or Backbone.js ) . 
 Knowledge of relational databases PostgreSQL preferred . 
 Experience with Ruby on Rails , Rails2 , or React/Flux , will be a plus . 
 Experience working in agile in a web environment , code refactoring HTML dashboard Ops HTML dashboard Marketing / Analytics / KPIs HTML5 controllers Refactoring current communications stack to Android Ruby on Rails development experience . 
 Experience with client side technologies HTML5 , CSS3 , JavaScript , JQuery , React . 
-Experience or knowledge of .NET $ B-KEYWORD 2.0 development using C# , Java Script . 
+Experience or knowledge of .NET 2.0 development using C# , Java Script . 
 Experience using Visual Basic Version 6.0 and/or ASP , VBA . 
 Knowledge of how to implement .Net or Visual Basic applications . 
-Experience or knowledge of .NET $ B-KEYWORD 2.0 development using C# , Java Script . 
+Experience or knowledge of .NET 2.0 development using C# , Java Script . 
 Experience using Visual Basic Version 6.0 and/or ASP , VBA within MS Access 2010 & Excel 2010 is a definite asset . 
 Write clear , concise , and well-tested code in Scala , Java , Python , and occasionally other languages . 
 Implement and maintain TunnelBear 's internal API that currently runs on the Java/Scala Play ! framework . 

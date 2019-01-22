@@ -8,7 +8,11 @@
 
 using namespace std;
 
-extern unordered_map<string, unordered_map<string, string> > keywords;
+Postagger_Model::~Postagger_Model(){
+    if (postagger != nullptr){
+        delete postagger;
+    }
+}
 
 void Postagger_Model::load_pos_tagger(){
     cout << "start loading pos tagger" << endl;
@@ -67,15 +71,48 @@ void Postagger_Model::load_pos_tagger(){
 }
 
 string make_regex(string keyword){
+    // regex special chars: [\^$.|?*+(){}
     ostringstream oss;
-    oss << "[\\s|(|,|-|/](";
-    oss << keyword;
-    oss << ")[\\s|)|,|-|.|/]";
-    return oss.str();
+    for (int i = 0; i < keyword.length(); i += 1){
+        switch (keyword[i]){
+            case '[':
+            case '\\':
+            case '^':
+            case '$':
+            case '.':
+            case '|':
+            case '?':
+            case '*':
+            case '+':
+            case '(':
+            case ')':
+            case '{':
+            case '}':
+                oss << "\\";
+            default:
+                oss << keyword[i];
+                break;
+        }
+    }
+
+    string escaped_keyword = oss.str();
+
+    ostringstream oss2;
+    oss2 << "[\\s|(|,|-|/](";
+    oss2 << escaped_keyword;
+    oss2 << ")[\\s|)|,|-|.|/]";
+    return oss2.str();
 }
 
 vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
-    unordered_map<int, unordered_map<int, string> > history;
+    for (int i = 0; i < str.length(); i += 1){
+        if (str[i] == char(127)){
+            str[i] = '\0';
+        }
+    }
+
+    unordered_map<int, string> history;
+    int i = 0;
     for (unordered_map<string, unordered_map<string, string> >::iterator iter = keywords.begin(); iter != keywords.end(); ++iter){
         string keyword = iter->first;
         regex e(make_regex(keyword), regex_constants::icase);
@@ -83,14 +120,16 @@ vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
         regex_search(str, m, e);
 
         // if match
-        if (m.str(1) != ""){            
+        if (m.str(1) != ""){
             int start_index = m.position(1);
-            int end_index = m.position(1) + m.str(1).length() - 1;
-            history[start_index][end_index] = keyword;
+            int end_index = start_index + m.str(1).length() - 1;
 
-            for (int i = start_index; i <= end_index; i += 1){
-                str[i] = '#';
-            }
+            ostringstream oss;
+            oss << char(127) << "_" << i;
+            string replaced_k = oss.str();
+            history[i++] = keyword;
+
+            str.replace(start_index, end_index - start_index + 1, replaced_k);
         }
     }
 
@@ -103,9 +142,11 @@ vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
         start_index = end_index + 1;
         end_index = start_index + word.length() - 1;
 
-        if (history.find(start_index) != history.end() && 
-            history[start_index].find(end_index) != history[start_index].end()){
-            word = history[start_index][end_index];
+        if (word[0] == char(127)){
+            string index = word.substr(2, word.length() - 2);
+            istringstream iss(index);
+            iss >> i;
+            word = history[i];
         }
 
         sentence.push_back(word);
