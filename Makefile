@@ -1,5 +1,5 @@
 CXX = g++ -std=c++11 # compiler
-CXXFLAGS = -g -O2 -Wall -fbracket-depth=2048 # compiler flags
+CXXFLAGS = -g -O2 -Wall # compiler flags
 
 OBJECTS = maxent/maxent.o maxent/lbfgs.o maxent/owlqn.o maxent/sgd.o keyword_extr_model.o postagger_model.o main.o
 DEPENDS = ${OBJECTS:.o=.d} # substitute ".o" with ".d"

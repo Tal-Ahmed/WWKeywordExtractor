@@ -18,9 +18,13 @@ class Keyword_Extractor_Model {
 
     string train_file, test_file;
 
+    void init();
+
     public:
         Keyword_Extractor_Model(string train_file, string test_file): 
-            extractor_model_loaded(false), train_file(train_file), test_file(test_file) {}
+            extractor_model_loaded(false), train_file(train_file), test_file(test_file) {
+                init();
+            }
 
         struct ClassifiedToken {
             string word, pos_tag, type;

@@ -104,6 +104,10 @@ string make_regex(string keyword){
     return oss2.str();
 }
 
+bool valid (string keyword){
+    return keyword != "e.g." && keyword != "E.g." && keyword != "E.G";
+}
+
 vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
     for (int i = 0; i < str.length(); i += 1){
         if (str[i] == char(127)){
@@ -120,7 +124,7 @@ vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
         regex_search(str, m, e);
 
         // if match
-        if (m.str(1) != ""){
+        if (m.str(1) != "" && valid(m.str(1))){
             int start_index = m.position(1);
             int end_index = start_index + m.str(1).length() - 1;
 

@@ -10,1459 +10,1461 @@ using namespace std;
 
 typedef vector<Keyword_Extractor_Model::ClassifiedToken> classified_tokens_t;
 
-unordered_map<string, unordered_map<string, string> > keywords = {
-	{"Simulink", {{"keyword", "Simulink"}, {"type", "Programming Language"}}},
-	{"KRL", {{"keyword", "KRL"}, {"type", "Programming Language"}}},
-	{"NoSQL", {{"keyword", "NoSQL"}, {"type", "Database Type"}}},
-	{"GoCD", {{"keyword", "GoCD"}, {"type", "Continuous Integration Tools"}}},
-	{"Fortran", {{"keyword", "Fortran"}, {"type", "Programming Language"}}},
-	{"ACL2", {{"keyword", "ACL2"}, {"type", "Programming Language"}}},
-	{"Zope", {{"keyword", "Zope,Python"}, {"type", "Web Framework"}}},
-	{"Foundation", {{"keyword", "Foundation,CSS"}, {"type", "CSS Framework"}}},
-	{"PHPixie", {{"keyword", "PHPixie,PHP"}, {"type", "Web Framework"}}},
-	{"SPS", {{"keyword", "SPS"}, {"type", "Programming Language"}}},
-	{"Active Server Pages", {{"keyword", "ASP.NET,.NET"}, {"type", "Web Framework"}}},
-	{"C--", {{"keyword", "C--"}, {"type", "Programming Language"}}},
-	{"XPL", {{"keyword", "XPL"}, {"type", "Programming Language"}}},
-	{"Banshee", {{"keyword", "Banshee,PHP"}, {"type", "Web Framework"}}},
-	{"Ch", {{"keyword", "Ch"}, {"type", "Programming Language"}}},
-	{"GM", {{"keyword", "GM"}, {"type", "Programming Language"}}},
-	{"GJ", {{"keyword", "GJ"}, {"type", "Programming Language"}}},
-	{"MPW Make", {{"keyword", "MPW Make"}, {"type", "Build Automation Tool"}}},
-	{"IBM HAScript", {{"keyword", "IBM HAScript"}, {"type", "Programming Language"}}},
-	{"XBL", {{"keyword", "XBL"}, {"type", "Programming Language"}}},
-	{"Ateji PX", {{"keyword", "Ateji PX"}, {"type", "Programming Language"}}},
-	{"Visual Basic .NET", {{"keyword", "Visual Basic .NET,.NET"}, {"type", "Programming Language"}}},
-	{"COBOL", {{"keyword", "COBOL"}, {"type", "Programming Language"}}},
-	{"MAD", {{"keyword", "MAD"}, {"type", "Programming Language"}}},
-	{"Go", {{"keyword", "Go"}, {"type", "Programming Language"}}},
-	{"MAT LAB", {{"keyword", "MATLAB"}, {"type", "Programming Language"}}},
-	{"Makefile", {{"keyword", "Make"}, {"type", "Build Automation Tool"}}},
-	{"Agilent VEE", {{"keyword", "Agilent VEE"}, {"type", "Programming Language"}}},
-	{"C/AL", {{"keyword", "C/AL"}, {"type", "Programming Language"}}},
-	{"FormEngine", {{"keyword", "FormEngine,Java"}, {"type", "Web Framework"}}},
-	{"C#/Visual Studio", {{"keyword", "C#"}, {"type", "Programming Language"}}},
-	{"LSE", {{"keyword", "LSE"}, {"type", "Programming Language"}}},
-	{"MicroScript", {{"keyword", "MicroScript"}, {"type", "Programming Language"}}},
-	{"SQL Server", {{"keyword", "MSSQL,SQL"}, {"type", "Database"}}},
-	{"LSL", {{"keyword", "LSL"}, {"type", "Programming Language"}}},
-	{"Mimer SQL", {{"keyword", "Mimer SQL,SQL"}, {"type", "Database"}}},
-	{"TTM", {{"keyword", "TTM"}, {"type", "Programming Language"}}},
-	{"SIMSCRIPT", {{"keyword", "SIMSCRIPT"}, {"type", "Programming Language"}}},
-	{"Whiley", {{"keyword", "Whiley"}, {"type", "Programming Language"}}},
-	{"RCFile", {{"keyword", "RCFile"}, {"type", "Database"}}},
-	{"Bcfg2", {{"keyword", "Bcfg2"}, {"type", "Configuration Management Tools"}}},
-	{"ZK", {{"keyword", "ZK,Java"}, {"type", "Web Framework"}}},
-	{"Clarion", {{"keyword", "Clarion,SQL"}, {"type", "Programming Language"}}},
-	{"A++", {{"keyword", "A++"}, {"type", "Programming Language"}}},
-	{"Mohol", {{"keyword", "Mohol"}, {"type", "Programming Language"}}},
-	{"Curry", {{"keyword", "Curry"}, {"type", "Programming Language"}}},
-	{"AmbientTalk", {{"keyword", "AmbientTalk"}, {"type", "Programming Language"}}},
-	{"CMake", {{"keyword", "CMake"}, {"type", "Build Automation Tool"}}},
-	{"CA IDMS", {{"keyword", "CA IDMS,SQL"}, {"type", "Database"}}},
-	{"xHarbour", {{"keyword", "xHarbour"}, {"type", "Programming Language"}}},
-	{"MustacheJS", {{"keyword", "Mustache.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"VBA", {{"keyword", "Visual Basic for Applications"}, {"type", "Programming Language"}}},
-	{"Boot", {{"keyword", "Boot,Clojure,Java"}, {"type", "Build Automation Tool"}}},
-	{"TUTOR", {{"keyword", "TUTOR"}, {"type", "Programming Language"}}},
-	{"Mulgara", {{"keyword", "Mulgara,Graph databases"}, {"type", "Database"}}},
-	{"SAP PI", {{"keyword", "SAP PI"}, {"type", "Message Broker"}}},
-	{"Stateflow", {{"keyword", "Stateflow"}, {"type", "Programming Language"}}},
-	{"ReactJS", {{"keyword", "React.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Database Management Library", {{"keyword", "Database Management Library"}, {"type", "Database"}}},
-	{"Moment", {{"keyword", "Moment.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"SilverStripe", {{"keyword", "SilverStripe,PHP"}, {"type", "Web Framework"}}},
-	{"AngularJS", {{"keyword", "AngularJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Charity", {{"keyword", "Charity"}, {"type", "Programming Language"}}},
-	{"ActiveMQ", {{"keyword", "Apache ActiveMQ"}, {"type", "Message Broker"}}},
-	{"Obliq", {{"keyword", "Obliq"}, {"type", "Programming Language"}}},
-	{"Inform", {{"keyword", "Inform"}, {"type", "Programming Language"}}},
-	{"Docker", {{"keyword", "Docker"}, {"type", "Virtual Machine Environment"}}},
-	{"ParaSail", {{"keyword", "ParaSail"}, {"type", "Programming Language"}}},
-	{"MAPPER", {{"keyword", "MAPPER"}, {"type", "Programming Language"}}},
-	{"Neo4j", {{"keyword", "Neo4j,Graph databases"}, {"type", "Database"}}},
-	{"JavaScript", {{"keyword", "JavaScript"}, {"type", "Programming Language"}}},
-	{"Jembe", {{"keyword", "Jembe,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"ABAP", {{"keyword", "ABAP"}, {"type", "Programming Language"}}},
-	{"Franz Lisp", {{"keyword", "Franz Lisp"}, {"type", "Programming Language"}}},
-	{"Blazegraph", {{"keyword", "Blazegraph,Graph databases"}, {"type", "Database"}}},
-	{"Erlang", {{"keyword", "Erlang"}, {"type", "Programming Language"}}},
-	{"Synctool", {{"keyword", "Synctool"}, {"type", "Configuration Management Tools"}}},
-	{"Accumulo", {{"keyword", "Apache Accumulo,NoSQL"}, {"type", "Database,Apache Framework"}}},
-	{"IIS", {{"keyword", "IIS"}, {"type", "Web Server"}}},
-	{"Sather", {{"keyword", "Sather"}, {"type", "Programming Language"}}},
-	{"Polyhedra", {{"keyword", "Polyhedra,SQL"}, {"type", "Database"}}},
-	{"OpenLink Virtuoso", {{"keyword", "OpenLink Virtuoso"}, {"type", "Web Server"}}},
-	{"Miranda", {{"keyword", "Miranda"}, {"type", "Programming Language"}}},
-	{"Falcon", {{"keyword", "Falcon"}, {"type", "Programming Language"}}},
-	{"PILOT", {{"keyword", "PILOT"}, {"type", "Programming Language"}}},
-	{"Dylan", {{"keyword", "Dylan"}, {"type", "Programming Language"}}},
-	{"Makefiles", {{"keyword", "Make"}, {"type", "Build Automation Tool"}}},
-	{"SequenceL", {{"keyword", "SequenceL"}, {"type", "Programming Language"}}},
-	{"Bootstrap", {{"keyword", "Bootstrap,CSS"}, {"type", "CSS Framework"}}},
-	{"Django", {{"keyword", "Django,Python"}, {"type", "Web Framework"}}},
-	{"CSS3", {{"keyword", "CSS"}, {"type", "Programming Language"}}},
-	{"Tntnet", {{"keyword", "Tntnet,C++"}, {"type", "Web Framework"}}},
-	{"Python", {{"keyword", "Python"}, {"type", "Programming Language"}}},
-	{"Haskell", {{"keyword", "Haskell"}, {"type", "Programming Language"}}},
-	{"Jackrabbit", {{"keyword", "Apache Jackrabbit"}, {"type", "Apache Framework"}}},
-	{"Blue", {{"keyword", "Blue"}, {"type", "Programming Language"}}},
-	{"RAPID", {{"keyword", "RAPID"}, {"type", "Programming Language"}}},
-	{"Capistrano", {{"keyword", "Capistrano,Ruby"}, {"type", "Build Automation Tool"}}},
-	{"ORCA/Modula-2", {{"keyword", "ORCA/Modula-2"}, {"type", "Programming Language"}}},
-	{"DB2", {{"keyword", "IBM DB2,SQL"}, {"type", "Database"}}},
-	{"POP-11", {{"keyword", "POP-11"}, {"type", "Programming Language"}}},
-	{"Emerald", {{"keyword", "Emerald"}, {"type", "Programming Language"}}},
-	{"SAS", {{"keyword", "SAS"}, {"type", "Programming Language"}}},
-	{"Calpont InfiniDB", {{"keyword", "Calpont InfiniDB,SQL"}, {"type", "Database"}}},
-	{"Lucene/Solr", {{"keyword", "Apache Solr,Lucene"}, {"type", "Search Server,Apache Framework"}}},
-	{"SA-C", {{"keyword", "SA-C"}, {"type", "Programming Language"}}},
-	{"AnthillPro", {{"keyword", "AnthillPro"}, {"type", "Continuous Integration Tools"}}},
-	{"Visual J#", {{"keyword", "Visual J#,Java"}, {"type", "Programming Language"}}},
-	{"CHR", {{"keyword", "CHR"}, {"type", "Programming Language"}}},
-	{"Arrow", {{"keyword", "Apache Arrow"}, {"type", "Database,Apache Framework"}}},
-	{"Kixtart", {{"keyword", "Kixtart"}, {"type", "Programming Language"}}},
-	{"APR", {{"keyword", "Apache APR"}, {"type", "Apache Framework"}}},
-	{"Baseguide", {{"keyword", "Baseguide,CSS"}, {"type", "CSS Framework"}}},
-	{"Pharo", {{"keyword", "Pharo"}, {"type", "Programming Language"}}},
-	{"APL", {{"keyword", "APL"}, {"type", "Programming Language"}}},
-	{"SAP Sybase Adaptive Server Enterprise", {{"keyword", "SAP Sybase Adaptive Server Enterprise,SQL"}, {"type", "Database"}}},
-	{"Sawzall", {{"keyword", "Sawzall"}, {"type", "Programming Language"}}},
-	{"Mouse", {{"keyword", "Mouse"}, {"type", "Programming Language"}}},
-	{"Timber", {{"keyword", "Timber"}, {"type", "Programming Language"}}},
-	{"Windows Mobile", {{"keyword", "Windows Mobile,C#"}, {"type", "Mobile Operating System"}}},
-	{"Vue.js", {{"keyword", "Vue.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Factor", {{"keyword", "Factor"}, {"type", "Programming Language"}}},
-	{"Cyclone", {{"keyword", "Cyclone"}, {"type", "Programming Language"}}},
-	{"Tokutek", {{"keyword", "Tokutek,NewSQL"}, {"type", "Database"}}},
-	{"Postgres", {{"keyword", "PostgreSQL,SQL"}, {"type", "Database"}}},
-	{"VB .NET", {{"keyword", "Visual Basic .NET,.NET"}, {"type", "Programming Language"}}},
-	{"Muse", {{"keyword", "Apache Muse"}, {"type", "Apache Framework"}}},
-	{"Ingres", {{"keyword", "Ingres,SQL"}, {"type", "Database"}}},
-	{"Underscore", {{"keyword", "Underscore.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"rc", {{"keyword", "rc"}, {"type", "Programming Language"}}},
-	{"Joule", {{"keyword", "Joule"}, {"type", "Programming Language"}}},
-	{"Xcode/Objective-C", {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}}},
-	{"Cypher Query Language", {{"keyword", "Cypher Query Language,Graph databases"}, {"type", "Database"}}},
-	{"Visual Objects", {{"keyword", "Visual Objects"}, {"type", "Programming Language"}}},
-	{"Common JS", {{"keyword", "CommonJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Kathamo", {{"keyword", "Kathamo,CSS"}, {"type", "CSS Framework"}}},
-	{"High Level Assembly", {{"keyword", "High Level Assembly"}, {"type", "Programming Language"}}},
-	{"ASP.NET", {{"keyword", "ASP.NET,.NET"}, {"type", "Web Framework"}}},
-	{"InterBase", {{"keyword", "InterBase,SQL"}, {"type", "Database"}}},
-	{"Kivy", {{"keyword", "Kivy,Python"}, {"type", "Mobile Framework"}}},
-	{"Curl", {{"keyword", "Curl"}, {"type", "Programming Language"}}},
-	{"SAM76", {{"keyword", "SAM76"}, {"type", "Programming Language"}}},
-	{"Lasso", {{"keyword", "Lasso"}, {"type", "Programming Language"}}},
-	{"OpenCL", {{"keyword", "OpenCL"}, {"type", "Programming Language"}}},
-	{"TADS", {{"keyword", "TADS"}, {"type", "Programming Language"}}},
-	{"Groovy on Grails", {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}}},
-	{"JBoss Seam", {{"keyword", "JBoss Seam,Java"}, {"type", "Web Framework"}}},
-	{"Mercury.js", {{"keyword", "Mercury.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Play (Scala)", {{"keyword", "Play Framework,Java,Scala"}, {"type", "Web Framework"}}},
-	{"ISLISP", {{"keyword", "ISLISP"}, {"type", "Programming Language"}}},
-	{"SAND CDBMS", {{"keyword", "SAND CDBMS,SQL"}, {"type", "Database"}}},
-	{"Google Fusion Tables", {{"keyword", "Google Fusion Tables"}, {"type", "Database"}}},
-	{"Pike", {{"keyword", "Pike"}, {"type", "Programming Language"}}},
-	{"Express.js", {{"keyword", "Express.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"C/C++", {{"keyword", "C++,C"}, {"type", "Programming Language"}}},
-	{"Accent", {{"keyword", "Accent"}, {"type", "Programming Language"}}},
-	{"lighttpd", {{"keyword", "lighttpd"}, {"type", "Web Server"}}},
-	{"Machine learning", {{"keyword", "Machine learning"}, {"type", "Keyword"}}},
-	{"BETA", {{"keyword", "BETA"}, {"type", "Programming Language"}}},
-	{"EC2", {{"keyword", "Amazon EC2"}, {"type", "Amazon Web Services Product"}}},
-	{"Oracle", {{"keyword", "Oracle,SQL"}, {"type", "Database"}}},
-	{"Velocity", {{"keyword", "Apache Velocity"}, {"type", "Apache Framework"}}},
-	{"MSBuild", {{"keyword", "MSBuild"}, {"type", "Build Automation Tool"}}},
-	{"o:XML", {{"keyword", "o:XML"}, {"type", "Programming Language"}}},
-	{"MongoDB", {{"keyword", "MongoDB,NoSQL"}, {"type", "Database"}}},
-	{"CHIP-8", {{"keyword", "CHIP-8"}, {"type", "Programming Language"}}},
-	{"Zettair", {{"keyword", "Zettair"}, {"type", "Search Server"}}},
-	{"Objective C", {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}}},
-	{"Unix", {{"keyword", "Unix"}, {"type", "Operating System"}}},
-	{"Sed", {{"keyword", "Sed"}, {"type", "Programming Language"}}},
-	{"UnrealScript", {{"keyword", "UnrealScript"}, {"type", "Programming Language"}}},
-	{"Cassandra", {{"keyword", "Apache Cassandra,NoSQL"}, {"type", "Database,Apache Framework"}}},
-	{"Tarantool", {{"keyword", "Tarantool,NoSQL"}, {"type", "Database"}}},
-	{"Rudder", {{"keyword", "Rudder"}, {"type", "Configuration Management Tools"}}},
-	{"Isearch", {{"keyword", "Isearch"}, {"type", "Search Server"}}},
-	{"FlooP", {{"keyword", "FlooP"}, {"type", "Programming Language"}}},
-	{"TSQL", {{"keyword", "T-SQL,SQL"}, {"type", "Database"}}},
-	{"RDM Server", {{"keyword", "RDM Server,SQL"}, {"type", "Database"}}},
-	{"POI", {{"keyword", "Apache POI"}, {"type", "Apache Framework"}}},
-	{"Unisys RDMS 2200", {{"keyword", "Unisys RDMS 2200,SQL"}, {"type", "Database"}}},
-	{"Lucy", {{"keyword", "Apache Lucy"}, {"type", "Apache Framework"}}},
-	{"Beehive", {{"keyword", "Apache Beehive"}, {"type", "Apache Framework"}}},
-	{"TeamCity", {{"keyword", "TeamCity"}, {"type", "Continuous Integration Tools"}}},
-	{"Lynx", {{"keyword", "Lynx"}, {"type", "Programming Language"}}},
-	{"Oracle Rdb", {{"keyword", "Oracle,SQL"}, {"type", "Database"}}},
-	{"Cobra", {{"keyword", "Cobra"}, {"type", "Programming Language"}}},
-	{"Scratch", {{"keyword", "Scratch"}, {"type", "Programming Language"}}},
-	{"Java Script", {{"keyword", "JavaScript"}, {"type", "Programming Language"}}},
-	{"DataEase", {{"keyword", "DataEase,SQL"}, {"type", "Database"}}},
-	{"Socket.io", {{"keyword", "Socket.io,JavaScript"}, {"type", "Javascript Library"}}},
-	{"DataFlex", {{"keyword", "keyword"}, {"type", "Programming Language"}}},
-	{"Bower.js", {{"keyword", "Bower.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Racket", {{"keyword", "Racket"}, {"type", "Programming Language"}}},
-	{"Neural Networks", {{"keyword", "Neural Networks"}, {"type", "Keyword"}}},
-	{"Flask", {{"keyword", "Flask,Python"}, {"type", "Web Framework"}}},
-	{"Hadoop", {{"keyword", "Apache Hadoop,NoSQL"}, {"type", "Database"}}},
-	{"Concourse", {{"keyword", "Concourse"}, {"type", "Continuous Integration Tools"}}},
-	{"SmallSQL", {{"keyword", "SmallSQL,SQL"}, {"type", "Database"}}},
-	{"Riak", {{"keyword", "Riak,NoSQL"}, {"type", "Database"}}},
-	{"DCL", {{"keyword", "DCL"}, {"type", "Programming Language"}}},
-	{"RuneScript", {{"keyword", "RuneScript"}, {"type", "Programming Language"}}},
-	{"Virtuoso Universal Server", {{"keyword", "Virtuoso Universal Server,NoSQL"}, {"type", "Database"}}},
-	{"Eiffel", {{"keyword", "Eiffel"}, {"type", "Programming Language"}}},
-	{"AWS", {{"keyword", "Amazon Web Services"}, {"type", "Keyword"}}},
-	{"AWK", {{"keyword", "AWK"}, {"type", "Programming Language"}}},
-	{"Octave", {{"keyword", "Octave"}, {"type", "Programming Language"}}},
-	{"Hamilton C shell", {{"keyword", "Hamilton C shell"}, {"type", "Programming Language"}}},
-	{"GPSS", {{"keyword", "GPSS"}, {"type", "Programming Language"}}},
-	{"Spacewalk", {{"keyword", "Spacewalk"}, {"type", "Configuration Management Tools"}}},
-	{"dc", {{"keyword", "dc"}, {"type", "Programming Language"}}},
-	{"IPTSCRAE", {{"keyword", "IPTSCRAE"}, {"type", "Programming Language"}}},
-	{"Phrogram", {{"keyword", "Phrogram"}, {"type", "Programming Language"}}},
-	{"Microsoft Jet Database Engine", {{"keyword", "Microsoft Jet Database Engine"}, {"type", "Database"}}},
-	{"Namazu", {{"keyword", "Namazu"}, {"type", "Search Server"}}},
-	{"VoltDB", {{"keyword", "VoltDB,NewSQL"}, {"type", "Database"}}},
-	{"Subtext", {{"keyword", "Subtext"}, {"type", "Programming Language"}}},
-	{"Modula-2", {{"keyword", "Modula-2"}, {"type", "Programming Language"}}},
-	{"ARexx", {{"keyword", "ARexx"}, {"type", "Programming Language"}}},
-	{"Android", {{"keyword", "Android"}, {"type", "Mobile Operating System"}}},
-	{"SabreTalk", {{"keyword", "SabreTalk"}, {"type", "Programming Language"}}},
-	{"The SAS system", {{"keyword", "The SAS system,SQL"}, {"type", "Database"}}},
-	{"COMIT", {{"keyword", "COMIT"}, {"type", "Programming Language"}}},
-	{"J++", {{"keyword", "J++"}, {"type", "Programming Language"}}},
-	{"C", {{"keyword", "C"}, {"type", "Programming Language"}}},
-	{"TELCOMP", {{"keyword", "TELCOMP"}, {"type", "Programming Language"}}},
-	{"SpamAssassin", {{"keyword", "Apache SpamAssassin"}, {"type", "Apache Framework"}}},
-	{"Argus", {{"keyword", "Argus"}, {"type", "Programming Language"}}},
-	{"openSUSE", {{"keyword", "openSUSE,Linux"}, {"type", "Operating System"}}},
-	{"REBOL", {{"keyword", "REBOL"}, {"type", "Programming Language"}}},
-	{"Genie", {{"keyword", "Genie"}, {"type", "Programming Language"}}},
-	{"4th Dimension", {{"keyword", "4th Dimension,SQL"}, {"type", "Database"}}},
-	{"Karel", {{"keyword", "Karel"}, {"type", "Programming Language"}}},
-	{"MOO", {{"keyword", "MOO"}, {"type", "Programming Language"}}},
-	{"Rails3", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"Amazon Lambda", {{"keyword", "Amazon Lambda"}, {"type", "Amazon Web Services Product"}}},
-	{"OpenXava", {{"keyword", "JVx,Java"}, {"type", "Web Framework"}}},
-	{"Searchdaimon", {{"keyword", "Searchdaimon"}, {"type", "Search Server"}}},
-	{"Samza", {{"keyword", "Apache Samza"}, {"type", "Apache Framework"}}},
-	{"CICS", {{"keyword", "CICS"}, {"type", "Programming Language"}}},
-	{"SenseiDB", {{"keyword", "SenseiDB,NewSQL"}, {"type", "Database"}}},
-	{"C#", {{"keyword", "C#"}, {"type", "Programming Language"}}},
-	{"Object Pascal", {{"keyword", "Object Pascal"}, {"type", "Programming Language"}}},
-	{"COWSEL", {{"keyword", "COWSEL"}, {"type", "Programming Language"}}},
-	{"DataStax", {{"keyword", "DataStax,Graph databases"}, {"type", "Database"}}},
-	{"Prograph", {{"keyword", "Prograph"}, {"type", "Programming Language"}}},
-	{"DocumentDB", {{"keyword", "DocumentDB,NoSQL"}, {"type", "Database"}}},
-	{"CL", {{"keyword", "CL"}, {"type", "Programming Language"}}},
-	{"Couchbase", {{"keyword", "Couchbase,NoSQL"}, {"type", "Database"}}},
-	{"ScalArc", {{"keyword", "ScalArc,NewSQL"}, {"type", "Database"}}},
-	{"PROMAL", {{"keyword", "PROMAL"}, {"type", "Programming Language"}}},
-	{"occam", {{"keyword", "occam"}, {"type", "Programming Language"}}},
-	{"ALGOL W", {{"keyword", "ALGOL W"}, {"type", "Programming Language"}}},
-	{"Cg", {{"keyword", "Cg"}, {"type", "Programming Language"}}},
-	{"Drizzle", {{"keyword", "Drizzle,NewSQL"}, {"type", "Database"}}},
-	{"Clickhouse", {{"keyword", "Clickhouse"}, {"type", "Database"}}},
-	{"NCSA HTTPd", {{"keyword", "NCSA HTTPd"}, {"type", "Web Server"}}},
-	{"SAIL", {{"keyword", "SAIL"}, {"type", "Programming Language"}}},
-	{"T SQL", {{"keyword", "T-SQL,SQL"}, {"type", "Database"}}},
-	{"CVS", {{"keyword", "CVS"}, {"type", "Version Control"}}},
-	{"Ratfiv", {{"keyword", "Ratfiv"}, {"type", "Programming Language"}}},
-	{"Cordova", {{"keyword", "Apache Cordova,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework,Apache Framework"}}},
-	{"Autocoder", {{"keyword", "Autocoder"}, {"type", "Programming Language"}}},
-	{"Akiban", {{"keyword", "Akiban,NewSQL"}, {"type", "Database"}}},
-	{"M2001", {{"keyword", "M2001"}, {"type", "Programming Language"}}},
-	{"Tornado", {{"keyword", "Tornado,Python"}, {"type", "Web Framework"}}},
-	{"easyCIS", {{"keyword", "easyCIS"}, {"type", "Continuous Integration Tools"}}},
-	{"log4j", {{"keyword", "Apache log4j"}, {"type", "Apache Framework"}}},
-	{"Chapel", {{"keyword", "Chapel"}, {"type", "Programming Language"}}},
-	{"VB", {{"keyword", "Visual Basic"}, {"type", "Programming Language"}}},
-	{"CircleCI", {{"keyword", "CircleCI"}, {"type", "Continuous Integration Tools"}}},
-	{"Jakarta", {{"keyword", "Apache Jakarta"}, {"type", "Apache Framework"}}},
-	{"EusLisp Robot", {{"keyword", "EusLisp Robot"}, {"type", "Programming Language"}}},
-	{"Commons", {{"keyword", "Apache Commons"}, {"type", "Apache Framework"}}},
-	{"NWScript", {{"keyword", "NWScript"}, {"type", "Programming Language"}}},
-	{"TACL", {{"keyword", "TACL"}, {"type", "Programming Language"}}},
-	{"HTML5", {{"keyword", "HTML"}, {"type", "Programming Language"}}},
-	{"Kaleidoscope", {{"keyword", "Kaleidoscope"}, {"type", "Programming Language"}}},
-	{"Flexify", {{"keyword", "Flexify,CSS"}, {"type", "CSS Framework"}}},
-	{"Object Lisp", {{"keyword", "Object Lisp,Lisp"}, {"type", "Programming Language"}}},
-	{"FOCUS", {{"keyword", "FOCUS"}, {"type", "Programming Language"}}},
-	{"Snap!", {{"keyword", "Snap!"}, {"type", "Programming Language"}}},
-	{"EBS", {{"keyword", "Amazon EBS"}, {"type", "Amazon Web Services Product"}}},
-	{"Oz", {{"keyword", "Oz"}, {"type", "Programming Language"}}},
-	{"Flavors", {{"keyword", "Flavors"}, {"type", "Programming Language"}}},
-	{"Rapira", {{"keyword", "Rapira"}, {"type", "Programming Language"}}},
-	{"CSQL", {{"keyword", "CSQL,SQL"}, {"type", "Database"}}},
-	{"Frege", {{"keyword", "Frege"}, {"type", "Programming Language"}}},
-	{"Mach-II", {{"keyword", "Mach-II,ColdFusion"}, {"type", "Web Framework"}}},
-	{"Flink", {{"keyword", "Apache Flink"}, {"type", "Apache Framework"}}},
-	{"SCons", {{"keyword", "SCons"}, {"type", "Build Automation Tool"}}},
-	{"BuildAMation", {{"keyword", "BuildAMation"}, {"type", "Build Automation Tool"}}},
-	{"CommonJS", {{"keyword", "CommonJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Xapian", {{"keyword", "Xapian"}, {"type", "Search Server"}}},
-	{"D", {{"keyword", "D"}, {"type", "Programming Language"}}},
-	{"Recoll", {{"keyword", "Recoll"}, {"type", "Search Server"}}},
-	{"James", {{"keyword", "Apache James"}, {"type", "Apache Framework"}}},
-	{"Ember", {{"keyword", "Ember.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Alice", {{"keyword", "Alice"}, {"type", "Programming Language"}}},
-	{"React.js", {{"keyword", "React.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Ruby/Ruby on Rails", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"CakePHP", {{"keyword", "CakePHP,PHP"}, {"type", "Web Framework"}}},
-	{"Android Studio", {{"keyword", "Android,Java"}, {"type", "Mobile Operating System"}}},
-	{"Mongo", {{"keyword", "MongoDB,NoSQL"}, {"type", "Database"}}},
-	{"Redshift", {{"keyword", "Amazon Redshift"}, {"type", "Amazon Web Services Product"}}},
-	{"Wakanda Server", {{"keyword", "Wakanda Server"}, {"type", "Web Server"}}},
-	{"Arc", {{"keyword", "Arc"}, {"type", "Programming Language"}}},
-	{"CXF", {{"keyword", "Apache CXF"}, {"type", "Apache Framework"}}},
-	{"XSB", {{"keyword", "XSB"}, {"type", "Programming Language"}}},
-	{"PostScript", {{"keyword", "PostScript"}, {"type", "Programming Language"}}},
-	{"Seed7", {{"keyword", "Seed7"}, {"type", "Programming Language"}}},
-	{"Haxe", {{"keyword", "Haxe"}, {"type", "Programming Language"}}},
-	{"GraphTalk", {{"keyword", "GraphTalk"}, {"type", "Programming Language"}}},
-	{"Jmango360", {{"keyword", "Jmango360,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"Sling", {{"keyword", "Apache Sling,Java"}, {"type", "Web Framework,Apache Framework"}}},
-	{"AureliaJS", {{"keyword", "Aurelia.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"TTCN", {{"keyword", "TTCN"}, {"type", "Programming Language"}}},
-	{"Harrow", {{"keyword", "Harrow"}, {"type", "Continuous Integration Tools"}}},
-	{"Logtalk", {{"keyword", "Logtalk"}, {"type", "Programming Language"}}},
-	{"Stratos", {{"keyword", "Apache Stratos"}, {"type", "Apache Framework"}}},
-	{"ASDF", {{"keyword", "ASDF,Lisp"}, {"type", "Build Automation Tool"}}},
-	{"MPD", {{"keyword", "MPD"}, {"type", "Programming Language"}}},
-	{"AMPL", {{"keyword", "AMPL"}, {"type", "Programming Language"}}},
-	{"H2", {{"keyword", "H2,SQL"}, {"type", "Database"}}},
-	{"Flowtracer", {{"keyword", "Flowtracer"}, {"type", "Build Automation Tool"}}},
-	{"MPL", {{"keyword", "MPL"}, {"type", "Programming Language"}}},
-	{"NCache", {{"keyword", "NCache"}, {"type", "Data Structure Server"}}},
-	{"Kafka", {{"keyword", "Apache Kafka"}, {"type", "Message Broker"}}},
-	{"JBoss", {{"keyword", "JBoss EAP"}, {"type", "Web Server"}}},
-	{"BREW", {{"keyword", "BREW"}, {"type", "Programming Language"}}},
-	{"YQL", {{"keyword", "YQL"}, {"type", "Programming Language"}}},
-	{"Express", {{"keyword", "Express.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"GAMS", {{"keyword", "GAMS"}, {"type", "Programming Language"}}},
-	{"Make", {{"keyword", "Make"}, {"type", "Build Automation Tool"}}},
-	{"F-Script", {{"keyword", "F-Script"}, {"type", "Programming Language"}}},
-	{"mSQL", {{"keyword", "mSQL,SQL"}, {"type", "Database"}}},
-	{"GRASS", {{"keyword", "GRASS"}, {"type", "Programming Language"}}},
-	{"awsm.css", {{"keyword", "awsm.css,CSS"}, {"type", "CSS Framework"}}},
-	{"HyperDex", {{"keyword", "HyperDex,NoSQL"}, {"type", "Database"}}},
-	{"Ubuntu", {{"keyword", "Ubuntu,Linux"}, {"type", "Operating System"}}},
-	{"ProvideX", {{"keyword", "ProvideX"}, {"type", "Programming Language"}}},
-	{"Materialize", {{"keyword", "Materialize,CSS"}, {"type", "CSS Framework"}}},
-	{"Resin Open Source", {{"keyword", "Resin"}, {"type", "Web Server"}}},
-	{"PL/SQL", {{"keyword", "PL-SQL,SQL"}, {"type", "Programming Language"}}},
-	{"OS X", {{"keyword", "OS X"}, {"type", "Operating System"}}},
-	{"Napier88", {{"keyword", "Napier88"}, {"type", "Programming Language"}}},
-	{"thttpd", {{"keyword", "thttpd"}, {"type", "Web Server"}}},
-	{"Ruby/Rails", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"KnockoutJS", {{"keyword", "Knockout.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Puppet", {{"keyword", "Puppet"}, {"type", "Configuration Management Tools"}}},
-	{"MATH-MATIC", {{"keyword", "MATH-MATIC"}, {"type", "Programming Language"}}},
-	{"Ioke", {{"keyword", "Ioke"}, {"type", "Programming Language"}}},
-	{"Tibero", {{"keyword", "Tibero,SQL"}, {"type", "Database"}}},
-	{"Hudson", {{"keyword", "Hudson"}, {"type", "Continuous Integration Tools"}}},
-	{"Moment.js", {{"keyword", "Moment.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Underscore.js", {{"keyword", "Underscore.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"ES7", {{"keyword", "ECMAScript"}, {"type", "Programming Language"}}},
-	{"ES6", {{"keyword", "ECMAScript"}, {"type", "Programming Language"}}},
-	{"SQLite", {{"keyword", "SQLite,SQL"}, {"type", "Database"}}},
-	{"Greenplum", {{"keyword", "Greenplum,PostgreSQL"}, {"type", "Database"}}},
-	{"Promela", {{"keyword", "Promela"}, {"type", "Programming Language"}}},
-	{"Common Lisp", {{"keyword", "Common Lisp"}, {"type", "Programming Language"}}},
-	{"Sparksee", {{"keyword", "Sparksee,Graph databases"}, {"type", "Database"}}},
-	{"E", {{"keyword", "E"}, {"type", "Programming Language"}}},
-	{"Windows", {{"keyword", "Windows"}, {"type", "Operating System"}}},
-	{"DynamoDB", {{"keyword", "Amazon DynamoDB"}, {"type", "Amazon Web Services Product"}}},
-	{"Elasticsearch", {{"keyword", "Elasticsearch,Lucene"}, {"type", "Search Server"}}},
-	{"DeployBot", {{"keyword", "DeployBot"}, {"type", "Continuous Integration Tools"}}},
-	{"QuakeC", {{"keyword", "QuakeC"}, {"type", "Programming Language"}}},
-	{"Symfony", {{"keyword", "Symfony,PHP"}, {"type", "Web Framework"}}},
-	{"PostgreSQL", {{"keyword", "PostgreSQL,SQL"}, {"type", "Database"}}},
-	{"Progress Software", {{"keyword", "Progress Software,SQL"}, {"type", "Database"}}},
-	{"MonetDB", {{"keyword", "MonetDB,SQL"}, {"type", "Database"}}},
-	{"MSSQL", {{"keyword", "MSSQL,SQL"}, {"type", "Database"}}},
-	{"Artificial Intelligence", {{"keyword", "Artificial Intelligence"}, {"type", "Keyword"}}},
-	{"X++", {{"keyword", "X++"}, {"type", "Programming Language"}}},
-	{"MoSync", {{"keyword", "MoSync,C/C++,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"FuelPHP", {{"keyword", "FuelPHP,PHP"}, {"type", "Web Framework"}}},
-	{"Nutch", {{"keyword", "Nutch"}, {"type", "Search Server"}}},
-	{"Visual Studio/C#", {{"keyword", "C#"}, {"type", "Programming Language"}}},
-	{"UniVerse", {{"keyword", "UniVerse,SQL"}, {"type", "Database"}}},
-	{"Deesel", {{"keyword", "Deesel"}, {"type", "Programming Language"}}},
-	{"Visual Prolog", {{"keyword", "Visual Prolog"}, {"type", "Programming Language"}}},
-	{"ztemplates", {{"keyword", "ztemplates,Java"}, {"type", "Web Framework"}}},
-	{"HBase", {{"keyword", "Apache HBase,NoSQL"}, {"type", "Database,Apache Framework"}}},
-	{"App Inventor for Android", {{"keyword", "App Inventor for Android"}, {"type", "Programming Language"}}},
-	{"VirtualBox", {{"keyword", "VirtualBox"}, {"type", "Virtual Machine Environment"}}},
-	{"Drone.io", {{"keyword", "Drone.io"}, {"type", "Continuous Integration Tools"}}},
-	{"Meteor.js", {{"keyword", "Meteor.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Pure CSS", {{"keyword", "Pure CSS,CSS"}, {"type", "CSS Framework"}}},
-	{"IBM HTTP Server", {{"keyword", "IBM HTTP Server"}, {"type", "Web Server"}}},
-	{"Pro*C", {{"keyword", "Pro*C"}, {"type", "Programming Language"}}},
-	{"AOLserver", {{"keyword", "AOLserver"}, {"type", "Web Server"}}},
-	{"LaTeX", {{"keyword", "LaTeX"}, {"type", "Programming Language"}}},
-	{"Rex", {{"keyword", "Rex"}, {"type", "Configuration Management Tools"}}},
-	{"M#", {{"keyword", "M#"}, {"type", "Programming Language"}}},
-	{"txtSQL", {{"keyword", "txtSQL,SQL"}, {"type", "Database"}}},
-	{"Mathcad", {{"keyword", "Mathcad"}, {"type", "Programming Language"}}},
-	{"NESL", {{"keyword", "NESL"}, {"type", "Programming Language"}}},
-	{"NaviServer", {{"keyword", "NaviServer"}, {"type", "Web Server"}}},
-	{"PCF", {{"keyword", "PCF"}, {"type", "Programming Language"}}},
-	{"Graph databases", {{"keyword", "Graph database"}, {"type", "Database Type"}}},
-	{"Seeks", {{"keyword", "Seeks"}, {"type", "Search Server"}}},
-	{"Visual DialogScript", {{"keyword", "Visual DialogScript"}, {"type", "Programming Language"}}},
-	{"bc", {{"keyword", "bc"}, {"type", "Programming Language"}}},
-	{"Script.NET", {{"keyword", "Script.NET"}, {"type", "Programming Language"}}},
-	{"CouchDB", {{"keyword", "Apache CouchDB,NewSQL"}, {"type", "Database,Apache Framework"}}},
-	{"TYPO3", {{"keyword", "TYPO3,PHP"}, {"type", "Web Framework"}}},
-	{"Knockout", {{"keyword", "Knockout.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"ML", {{"keyword", "ML"}, {"type", "Programming Language"}}},
-	{"VSXu", {{"keyword", "VSXu"}, {"type", "Programming Language"}}},
-	{"Clipper", {{"keyword", "Clipper"}, {"type", "Programming Language"}}},
-	{"PROIV", {{"keyword", "PROIV"}, {"type", "Programming Language"}}},
-	{"Amazon Route 53", {{"keyword", "Amazon Route 53"}, {"type", "Amazon Web Services Product"}}},
-	{"Codeship", {{"keyword", "Codeship"}, {"type", "Continuous Integration Tools"}}},
-	{"NonStop SQL", {{"keyword", "NonStop SQL,SQL"}, {"type", "Database"}}},
-	{"Uniface", {{"keyword", "Uniface"}, {"type", "Programming Language"}}},
-	{"OmniMark", {{"keyword", "OmniMark"}, {"type", "Programming Language"}}},
-	{"Limbo", {{"keyword", "Limbo"}, {"type", "Programming Language"}}},
-	{"Node", {{"keyword", "Node.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Clojure", {{"keyword", "Clojure"}, {"type", "Programming Language"}}},
-	{"SETL", {{"keyword", "SETL"}, {"type", "Programming Language"}}},
-	{"RIFE", {{"keyword", "RIFE,Java"}, {"type", "Web Framework"}}},
-	{"BSD", {{"keyword", "BSD,Unix"}, {"type", "Operating System"}}},
-	{"IBM Basic assembly language", {{"keyword", "IBM Basic assembly language"}, {"type", "Programming Language"}}},
-	{"Chart.js", {{"keyword", "Chart.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"F", {{"keyword", "F"}, {"type", "Programming Language"}}},
-	{"Elixir", {{"keyword", "Elixir"}, {"type", "Programming Language"}}},
-	{"Agora", {{"keyword", "Agora"}, {"type", "Programming Language"}}},
-	{"Travis CI", {{"keyword", "Travis-CI"}, {"type", "Continuous Integration Tools"}}},
-	{"Pyramid", {{"keyword", "Pyramid,Python"}, {"type", "Web Framework"}}},
-	{"Concise", {{"keyword", "Concise,CSS"}, {"type", "CSS Framework"}}},
-	{"Xitami", {{"keyword", "Xitami"}, {"type", "Web Server"}}},
-	{"Little b", {{"keyword", "Little b"}, {"type", "Programming Language"}}},
-	{"Agda", {{"keyword", "Agda"}, {"type", "Programming Language"}}},
-	{"Archiva", {{"keyword", "Apache Archiva"}, {"type", "Apache Framework"}}},
-	{"SBL", {{"keyword", "SBL"}, {"type", "Programming Language"}}},
-	{"PL-SQL", {{"keyword", "PL-SQL,SQL"}, {"type", "Programming Language"}}},
-	{"Openbase", {{"keyword", "Openbase,SQL"}, {"type", "Database"}}},
-	{"Emacs Lisp", {{"keyword", "Emacs Lisp"}, {"type", "Programming Language"}}},
-	{"Processing.js", {{"keyword", "Processing.js,JavaScript"}, {"type", "Programming Language"}}},
-	{"Hume", {{"keyword", "Hume"}, {"type", "Programming Language"}}},
-	{"Oberon", {{"keyword", "Oberon"}, {"type", "Programming Language"}}},
-	{"UnderscoreJS", {{"keyword", "Underscore.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Onyx", {{"keyword", "Onyx"}, {"type", "Programming Language"}}},
-	{"Perforce", {{"keyword", "Perforce"}, {"type", "Version Control"}}},
-	{"Unsemantic", {{"keyword", "Unsemantic,CSS"}, {"type", "CSS Framework"}}},
-	{"Unicon", {{"keyword", "Unicon"}, {"type", "Programming Language"}}},
-	{"Snap CI", {{"keyword", "Snap CI"}, {"type", "Continuous Integration Tools"}}},
-	{"Fortress", {{"keyword", "Fortress"}, {"type", "Programming Language"}}},
-	{"GitLab CI", {{"keyword", "GitLab CI"}, {"type", "Continuous Integration Tools"}}},
-	{"L# .NET", {{"keyword", "L# .NET,.NET"}, {"type", "Programming Language"}}},
-	{"NCI", {{"keyword", "NCI"}, {"type", "Continuous Integration Tools"}}},
-	{"QuickBuild", {{"keyword", "QuickBuild"}, {"type", "Continuous Integration Tools"}}},
-	{"Euclid", {{"keyword", "Euclid"}, {"type", "Programming Language"}}},
-	{"Angular", {{"keyword", "AngularJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"LESS", {{"keyword", "LESS"}, {"type", "Programming Language"}}},
-	{"LIL", {{"keyword", "LIL"}, {"type", "Programming Language"}}},
-	{"Powerhouse", {{"keyword", "Powerhouse"}, {"type", "Programming Language"}}},
-	{"PROTEL", {{"keyword", "PROTEL"}, {"type", "Programming Language"}}},
-	{"LIS", {{"keyword", "LIS"}, {"type", "Programming Language"}}},
-	{"QPL", {{"keyword", "QPL"}, {"type", "Programming Language"}}},
-	{"PIKT", {{"keyword", "PIKT"}, {"type", "Configuration Management Tools"}}},
-	{"Trafodion", {{"keyword", "Trafodion,NoSQL,Hadoop,HBase"}, {"type", "Database"}}},
-	{"Buck", {{"keyword", "Buck"}, {"type", "Build Automation Tool"}}},
-	{"JCL", {{"keyword", "JCL"}, {"type", "Programming Language"}}},
-	{"Cesil", {{"keyword", "Cesil"}, {"type", "Programming Language"}}},
-	{"UCSD Pascal", {{"keyword", "UCSD Pascal"}, {"type", "Programming Language"}}},
-	{"Altibase", {{"keyword", "Altibase,NoSQL"}, {"type", "Database"}}},
-	{"TPU", {{"keyword", "TPU"}, {"type", "Programming Language"}}},
-	{"AllegroGraph", {{"keyword", "AllegroGraph,Graph databases"}, {"type", "Database"}}},
-	{"SenseTalk", {{"keyword", "SenseTalk"}, {"type", "Programming Language"}}},
-	{"Chopstick", {{"keyword", "Chopstick,CSS"}, {"type", "CSS Framework"}}},
-	{"Milk", {{"keyword", "Milk"}, {"type", "Programming Language"}}},
-	{"DinkC", {{"keyword", "DinkC"}, {"type", "Programming Language"}}},
-	{"YaCy", {{"keyword", "YaCy"}, {"type", "Search Server"}}},
-	{"Perl", {{"keyword", "Perl"}, {"type", "Programming Language"}}},
-	{"Lua", {{"keyword", "Lua"}, {"type", "Programming Language"}}},
-	{"Natural Language Processing", {{"keyword", "Natural Language Processing"}, {"type", "Keyword"}}},
-	{"es", {{"keyword", "es"}, {"type", "Programming Language"}}},
-	{"Play Framework", {{"keyword", "Play Framework,Java,Scala"}, {"type", "Web Framework"}}},
-	{"Joy", {{"keyword", "Joy"}, {"type", "Programming Language"}}},
-	{"DIBOL", {{"keyword", "DIBOL"}, {"type", "Programming Language"}}},
-	{"Solano CI", {{"keyword", "Solano CI"}, {"type", "Continuous Integration Tools"}}},
-	{"Microsoft Access", {{"keyword", "Microsoft Access"}, {"type", "Database"}}},
-	{"Alma-0", {{"keyword", "Alma-0"}, {"type", "Programming Language"}}},
-	{"SIMPOL", {{"keyword", "SIMPOL"}, {"type", "Programming Language"}}},
-	{"G", {{"keyword", "G"}, {"type", "Programming Language"}}},
-	{"CratelO", {{"keyword", "CratelO,NoSQL"}, {"type", "Database"}}},
-	{"Batik", {{"keyword", "Apache Batik"}, {"type", "Apache Framework"}}},
-	{"Fusebox", {{"keyword", "Fusebox,PHP"}, {"type", "Web Framework"}}},
-	{"OpenOffice", {{"keyword", "Apache OpenOffice"}, {"type", "Apache Framework"}}},
-	{"Groovy-on-Grails", {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}}},
-	{"Modelica", {{"keyword", "Modelica"}, {"type", "Programming Language"}}},
-	{"Bamboo", {{"keyword", "Bamboo"}, {"type", "Continuous Integration Tools"}}},
-	{"Pervasive PSQL", {{"keyword", "Pervasive PSQL,SQL"}, {"type", "Database"}}},
-	{"ColdFusion", {{"keyword", "ColdFusion"}, {"type", "Programming Language"}}},
-	{"Harbour", {{"keyword", "Harbour"}, {"type", "Programming Language"}}},
-	{"cTAKES", {{"keyword", "Apache cTAKES"}, {"type", "Apache Framework"}}},
-	{"Beanstalk", {{"keyword", "Amazon Elastic Beanstalk"}, {"type", "Amazon Web Services Product"}}},
-	{"Kepler", {{"keyword", "Kepler,Lua"}, {"type", "Web Framework"}}},
-	{"Xojo", {{"keyword", "Xojo"}, {"type", "Programming Language"}}},
-	{"DYNAMO", {{"keyword", "DYNAMO"}, {"type", "Programming Language"}}},
-	{"CMS EXEC", {{"keyword", "CMS EXEC"}, {"type", "Programming Language"}}},
-	{"Arduino", {{"keyword", "Arduino"}, {"type", "Programming Language"}}},
-	{"ATS", {{"keyword", "ATS"}, {"type", "Programming Language"}}},
-	{"Pure", {{"keyword", "Pure"}, {"type", "Programming Language"}}},
-	{"Pyjs", {{"keyword", "Pyjs,Python"}, {"type", "Web Framework"}}},
-	{"SASS", {{"keyword", "SASS"}, {"type", "Programming Language"}}},
-	{"CMS-2", {{"keyword", "CMS-2"}, {"type", "Programming Language"}}},
-	{"Join Java", {{"keyword", "Join Java,Java"}, {"type", "Programming Language"}}},
-	{"Marionette", {{"keyword", "Marionette.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Squeak", {{"keyword", "Squeak"}, {"type", "Programming Language"}}},
-	{"SASL", {{"keyword", "SASL"}, {"type", "Programming Language"}}},
-	{"Debian", {{"keyword", "Fedora,Linux"}, {"type", "Operating System"}}},
-	{"Clusterpoint", {{"keyword", "Clusterpoint,NoSQL"}, {"type", "Database"}}},
-	{"Tomcat", {{"keyword", "Apache Tomcat"}, {"type", "Web Server,Apache Framework"}}},
-	{"JRuby", {{"keyword", "JRuby,Ruby"}, {"type", "Programming Language"}}},
-	{"IMP", {{"keyword", "IMP"}, {"type", "Programming Language"}}},
-	{"PDL", {{"keyword", "PDL"}, {"type", "Programming Language"}}},
-	{"Ruby/Ror", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"CLU", {{"keyword", "CLU"}, {"type", "Programming Language"}}},
-	{"PHP7", {{"keyword", "PHP"}, {"type", "Programming Language"}}},
-	{"Nette", {{"keyword", "Nette Framework,PHP"}, {"type", "Web Framework"}}},
-	{"BowerJS", {{"keyword", "Bower.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"C Shell", {{"keyword", "Shell,Unix"}, {"type", "Programming Language"}}},
-	{"Magma", {{"keyword", "Magma"}, {"type", "Programming Language"}}},
-	{"GlassFish", {{"keyword", "GlassFish"}, {"type", "Web Server"}}},
-	{"LISA", {{"keyword", "LISA"}, {"type", "Programming Language"}}},
-	{"mnoGoSearch", {{"keyword", "mnoGoSearch"}, {"type", "Search Server"}}},
-	{"VMWare", {{"keyword", "VMWare"}, {"type", "Virtual Machine Environment"}}},
-	{"PDFBox", {{"keyword", "Apache PDFBox"}, {"type", "Apache Framework"}}},
-	{"COMPASS", {{"keyword", "COMPASS"}, {"type", "Programming Language"}}},
-	{"Clustrix", {{"keyword", "Clustrix,NewSQL"}, {"type", "Database"}}},
-	{"FinalBuilder", {{"keyword", "FinalBuilder"}, {"type", "Build Automation Tool"}}},
-	{"GOM", {{"keyword", "GOM"}, {"type", "Programming Language"}}},
-	{"Geronimo", {{"keyword", "Apache Geronimo"}, {"type", "Web Server,Apache Framework"}}},
-	{"IBM DB2 Express-C", {{"keyword", "IBM DB2 Express-C,SQL"}, {"type", "Database"}}},
-	{"Leda", {{"keyword", "Leda"}, {"type", "Programming Language"}}},
-	{"Mac OS", {{"keyword", "OS X"}, {"type", "Operating System"}}},
-	{"Amazon Simple Storage Service", {{"keyword", "Amazon S3"}, {"type", "Amazon Web Services Product"}}},
-	{"Modula", {{"keyword", "Modula"}, {"type", "Programming Language"}}},
-	{"Chef", {{"keyword", "Chef"}, {"type", "Configuration Management Tools"}}},
-	{"Bigwig", {{"keyword", "Bigwig"}, {"type", "Programming Language"}}},
-	{"Rampart", {{"keyword", "Apache Rampart"}, {"type", "Apache Framework"}}},
-	{"D3", {{"keyword", "D3.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"LC-3", {{"keyword", "LC-3"}, {"type", "Programming Language"}}},
-	{"Wee", {{"keyword", "Wee,CSS"}, {"type", "CSS Framework"}}},
-	{"IBM Notes", {{"keyword", "IBM Notes,NoSQL"}, {"type", "Database"}}},
-	{"Amazon Aurora", {{"keyword", "Amazon Aurora,SQL"}, {"type", "Database"}}},
-	{"TouchDevelop", {{"keyword", "TouchDevelop"}, {"type", "Programming Language"}}},
-	{"KRYPTON", {{"keyword", "KRYPTON"}, {"type", "Programming Language"}}},
-	{"Oracle iPlanet Web Server", {{"keyword", "Oracle iPlanet Web Server"}, {"type", "Web Server"}}},
-	{"Codename One", {{"keyword", "Codename One,Java,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"Wt", {{"keyword", "Wt,C++"}, {"type", "Web Framework"}}},
-	{"Octopus Deploy", {{"keyword", "Octopus Deploy,ASP.NET,C#,.NET"}, {"type", "Build Automation Tool"}}},
-	{"Presto", {{"keyword", "Presto,SQL"}, {"type", "Database"}}},
-	{"Object REXX", {{"keyword", "Object REXX"}, {"type", "Programming Language"}}},
-	{"MomentJS", {{"keyword", "Moment.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Manjaro", {{"keyword", "Manjaro,Linux"}, {"type", "Operating System"}}},
-	{"Dojo", {{"keyword", "Dojo,CSS"}, {"type", "CSS Framework"}}},
-	{"TokuDB", {{"keyword", "TokuDB,NewSQL"}, {"type", "Database"}}},
-	{"Felix", {{"keyword", "Apache Felix"}, {"type", "Apache Framework"}}},
-	{"IBM Lotus Approach", {{"keyword", "IBM Lotus Approach,SQL"}, {"type", "Database"}}},
-	{"AutoLISP", {{"keyword", "AutoLISP"}, {"type", "Programming Language"}}},
-	{"BitC", {{"keyword", "BitC"}, {"type", "Programming Language"}}},
-	{"CoffeeScript", {{"keyword", "CoffeeScript,JavaScript"}, {"type", "Programming Language"}}},
-	{"ROOP", {{"keyword", "ROOP"}, {"type", "Programming Language"}}},
-	{"HTML 5", {{"keyword", "HTML"}, {"type", "Programming Language"}}},
-	{"Curator", {{"keyword", "Apache Curator"}, {"type", "Apache Framework"}}},
-	{"Easy PL/I", {{"keyword", "Easy PL/I"}, {"type", "Programming Language"}}},
-	{"FOP", {{"keyword", "Apache FOP"}, {"type", "Apache Framework"}}},
-	{"Model-Glue", {{"keyword", "Model-Glue,ColdFusion"}, {"type", "Web Framework"}}},
-	{"MercuryJS", {{"keyword", "Mercury.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Sones GraphDB", {{"keyword", "Sones GraphDB,Graph databases"}, {"type", "Database"}}},
-	{"Tcl", {{"keyword", "Tcl"}, {"type", "Programming Language"}}},
-	{"Xtend", {{"keyword", "Xtend"}, {"type", "Programming Language"}}},
-	{"Python/Django", {{"keyword", "Django,Python"}, {"type", "Web Framework"}}},
-	{"Marionette.js", {{"keyword", "Marionette.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Assembly", {{"keyword", "Assembly"}, {"type", "Programming Language"}}},
-	{"Turing", {{"keyword", "Turing"}, {"type", "Programming Language"}}},
-	{"Ladder", {{"keyword", "Ladder"}, {"type", "Programming Language"}}},
-	{"AppVeyor", {{"keyword", "AppVeyor"}, {"type", "Continuous Integration Tools"}}},
-	{"GenieDB", {{"keyword", "GenieDB,NewSQL"}, {"type", "Database"}}},
-	{"LabVIEW", {{"keyword", "LabVIEW"}, {"type", "Programming Language"}}},
-	{"Amazon SimpleDB", {{"keyword", "Amazon SimpleDB,NoSQL"}, {"type", "Database"}}},
-	{"Converge", {{"keyword", "Converge"}, {"type", "Programming Language"}}},
-	{"CobolScript", {{"keyword", "CobolScript"}, {"type", "Programming Language"}}},
-	{"Elastic Search", {{"keyword", "Elasticsearch"}, {"type", "Search Server"}}},
-	{"Jexus", {{"keyword", "Jexus"}, {"type", "Web Server"}}},
-	{"BlooP", {{"keyword", "BlooP"}, {"type", "Programming Language"}}},
-	{"Redis", {{"keyword", "Redis"}, {"type", "Data Structure Server"}}},
-	{"Leiningen", {{"keyword", "Leiningen,Clojure,Java"}, {"type", "Build Automation Tool"}}},
-	{"Diisba framework", {{"keyword", "Diisba framework,CSS"}, {"type", "CSS Framework"}}},
-	{"Three.js", {{"keyword", "Three.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Bulma", {{"keyword", "Bulma,CSS"}, {"type", "CSS Framework"}}},
-	{"Charm", {{"keyword", "Charm"}, {"type", "Programming Language"}}},
-	{"MSIL", {{"keyword", "MSIL"}, {"type", "Programming Language"}}},
-	{"ACT-III", {{"keyword", "ACT-III"}, {"type", "Programming Language"}}},
-	{"Mortran", {{"keyword", "Mortran"}, {"type", "Programming Language"}}},
-	{"Lisaac", {{"keyword", "Lisaac"}, {"type", "Programming Language"}}},
-	{"OBJ2", {{"keyword", "OBJ2"}, {"type", "Programming Language"}}},
-	{"Kule Lazy", {{"keyword", "Kule Lazy,CSS"}, {"type", "CSS Framework"}}},
-	{"Clean", {{"keyword", "Clean"}, {"type", "Programming Language"}}},
-	{"Tika", {{"keyword", "Apache Tika"}, {"type", "Apache Framework"}}},
-	{"MAD/I", {{"keyword", "MAD/I"}, {"type", "Programming Language"}}},
-	{"SyncCharts", {{"keyword", "SyncCharts"}, {"type", "Programming Language"}}},
-	{"JAL", {{"keyword", "JAL"}, {"type", "Programming Language"}}},
-	{"Golang", {{"keyword", "Go"}, {"type", "Programming Language"}}},
-	{"Io", {{"keyword", "Io"}, {"type", "Programming Language"}}},
-	{"nesC", {{"keyword", "nesC"}, {"type", "Programming Language"}}},
-	{"Material Design Lite", {{"keyword", "Material Design Lite,CSS"}, {"type", "CSS Framework"}}},
-	{"GruntJS", {{"keyword", "Grunt.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"RabbitMQ", {{"keyword", "RabbitMQ"}, {"type", "Message Broker"}}},
-	{"EPL", {{"keyword", "EPL"}, {"type", "Programming Language"}}},
-	{"WEBrick", {{"keyword", "WEBrick"}, {"type", "Web Server"}}},
-	{"Monkey HTTP Server", {{"keyword", "Monkey HTTP Server"}, {"type", "Web Server"}}},
-	{"AppleScript", {{"keyword", "AppleScript"}, {"type", "Programming Language"}}},
-	{"SuperCollider", {{"keyword", "SuperCollider"}, {"type", "Programming Language"}}},
-	{"JOSS", {{"keyword", "JOSS"}, {"type", "Programming Language"}}},
-	{"Wyvern", {{"keyword", "Wyvern"}, {"type", "Programming Language"}}},
-	{"UniData", {{"keyword", "UniData,SQL"}, {"type", "Database"}}},
-	{"SVN", {{"keyword", "Apache Subversion"}, {"type", "Version Control,Apache Framework"}}},
-	{"Alpha Five", {{"keyword", "Alpha Five"}, {"type", "Database"}}},
-	{"Hyper-V", {{"keyword", "Hyper-V"}, {"type", "Virtual Machine Environment"}}},
-	{"OrientDB", {{"keyword", "OrientDB,NoSQL,Graph databases"}, {"type", "Database"}}},
-	{"Caml", {{"keyword", "Caml"}, {"type", "Programming Language"}}},
-	{"web2py", {{"keyword", "web2py,Python"}, {"type", "Web Framework"}}},
-	{"JVx", {{"keyword", "JVx,Java"}, {"type", "Web Framework"}}},
-	{"Handlebars", {{"keyword", "Handlebars.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Xcode/Objective C", {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}}},
-	{"Pig", {{"keyword", "Apache Pig"}, {"type", "Apache Framework"}}},
-	{"GOTRAN", {{"keyword", "GOTRAN"}, {"type", "Programming Language"}}},
-	{"Struts", {{"keyword", "Apache Struts,Java"}, {"type", "Web Framework,Apache Framework"}}},
-	{"Vectorwise", {{"keyword", "Vectorwise,SQL"}, {"type", "Database"}}},
-	{"Apache HTTP Server", {{"keyword", "Apache HTTP Server"}, {"type", "Web Server,Apache Framework"}}},
-	{"Mary", {{"keyword", "Mary"}, {"type", "Programming Language"}}},
-	{"Team Foundation Server", {{"keyword", "Team Foundation Server"}, {"type", "Continuous Integration Tools"}}},
-	{"Rake", {{"keyword", "Rake,Ruby"}, {"type", "Build Automation Tool"}}},
-	{"GameMonkey Script", {{"keyword", "GameMonkey Script"}, {"type", "Programming Language"}}},
-	{"MeteorJS", {{"keyword", "Meteor.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"VB.NET", {{"keyword", "Visual Basic .NET"}, {"type", "Programming Language"}}},
-	{"Ruby", {{"keyword", "Ruby"}, {"type", "Programming Language"}}},
-	{"Oriel", {{"keyword", "Oriel"}, {"type", "Programming Language"}}},
-	{"AutoHotkey", {{"keyword", "AutoHotkey"}, {"type", "Programming Language"}}},
-	{"MARK-IV", {{"keyword", "MARK-IV"}, {"type", "Programming Language"}}},
-	{"AIMMS", {{"keyword", "AIMMS"}, {"type", "Programming Language"}}},
-	{"eXtremeDB", {{"keyword", "eXtremeDB,SQL"}, {"type", "Database"}}},
-	{"Ember.js", {{"keyword", "Ember.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"ServiceMix", {{"keyword", "Apache ServiceMix"}, {"type", "Apache Framework"}}},
-	{"Kajona", {{"keyword", "Kajona,PHP"}, {"type", "Web Framework"}}},
-	{"Csound", {{"keyword", "Csound"}, {"type", "Programming Language"}}},
-	{"JADE", {{"keyword", "JADE"}, {"type", "Programming Language"}}},
-	{"Jetty", {{"keyword", "Jetty"}, {"type", "Web Server"}}},
-	{"Lava", {{"keyword", "Lava"}, {"type", "Programming Language"}}},
-	{"WATFIV, WATFOR", {{"keyword", "WATFIV, WATFOR"}, {"type", "Programming Language"}}},
-	{"Storm", {{"keyword", "Apache Storm"}, {"type", "Apache Framework"}}},
-	{"Citrine", {{"keyword", "Citrine"}, {"type", "Programming Language"}}},
-	{"Nu", {{"keyword", "Nu"}, {"type", "Programming Language"}}},
-	{"Teradata", {{"keyword", "Teradata,SQL"}, {"type", "Database"}}},
-	{"Axum", {{"keyword", "Axum"}, {"type", "Programming Language"}}},
-	{"CodeIgniter", {{"keyword", "CodeIgniter,PHP"}, {"type", "Web Framework"}}},
-	{"NO", {{"keyword", "NO"}, {"type", "Programming Language"}}},
-	{"Executable UML", {{"keyword", "Executable UML"}, {"type", "Programming Language"}}},
-	{"Silex", {{"keyword", "Silex,PHP"}, {"type", "Web Framework"}}},
-	{"TECO", {{"keyword", "TECO"}, {"type", "Programming Language"}}},
-	{"Bower", {{"keyword", "Bower,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Kube", {{"keyword", "Kube,CSS"}, {"type", "CSS Framework"}}},
-	{"Sphinx", {{"keyword", "Sphinx"}, {"type", "Search Server"}}},
-	{"Firebird", {{"keyword", "Firebird,SQL"}, {"type", "Database"}}},
-	{"Aerospike", {{"keyword", "Aerospike,NoSQL"}, {"type", "Database"}}},
-	{"J", {{"keyword", "J"}, {"type", "Programming Language"}}},
-	{"Macsyma", {{"keyword", "Macsyma"}, {"type", "Programming Language"}}},
-	{"Dataphor", {{"keyword", "Dataphor,SQL"}, {"type", "Database"}}},
-	{"Cabal", {{"keyword", "Cabal,Haskell"}, {"type", "Build Automation Tool"}}},
-	{"ObjectLOGO", {{"keyword", "ObjectLOGO"}, {"type", "Programming Language"}}},
-	{"Resin Professional", {{"keyword", "Resin"}, {"type", "Web Server"}}},
-	{"JORAM", {{"keyword", "JORAM"}, {"type", "Message Broker"}}},
-	{"SmartFrog", {{"keyword", "SmartFrog"}, {"type", "Configuration Management Tools"}}},
-	{"Mongoose", {{"keyword", "Mongoose"}, {"type", "Web Server"}}},
-	{"Adabas D", {{"keyword", "Adabas D,SQL"}, {"type", "Database"}}},
-	{"Assertible", {{"keyword", "Assertible"}, {"type", "Continuous Integration Tools"}}},
-	{"Mathematica", {{"keyword", "Mathematica"}, {"type", "Programming Language"}}},
-	{"Wicket", {{"keyword", "Apache Wicket,Java"}, {"type", "Web Framework,Apache Framework"}}},
-	{"MIMIC", {{"keyword", "MIMIC"}, {"type", "Programming Language"}}},
-	{"Hop", {{"keyword", "Hop"}, {"type", "Programming Language"}}},
-	{"CFEngine", {{"keyword", "CFEngine"}, {"type", "Configuration Management Tools"}}},
-	{"Jako", {{"keyword", "Jako"}, {"type", "Programming Language"}}},
-	{"Dart", {{"keyword", "Dart"}, {"type", "Programming Language"}}},
-	{"React", {{"keyword", "React.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"XQuery", {{"keyword", "XQuery"}, {"type", "Programming Language"}}},
-	{"PL-0", {{"keyword", "PL-0"}, {"type", "Programming Language"}}},
-	{"PL-M", {{"keyword", "PL-M"}, {"type", "Programming Language"}}},
-	{"PL-I", {{"keyword", "PL-I"}, {"type", "Programming Language"}}},
-	{"Lordui", {{"keyword", "Lordui"}, {"type", "Continuous Integration Tools"}}},
-	{"PL-C", {{"keyword", "PL-C"}, {"type", "Programming Language"}}},
-	{"PL-B", {{"keyword", "PL-B"}, {"type", "Programming Language"}}},
-	{"BeanShell", {{"keyword", "BeanShell"}, {"type", "Programming Language"}}},
-	{"Alef", {{"keyword", "Alef"}, {"type", "Programming Language"}}},
-	{"PL-P", {{"keyword", "PL-P"}, {"type", "Programming Language"}}},
-	{"SchemafreeDB", {{"keyword", "SchemafreeDB,NewSQL"}, {"type", "Database"}}},
-	{"Torque", {{"keyword", "Apache Torque"}, {"type", "Apache Framework"}}},
-	{"Enduro/X ", {{"keyword", "Enduro/X "}, {"type", "Message Broker"}}},
-	{"FPr", {{"keyword", "FPr"}, {"type", "Programming Language"}}},
-	{"Phalcon", {{"keyword", "Phalcon,PHP"}, {"type", "Web Framework"}}},
-	{"CHILL", {{"keyword", "CHILL"}, {"type", "Programming Language"}}},
-	{"Wavemaker", {{"keyword", "Wavemaker,Java"}, {"type", "Web Framework"}}},
-	{"Graph database", {{"keyword", "Graph database"}, {"type", "Database Type"}}},
-	{"Delphi", {{"keyword", "Delphi"}, {"type", "Programming Language"}}},
-	{"Euler", {{"keyword", "Euler"}, {"type", "Programming Language"}}},
-	{"JScript", {{"keyword", "JScript"}, {"type", "Programming Language"}}},
-	{"Brazel", {{"keyword", "Brazel"}, {"type", "Build Automation Tool"}}},
-	{"TAL", {{"keyword", "TAL"}, {"type", "Programming Language"}}},
-	{"Salt", {{"keyword", "Salt"}, {"type", "Configuration Management Tools"}}},
-	{"ObjectiveC", {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}}},
-	{"NPL", {{"keyword", "NPL"}, {"type", "Programming Language"}}},
-	{"Portals", {{"keyword", "Apache Portals"}, {"type", "Apache Framework"}}},
-	{"Infobright", {{"keyword", "Infobright,SQL"}, {"type", "Database"}}},
-	{"Marmotta", {{"keyword", "Apache Marmotta"}, {"type", "Apache Framework"}}},
-	{"Cool", {{"keyword", "Cool"}, {"type", "Programming Language"}}},
-	{"R++", {{"keyword", "R++"}, {"type", "Programming Language"}}},
-	{"Backbone.js", {{"keyword", "Backbone.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Ease", {{"keyword", "Ease"}, {"type", "Programming Language"}}},
-	{"FAUST", {{"keyword", "FAUST"}, {"type", "Programming Language"}}},
-	{"ECMAScript", {{"keyword", "ECMAScript"}, {"type", "Programming Language"}}},
-	{"Windows PowerShell", {{"keyword", "PowerShell,Windows"}, {"type", "Programming Language"}}},
-	{"Cherokee HTTP Server", {{"keyword", "Cherokee HTTP Server"}, {"type", "Web Server"}}},
-	{"Speedcode", {{"keyword", "Speedcode"}, {"type", "Programming Language"}}},
-	{"Modula-3", {{"keyword", "Modula-3"}, {"type", "Programming Language"}}},
-	{"Amiga E", {{"keyword", "Amiga E"}, {"type", "Programming Language"}}},
-	{"Traffic Server", {{"keyword", "Traffic Server"}, {"type", "Apache Framework"}}},
-	{"K", {{"keyword", "K"}, {"type", "Programming Language"}}},
-	{"jclouds", {{"keyword", "Apache jclouds"}, {"type", "Apache Framework"}}},
-	{"Red Hat Linux", {{"keyword", "RedHat Linux,Linux"}, {"type", "Operating System"}}},
-	{"Rust", {{"keyword", "Rust"}, {"type", "Programming Language"}}},
-	{"HandlerSocket", {{"keyword", "Percona,NewSQL"}, {"type", "Database"}}},
-	{"Hyper V", {{"keyword", "Hyper-V"}, {"type", "Virtual Machine Environment"}}},
-	{"JBoss Messaging", {{"keyword", "JBoss Messaging"}, {"type", "Message Broker"}}},
-	{"LotusScript", {{"keyword", "LotusScript"}, {"type", "Programming Language"}}},
-	{"Epigram", {{"keyword", "Epigram"}, {"type", "Programming Language"}}},
-	{"Oracle HTTP Server", {{"keyword", "Oracle HTTP Server"}, {"type", "Web Server"}}},
-	{"HAL/S", {{"keyword", "HAL/S"}, {"type", "Programming Language"}}},
-	{"Forrest", {{"keyword", "Apache Forrest"}, {"type", "Apache Framework"}}},
-	{"GLSL", {{"keyword", "GLSL"}, {"type", "Programming Language"}}},
-	{"RTL/2", {{"keyword", "RTL/2"}, {"type", "Programming Language"}}},
-	{"S3", {{"keyword", "Amazon S3"}, {"type", "Amazon Web Services Product"}}},
-	{"S2", {{"keyword", "S2"}, {"type", "Programming Language"}}},
-	{"Coral 66", {{"keyword", "Coral 66"}, {"type", "Programming Language"}}},
-	{"Not Quite C", {{"keyword", "Not Quite C,C"}, {"type", "Programming Language"}}},
-	{"Corn", {{"keyword", "Corn"}, {"type", "Programming Language"}}},
-	{"Stardog", {{"keyword", "Stardog,Graph databases"}, {"type", "Database"}}},
-	{"Tuscany", {{"keyword", "Apache Tuscany"}, {"type", "Apache Framework"}}},
-	{"Oak", {{"keyword", "Oak"}, {"type", "Programming Language"}}},
-	{"NexusDB", {{"keyword", "NexusDB,SQL"}, {"type", "Database"}}},
-	{"SPIN", {{"keyword", "SPIN"}, {"type", "Programming Language"}}},
-	{"Lingo", {{"keyword", "Lingo"}, {"type", "Programming Language"}}},
-	{"Gigablast", {{"keyword", "Gigablast"}, {"type", "Search Server"}}},
-	{"SR", {{"keyword", "SR"}, {"type", "Programming Language"}}},
-	{"OpenCog", {{"keyword", "OpenCog,Graph databases"}, {"type", "Database"}}},
-	{"ALGOL 68", {{"keyword", "ALGOL 68"}, {"type", "Programming Language"}}},
-	{"Ink", {{"keyword", "Ink,CSS"}, {"type", "CSS Framework"}}},
-	{"ALGOL 60", {{"keyword", "ALGOL 60"}, {"type", "Programming Language"}}},
-	{"Phantom", {{"keyword", "PhantomJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Windows Phone", {{"keyword", "Windows Mobile,C#"}, {"type", "Mobile Operating System"}}},
-	{"Aurelia.js", {{"keyword", "Aurelia.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Map/Reduce", {{"keyword", "MapReduce"}, {"type", "Keyword"}}},
-	{"Redcode", {{"keyword", "Redcode"}, {"type", "Programming Language"}}},
-	{"Sierra SCSS Library", {{"keyword", "Sierra SCSS Library,CSS"}, {"type", "CSS Framework"}}},
-	{"Obj C", {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}}},
-	{"PL-11", {{"keyword", "PL-11"}, {"type", "Programming Language"}}},
-	{"csh", {{"keyword", "csh"}, {"type", "Programming Language"}}},
-	{"React Native", {{"keyword", "React Native,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"Fat-Free", {{"keyword", "Fat-Free Framework,PHP"}, {"type", "Web Framework"}}},
-	{"Tacit", {{"keyword", "Tacit,CSS"}, {"type", "CSS Framework"}}},
-	{"CUDA", {{"keyword", "CUDA"}, {"type", "Programming Language"}}},
-	{"Spark", {{"keyword", "Apache Spark"}, {"type", "Apache Framework"}}},
-	{"Meson build system", {{"keyword", "Meson build system"}, {"type", "Build Automation Tool"}}},
-	{"Esterel", {{"keyword", "Esterel"}, {"type", "Programming Language"}}},
-	{"Shippable", {{"keyword", "Shippable"}, {"type", "Continuous Integration Tools"}}},
-	{"XMLBeans", {{"keyword", "Apache XMLBeans"}, {"type", "Apache Framework"}}},
-	{"Lisp", {{"keyword", "Lisp"}, {"type", "Programming Language"}}},
-	{"SuperTalk", {{"keyword", "SuperTalk"}, {"type", "Programming Language"}}},
-	{"Dog", {{"keyword", "Dog"}, {"type", "Programming Language"}}},
-	{"Gradle", {{"keyword", "Gradle"}, {"type", "Build Automation Tool"}}},
-	{"PEARL", {{"keyword", "PEARL"}, {"type", "Programming Language"}}},
-	{"RequireJS", {{"keyword", "Require.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"RSL", {{"keyword", "RSL"}, {"type", "Programming Language"}}},
-	{"Solaris", {{"keyword", "Solaris,Unix"}, {"type", "Operating System"}}},
-	{"Semantic UI", {{"keyword", "Semantic UI,CSS"}, {"type", "CSS Framework"}}},
-	{"D3JS", {{"keyword", "D3.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Linux", {{"keyword", "Linux,Unix"}, {"type", "Operating System"}}},
-	{"iPFaces", {{"keyword", "iPFaces,PHP,ASP.NET,Java,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"TransLattice", {{"keyword", "TransLattice,NewSQL"}, {"type", "Database"}}},
-	{"J2EE", {{"keyword", "Java EE,Java"}, {"type", "Programming Language"}}},
-	{"TurboGears", {{"keyword", "TurboGears,Python"}, {"type", "Web Framework"}}},
-	{"GAP", {{"keyword", "GAP"}, {"type", "Programming Language"}}},
-	{"LINC", {{"keyword", "LINC"}, {"type", "Programming Language"}}},
-	{"BPEL", {{"keyword", "BPEL"}, {"type", "Programming Language"}}},
-	{"Unix shell", {{"keyword", "Shell,Unix"}, {"type", "Programming Language"}}},
-	{"Enyo", {{"keyword", "Enyo,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"Cascade Framework", {{"keyword", "Cascade Framework,CSS"}, {"type", "CSS Framework"}}},
-	{"Legoscript", {{"keyword", "Legoscript"}, {"type", "Programming Language"}}},
-	{"Nginx", {{"keyword", "Nginx"}, {"type", "Web Server"}}},
-	{"PhantomJS", {{"keyword", "PhantomJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Kotlin", {{"keyword", "Kotlin,Java"}, {"type", "Programming Language"}}},
-	{"Joomla", {{"keyword", "Joomla,PHP"}, {"type", "Web Framework"}}},
-	{"CockroachDB", {{"keyword", "CockroachDB,NoSQL"}, {"type", "Database"}}},
-	{"MaxDB", {{"keyword", "MaxDB,SQL"}, {"type", "Database"}}},
-	{"IPL", {{"keyword", "IPL"}, {"type", "Programming Language"}}},
-	{"PLEXIL", {{"keyword", "PLEXIL"}, {"type", "Programming Language"}}},
-	{"QtScript", {{"keyword", "QtScript"}, {"type", "Programming Language"}}},
-	{"NGL", {{"keyword", "NGL"}, {"type", "Programming Language"}}},
-	{"E#", {{"keyword", "E#"}, {"type", "Programming Language"}}},
-	{"FOCAL", {{"keyword", "FOCAL"}, {"type", "Programming Language"}}},
-	{"MemSQL", {{"keyword", "MemSQL,NewSQL"}, {"type", "Database"}}},
-	{"sbt", {{"keyword", "sbt,Scala"}, {"type", "Build Automation Tool"}}},
-	{"Caudium", {{"keyword", "Caudium"}, {"type", "Web Server"}}},
-	{"Sybase Advantage Database Server", {{"keyword", "Sybase Advantage Database Server,SQL"}, {"type", "Database"}}},
-	{"JavaServer Faces", {{"keyword", "JavaServer Faces,Java"}, {"type", "Web Framework"}}},
-	{"Tajo", {{"keyword", "Apache Tajo"}, {"type", "Apache Framework"}}},
-	{"HornetQ", {{"keyword", "HornetQ"}, {"type", "Message Broker"}}},
-	{"Big Data", {{"keyword", "Big Data"}, {"type", "Keyword"}}},
-	{"OpenNLP", {{"keyword", "Apache OpenNLP"}, {"type", "Apache Framework"}}},
-	{"ScimoreDB", {{"keyword", "ScimoreDB,SQL"}, {"type", "Database"}}},
-	{"PROSE", {{"keyword", "PROSE"}, {"type", "Programming Language"}}},
-	{"Amazon Web Services", {{"keyword", "Amazon Web Services"}, {"type", "Keyword"}}},
-	{"NASM", {{"keyword", "NASM"}, {"type", "Programming Language"}}},
-	{"Hugo", {{"keyword", "Hugo"}, {"type", "Programming Language"}}},
-	{"Sybase", {{"keyword", "SAP Sybase,SQL"}, {"type", "Database"}}},
-	{"Lithe", {{"keyword", "Lithe"}, {"type", "Programming Language"}}},
-	{"SMALL", {{"keyword", "SMALL"}, {"type", "Programming Language"}}},
-	{"X#", {{"keyword", "X#"}, {"type", "Programming Language"}}},
-	{"SALSA", {{"keyword", "SALSA"}, {"type", "Programming Language"}}},
-	{"XL", {{"keyword", "XL"}, {"type", "Programming Language"}}},
-	{"XC", {{"keyword", "XC"}, {"type", "Programming Language"}}},
-	{"Tweaker", {{"keyword", "Tweaker"}, {"type", "Build Automation Tool"}}},
-	{"Natural-Language Processing", {{"keyword", "Natural Language Processing"}, {"type", "Keyword"}}},
-	{"ISPF", {{"keyword", "ISPF"}, {"type", "Programming Language"}}},
-	{"PL360", {{"keyword", "PL360"}, {"type", "Programming Language"}}},
-	{"IncrediBuild", {{"keyword", "IncrediBuild"}, {"type", "Build Automation Tool"}}},
-	{"SQLBase", {{"keyword", "SQLBase,SQL"}, {"type", "Database"}}},
-	{"M4", {{"keyword", "M4"}, {"type", "Programming Language"}}},
-	{"KEE", {{"keyword", "KEE"}, {"type", "Programming Language"}}},
-	{"FrontBase", {{"keyword", "FrontBase,SQL"}, {"type", "Database"}}},
-	{"Cecil", {{"keyword", "Cecil"}, {"type", "Programming Language"}}},
-	{"Subversion", {{"keyword", "Apache Subversion"}, {"type", "Version Control,Apache Framework"}}},
-	{"BLISS", {{"keyword", "BLISS"}, {"type", "Programming Language"}}},
-	{"Calcite", {{"keyword", "Apache Calcite"}, {"type", "Apache Framework"}}},
-	{"RedHat Linux", {{"keyword", "RedHat Linux,Linux"}, {"type", "Operating System"}}},
-	{"Nim", {{"keyword", "Nim"}, {"type", "Programming Language"}}},
-	{"Phantom.js", {{"keyword", "PhantomJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Lucid", {{"keyword", "Lucid"}, {"type", "Programming Language"}}},
-	{"Amazon VPC", {{"keyword", "Amazon VPC"}, {"type", "Amazon Web Services Product"}}},
-	{"Druid", {{"keyword", "Druid,NoSQL"}, {"type", "Database"}}},
-	{"Red", {{"keyword", "Red"}, {"type", "Programming Language"}}},
-	{"ALGOL 58", {{"keyword", "ALGOL 58"}, {"type", "Programming Language"}}},
-	{"Google Apps Script", {{"keyword", "Google Apps Script"}, {"type", "Programming Language"}}},
-	{"S/SL", {{"keyword", "S/SL"}, {"type", "Programming Language"}}},
-	{"RPL", {{"keyword", "RPL"}, {"type", "Programming Language"}}},
-	{"Groovy", {{"keyword", "Groovy,Java"}, {"type", "Programming Language"}}},
-	{"HiveMind", {{"keyword", "Apache HiveMind"}, {"type", "Apache Framework"}}},
-	{"C++/C", {{"keyword", "C,C++"}, {"type", "Programming Language"}}},
-	{"OFBiz", {{"keyword", "Apache OFBiz,Java"}, {"type", "Web Framework,Apache Framework"}}},
-	{"ColdBox", {{"keyword", "ColdBox,ColdFusion"}, {"type", "Web Framework"}}},
-	{"Id", {{"keyword", "Id"}, {"type", "Programming Language"}}},
-	{"Groovy/Grails", {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}}},
-	{"Tapestry", {{"keyword", "Apache Tapestry,Java"}, {"type", "Web Framework,Apache Framework"}}},
-	{"SYMPL", {{"keyword", "SYMPL"}, {"type", "Programming Language"}}},
-	{"Sencha Touch", {{"keyword", "Sencha Touch,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"JS", {{"keyword", "JavaScript"}, {"type", "Programming Language"}}},
-	{"Aurelia", {{"keyword", "Aurelia.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"MySQL", {{"keyword", "MySQL,SQL"}, {"type", "Database"}}},
-	{"PL/0", {{"keyword", "PL-0"}, {"type", "Programming Language"}}},
-	{"Helix database", {{"keyword", "Helix database,SQL"}, {"type", "Database"}}},
-	{"Responsee", {{"keyword", "Responsee,CSS"}, {"type", "CSS Framework"}}},
-	{"PeopleCode", {{"keyword", "PeopleCode"}, {"type", "Programming Language"}}},
-	{"Opa", {{"keyword", "Opa"}, {"type", "Programming Language"}}},
-	{"NAnt", {{"keyword", "NAnt,.NET"}, {"type", "Build Automation Tool"}}},
-	{"Bash", {{"keyword", "Bash,Linux"}, {"type", "Programming Language"}}},
-	{"PL/P", {{"keyword", "PL-P"}, {"type", "Programming Language"}}},
-	{"Xalan", {{"keyword", "Apache Xalan"}, {"type", "Apache Framework"}}},
-	{"PowerBuilder", {{"keyword", "PowerBuilder"}, {"type", "Programming Language"}}},
-	{"Magik", {{"keyword", "Magik"}, {"type", "Programming Language"}}},
-	{"Batch", {{"keyword", "Batch"}, {"type", "Programming Language"}}},
-	{"DASL", {{"keyword", "DASL"}, {"type", "Programming Language"}}},
-	{"PL/C", {{"keyword", "PL-C"}, {"type", "Programming Language"}}},
-	{"PL/B", {{"keyword", "PL-B"}, {"type", "Programming Language"}}},
-	{"PL/M", {{"keyword", "PL-M"}, {"type", "Programming Language"}}},
-	{"Monaca", {{"keyword", "Monaca,HTML,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"T-SQL", {{"keyword", "T-SQL,SQL"}, {"type", "Database"}}},
-	{"PL/I", {{"keyword", "PL-I"}, {"type", "Programming Language"}}},
-	{"Maxima", {{"keyword", "Maxima"}, {"type", "Programming Language"}}},
-	{"Polymer", {{"keyword", "Polymer.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"MySQL/MariaDB", {{"keyword", "MySQL,MariaDB,SQL"}, {"type", "Database"}}},
-	{"Olingo", {{"keyword", "Apache Olingo"}, {"type", "Apache Framework"}}},
-	{"Visual Basic", {{"keyword", "Visual Basic,.NET"}, {"type", "Programming Language"}}},
-	{"MariaDB", {{"keyword", "MariaDB,MySQL,SQL"}, {"type", "Database"}}},
-	{"J#", {{"keyword", "J#"}, {"type", "Programming Language"}}},
-	{"Kojo", {{"keyword", "Kojo"}, {"type", "Programming Language"}}},
-	{"Glacier", {{"keyword", "Amazon Glacier"}, {"type", "Amazon Web Services Product"}}},
-	{"Linter", {{"keyword", "Linter,SQL"}, {"type", "Database"}}},
-	{"Nial", {{"keyword", "Nial"}, {"type", "Programming Language"}}},
-	{"Jalsonic Opinion", {{"keyword", "Jalsonic Opinion,CSS"}, {"type", "CSS Framework"}}},
-	{"Psake", {{"keyword", "Psake,PowerShell"}, {"type", "Build Automation Tool"}}},
-	{"DATATRIEVE", {{"keyword", "DATATRIEVE"}, {"type", "Programming Language"}}},
-	{"Celix", {{"keyword", "Apache Celix"}, {"type", "Apache Framework"}}},
-	{"Edinburgh IMP", {{"keyword", "Edinburgh IMP"}, {"type", "Programming Language"}}},
-	{"Idris", {{"keyword", "Idris"}, {"type", "Programming Language"}}},
-	{"MaxScript internal language 3D Studio Max", {{"keyword", "MaxScript internal language 3D Studio Max"}, {"type", "Programming Language"}}},
-	{"TUX web server", {{"keyword", "TUX Web server"}, {"type", "Web Server"}}},
-	{"Janus", {{"keyword", "Janus"}, {"type", "Programming Language"}}},
-	{"floatz", {{"keyword", "floatz,CSS"}, {"type", "CSS Framework"}}},
-	{"Ionic", {{"keyword", "Ionic,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"MS SQL", {{"keyword", "MSSQL,SQL"}, {"type", "Database"}}},
-	{"Click", {{"keyword", "Apache Click,Java"}, {"type", "Web Framework,Apache Framework"}}},
-	{"Pivot", {{"keyword", "Apache Pivot"}, {"type", "Apache Framework"}}},
-	{"Buildout", {{"keyword", "Buildout"}, {"type", "Continuous Integration Tools"}}},
-	{"Waf", {{"keyword", "Waf"}, {"type", "Build Automation Tool"}}},
-	{"Visual LISP", {{"keyword", "Visual LISP"}, {"type", "Programming Language"}}},
-	{"C#/VB.NET", {{"keyword", "C#"}, {"type", "Programming Language"}}},
-	{"TMG", {{"keyword", "TMG"}, {"type", "Programming Language"}}},
-	{"REXX", {{"keyword", "REXX"}, {"type", "Programming Language"}}},
-	{"Aster Data", {{"keyword", "Aster Data,SQL"}, {"type", "Database"}}},
-	{"Play", {{"keyword", "Play Framework,Java,Scala"}, {"type", "Web Framework"}}},
-	{"Processing", {{"keyword", "Processing"}, {"type", "Programming Language"}}},
-	{"Yaws", {{"keyword", "Yaws"}, {"type", "Web Server"}}},
-	{"iBATIS", {{"keyword", "Apache iBATIS"}, {"type", "Apache Framework"}}},
-	{"NSIS", {{"keyword", "NSIS"}, {"type", "Programming Language"}}},
-	{"MATLAB", {{"keyword", "MATLAB"}, {"type", "Programming Language"}}},
-	{"Picolisp", {{"keyword", "Picolisp"}, {"type", "Programming Language"}}},
-	{"Cilk", {{"keyword", "Cilk"}, {"type", "Programming Language"}}},
-	{"CA Datacom", {{"keyword", "CA Datacom,SQL"}, {"type", "Database"}}},
-	{"XSLT", {{"keyword", "XSLT"}, {"type", "Programming Language"}}},
-	{"Pict", {{"keyword", "Pict"}, {"type", "Programming Language"}}},
-	{"Babbage", {{"keyword", "Babbage"}, {"type", "Programming Language"}}},
-	{"Pico", {{"keyword", "Pico"}, {"type", "Programming Language"}}},
-	{"CSS/CSS3", {{"keyword", "CSS"}, {"type", "Programming Language"}}},
-	{"BCPL", {{"keyword", "BCPL"}, {"type", "Programming Language"}}},
-	{"SLIP", {{"keyword", "SLIP"}, {"type", "Programming Language"}}},
-	{"KRC", {{"keyword", "KRC"}, {"type", "Programming Language"}}},
-	{"HyperTalk", {{"keyword", "HyperTalk"}, {"type", "Programming Language"}}},
-	{"Celery", {{"keyword", "Celery"}, {"type", "Message Broker"}}},
-	{"GOAL", {{"keyword", "GOAL"}, {"type", "Programming Language"}}},
-	{"Crosswalk Project", {{"keyword", "Crosswalk Project,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"OCaml", {{"keyword", "OCaml"}, {"type", "Programming Language"}}},
-	{"ElectricCommander", {{"keyword", "ElectricCommander"}, {"type", "Build Automation Tool"}}},
-	{"OpenOffice.org Base", {{"keyword", "OpenOffice.org Base"}, {"type", "Database"}}},
-	{"JavaFX Script", {{"keyword", "JavaFX Script,Java"}, {"type", "Programming Language"}}},
-	{"CherryPy", {{"keyword", "CherryPy,Python"}, {"type", "Web Framework"}}},
-	{"Sinatra", {{"keyword", "Sinatra,Ruby"}, {"type", "Web Framework"}}},
-	{"Radmind", {{"keyword", "Radmind"}, {"type", "Configuration Management Tools"}}},
-	{"Jython", {{"keyword", "Jython"}, {"type", "Programming Language"}}},
-	{"Small Basic", {{"keyword", "Small Basic"}, {"type", "Programming Language"}}},
-	{"Squirrel", {{"keyword", "Squirrel"}, {"type", "Programming Language"}}},
-	{"Dockunit", {{"keyword", "Dockunit"}, {"type", "Continuous Integration Tools"}}},
-	{"Knockout.js", {{"keyword", "Knockout.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Coq", {{"keyword", "Coq"}, {"type", "Programming Language"}}},
-	{"MariaDB/MySQL", {{"keyword", "MariaDB,MySQL,SQL"}, {"type", "Database"}}},
-	{"SISAL", {{"keyword", "SISAL"}, {"type", "Programming Language"}}},
-	{"LodashJS", {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Ace DASL", {{"keyword", "Ace DASL"}, {"type", "Programming Language"}}},
-	{"LANSA", {{"keyword", "LANSA"}, {"type", "Programming Language"}}},
-	{"Zeno", {{"keyword", "Zeno"}, {"type", "Programming Language"}}},
-	{"Camel", {{"keyword", "Apache Camel"}, {"type", "Apache Framework"}}},
-	{"IBM Informix-4GL", {{"keyword", "IBM Informix-4GL"}, {"type", "Programming Language"}}},
-	{"Lustre", {{"keyword", "Lustre"}, {"type", "Programming Language"}}},
-	{"Microsoft BizTalk Server", {{"keyword", "Microsoft BizTalk Server"}, {"type", "Message Broker"}}},
-	{"Lite-C", {{"keyword", "Lite-C"}, {"type", "Programming Language"}}},
-	{"PLANC", {{"keyword", "PLANC"}, {"type", "Programming Language"}}},
-	{"PowerShell", {{"keyword", "PowerShell,Windows"}, {"type", "Programming Language"}}},
-	{"Rlab", {{"keyword", "Rlab"}, {"type", "Programming Language"}}},
-	{"Unix/Linux", {{"keyword", "Unix"}, {"type", "Operating System"}}},
-	{"Webpack", {{"keyword", "Webpack,JavaScript"}, {"type", "Javascript Library"}}},
-	{"MarionetteJS", {{"keyword", "Marionette.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"VMDS", {{"keyword", "VMDS,SQL"}, {"type", "Database"}}},
-	{"JASS", {{"keyword", "JASS"}, {"type", "Programming Language"}}},
-	{"Icon", {{"keyword", "Icon"}, {"type", "Programming Language"}}},
-	{"RPG", {{"keyword", "RPG"}, {"type", "Programming Language"}}},
-	{"Winbatch", {{"keyword", "Winbatch"}, {"type", "Programming Language"}}},
-	{"Mercurial", {{"keyword", "Mercurial"}, {"type", "Version Control"}}},
-	{"Opal", {{"keyword", "Opal"}, {"type", "Programming Language"}}},
-	{"EnterpriseDB", {{"keyword", "EnterpriseDB,SQL"}, {"type", "Database"}}},
-	{"Grails", {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}}},
-	{"Linux/Unix", {{"keyword", "Linux,Unix"}, {"type", "Operating System"}}},
-	{"EXASolution", {{"keyword", "EXASolution,SQL"}, {"type", "Database"}}},
-	{"ZPL", {{"keyword", "ZPL"}, {"type", "Programming Language"}}},
-	{"Quattor", {{"keyword", "Quattor"}, {"type", "Configuration Management Tools"}}},
-	{"Visual Component Library (VCL)", {{"keyword", "Visual Component Library (VCL),CSS"}, {"type", "CSS Framework"}}},
-	{"Microcode", {{"keyword", "Microcode"}, {"type", "Programming Language"}}},
-	{"ISconf", {{"keyword", "ISconf"}, {"type", "Configuration Management Tools"}}},
-	{"ESPOL", {{"keyword", "ESPOL"}, {"type", "Programming Language"}}},
-	{"JDO", {{"keyword", "Apache JDO"}, {"type", "Apache Framework"}}},
-	{"Java", {{"keyword", "Java"}, {"type", "Programming Language"}}},
-	{"WebObjects", {{"keyword", "WebObjects,Java"}, {"type", "Web Framework"}}},
-	{"Webware", {{"keyword", "Webware,Python"}, {"type", "Web Framework"}}},
-	{"Gulp", {{"keyword", "Gulp.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"CorVision", {{"keyword", "CorVision"}, {"type", "Programming Language"}}},
-	{"Ontotext", {{"keyword", "Ontotext,Graph databases"}, {"type", "Database"}}},
-	{"Etoys", {{"keyword", "Etoys"}, {"type", "Programming Language"}}},
-	{"NetRexx", {{"keyword", "NetRexx"}, {"type", "Programming Language"}}},
-	{"PolymerJS", {{"keyword", "Polymer.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Starlogo", {{"keyword", "Starlogo"}, {"type", "Programming Language"}}},
-	{"FoxBase", {{"keyword", "FoxBase"}, {"type", "Programming Language"}}},
-	{"Hack", {{"keyword", "Hack,PHP"}, {"type", "Programming Language"}}},
-	{"Z notation", {{"keyword", "Z notation"}, {"type", "Programming Language"}}},
-	{"PLEX", {{"keyword", "PLEX"}, {"type", "Programming Language"}}},
-	{"Lucene", {{"keyword", "Apache Lucene"}, {"type", "Search Server,Apache Framework"}}},
-	{"Boo", {{"keyword", "Boo"}, {"type", "Programming Language"}}},
-	{"Boa", {{"keyword", "Boa"}, {"type", "Web Server"}}},
-	{"CppCMS", {{"keyword", "CppCMS,C++"}, {"type", "Web Framework"}}},
-	{"chomski", {{"keyword", "chomski"}, {"type", "Programming Language"}}},
-	{"ElastiCache", {{"keyword", "Amazon ElastiCache"}, {"type", "Amazon Web Services Product"}}},
-	{"Bourne shell", {{"keyword", "Bourne shell"}, {"type", "Programming Language"}}},
-	{"ACC", {{"keyword", "ACC"}, {"type", "Programming Language"}}},
-	{"Elm", {{"keyword", "Elm"}, {"type", "Programming Language"}}},
-	{"ObjectScript", {{"keyword", "ObjectScript"}, {"type", "Programming Language"}}},
-	{"HFS", {{"keyword", "HFS"}, {"type", "Web Server"}}},
-	{"EXEC 2", {{"keyword", "EXEC 2"}, {"type", "Programming Language"}}},
-	{"Klerer-May System", {{"keyword", "Klerer-May System"}, {"type", "Programming Language"}}},
-	{"Meteor", {{"keyword", "Meteor.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Flume", {{"keyword", "Apache Flume"}, {"type", "Apache Framework"}}},
-	{"Mac OS X", {{"keyword", "OS X"}, {"type", "Operating System"}}},
-	{"Backbone", {{"keyword", "Backbone.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Caddy", {{"keyword", "Caddy"}, {"type", "Web Server"}}},
-	{"Stripes MVC", {{"keyword", "Stripes,Java"}, {"type", "Web Framework"}}},
-	{"inuitcss", {{"keyword", "inuitcss,CSS"}, {"type", "CSS Framework"}}},
-	{"RDM Embedded", {{"keyword", "RDM Embedded,SQL"}, {"type", "Database"}}},
-	{"Responsive BP", {{"keyword", "Responsive BP,CSS"}, {"type", "CSS Framework"}}},
-	{"Fantom", {{"keyword", "Fantom"}, {"type", "Programming Language"}}},
-	{"Abdera", {{"keyword", "Apache Abdera"}, {"type", "Apache Framework"}}},
-	{"Vertica", {{"keyword", "Vertica,SQL"}, {"type", "Database"}}},
-	{"Datalog", {{"keyword", "Datalog"}, {"type", "Programming Language"}}},
-	{"COMAL", {{"keyword", "COMAL"}, {"type", "Programming Language"}}},
-	{"Lenya", {{"keyword", "Apache Lenya"}, {"type", "Apache Framework"}}},
-	{"Newspeak", {{"keyword", "Newspeak"}, {"type", "Programming Language"}}},
-	{"Pascal", {{"keyword", "Pascal"}, {"type", "Programming Language"}}},
-	{"ActionScript", {{"keyword", "ActionScript"}, {"type", "Programming Language"}}},
-	{"AMOS", {{"keyword", "AMOS"}, {"type", "Programming Language"}}},
-	{"GDL", {{"keyword", "GDL"}, {"type", "Programming Language"}}},
-	{"Cython", {{"keyword", "Cython"}, {"type", "Programming Language"}}},
-	{"Phoenix", {{"keyword", "Apache Phoenix,SQL,HBase"}, {"type", "Database,Apache Framework"}}},
-	{"Apex", {{"keyword", "Apex"}, {"type", "Programming Language"}}},
-	{"Vagrant", {{"keyword", "Vagrant"}, {"type", "Virtual Machine Environment"}}},
-	{"D3.js", {{"keyword", "D3.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Singa", {{"keyword", "Apache Singa"}, {"type", "Apache Framework"}}},
-	{"OPS5", {{"keyword", "OPS5"}, {"type", "Programming Language"}}},
-	{"ECMAScript6", {{"keyword", "ECMAScript"}, {"type", "Programming Language"}}},
-	{"ECMAScript7", {{"keyword", "ECMAScript"}, {"type", "Programming Language"}}},
-	{"A#", {{"keyword", "A#"}, {"type", "Programming Language"}}},
-	{"TXL", {{"keyword", "TXL"}, {"type", "Programming Language"}}},
-	{"LibreOffice Base", {{"keyword", "LibreOffice Base"}, {"type", "Database"}}},
-	{"Max", {{"keyword", "Max"}, {"type", "Programming Language"}}},
-	{"A+", {{"keyword", "A+"}, {"type", "Programming Language"}}},
-	{"vvvv", {{"keyword", "vvvv"}, {"type", "Programming Language"}}},
-	{"Karel++", {{"keyword", "Karel++"}, {"type", "Programming Language"}}},
-	{"Mac", {{"keyword", "OS X"}, {"type", "Operating System"}}},
-	{"Oozie", {{"keyword", "Apache Oozie"}, {"type", "Apache Framework"}}},
-	{"Simula", {{"keyword", "Simula"}, {"type", "Programming Language"}}},
-	{"Fedora", {{"keyword", "Fedora,Linux"}, {"type", "Operating System"}}},
-	{"SystemVerilog", {{"keyword", "SystemVerilog"}, {"type", "Programming Language"}}},
-	{"Laravel", {{"keyword", "Laravel,PHP"}, {"type", "Web Framework"}}},
-	{"XOTcl", {{"keyword", "XOTcl"}, {"type", "Programming Language"}}},
-	{"Escher", {{"keyword", "Escher"}, {"type", "Programming Language"}}},
-	{"Derby", {{"keyword", "Apache Derby,SQL"}, {"type", "Database,Apache Framework"}}},
-	{"QDB", {{"keyword", "QDB"}, {"type", "Message Broker"}}},
-	{"Mageia", {{"keyword", "Mageia,Linux"}, {"type", "Operating System"}}},
-	{"Gump", {{"keyword", "Apache Gump"}, {"type", "Continuous Integration Tools"}}},
-	{"OpenMake Software", {{"keyword", "OpenMake Software"}, {"type", "Build Automation Tool"}}},
-	{"Mercury", {{"keyword", "Mercury"}, {"type", "Programming Language"}}},
-	{"Git", {{"keyword", "Git"}, {"type", "Version Control"}}},
-	{"CPL", {{"keyword", "CPL"}, {"type", "Programming Language"}}},
-	{"Limnor", {{"keyword", "Limnor"}, {"type", "Programming Language"}}},
-	{"Self", {{"keyword", "Self"}, {"type", "Programming Language"}}},
-	{"Rails", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"Averest", {{"keyword", "Averest"}, {"type", "Programming Language"}}},
-	{"Smart.Framework", {{"keyword", "Smart.Framework,PHP"}, {"type", "Web Framework"}}},
-	{"Microsoft Visual FoxPro", {{"keyword", "Microsoft Visual FoxPro"}, {"type", "Database"}}},
-	{"ThreeJS", {{"keyword", "Three.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Ratfor", {{"keyword", "Ratfor"}, {"type", "Programming Language"}}},
-	{"Juju", {{"keyword", "Juju"}, {"type", "Configuration Management Tools"}}},
-	{"Internet Information Services", {{"keyword", "IIS"}, {"type", "Web Server"}}},
-	{"SWISH-E", {{"keyword", "SWISH-E"}, {"type", "Search Server"}}},
-	{"Yorick", {{"keyword", "Yorick"}, {"type", "Programming Language"}}},
-	{"GNU E", {{"keyword", "GNU E"}, {"type", "Programming Language"}}},
-	{"Rhodes", {{"keyword", "RhoMobile,HTML,Ruby,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"solidDB", {{"keyword", "solidDB,SQL"}, {"type", "Database"}}},
-	{"Perl6", {{"keyword", "Perl"}, {"type", "Programming Language"}}},
-	{"TimesTen", {{"keyword", "TimesTen,SQL"}, {"type", "Database"}}},
-	{"SAP HANA", {{"keyword", "SAP HANA,SQL"}, {"type", "Database"}}},
-	{"Zookeeper", {{"keyword", "Apache Zookeeper"}, {"type", "Apache Framework"}}},
-	{"FFP", {{"keyword", "FFP"}, {"type", "Programming Language"}}},
-	{"NuoDB", {{"keyword", "NuoDB,NewSQL"}, {"type", "Database"}}},
-	{"S-PLUS", {{"keyword", "S-PLUS"}, {"type", "Programming Language"}}},
-	{"R:Base", {{"keyword", "R:Base,SQL"}, {"type", "Database"}}},
-	{"MyFaces", {{"keyword", "Apache MyFaces"}, {"type", "Apache Framework"}}},
-	{"Blockly", {{"keyword", "Blockly"}, {"type", "Programming Language"}}},
-	{"BitBake", {{"keyword", "BitBake"}, {"type", "Build Automation Tool"}}},
-	{"Stata", {{"keyword", "Stata"}, {"type", "Programming Language"}}},
-	{"NewSQL", {{"keyword", "NewSQL"}, {"type", "Database Type"}}},
-	{"Nickle", {{"keyword", "Nickle"}, {"type", "Programming Language"}}},
-	{"Memcached", {{"keyword", "Memcached"}, {"type", "Data Structure Server"}}},
-	{"Continua CI", {{"keyword", "Continua CI"}, {"type", "Continuous Integration Tools"}}},
-	{"Stonehenge", {{"keyword", "Apache Stonehenge"}, {"type", "Apache Framework"}}},
-	{"ISWIM", {{"keyword", "ISWIM"}, {"type", "Programming Language"}}},
-	{"Lodash.js", {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Rails/Ruby", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"HTML", {{"keyword", "HTML"}, {"type", "Programming Language"}}},
-	{"SNOBOL", {{"keyword", "SNOBOL"}, {"type", "Programming Language"}}},
-	{"Swift", {{"keyword", "Swift,iOS"}, {"type", "Programming Language"}}},
-	{"Orc", {{"keyword", "Orc"}, {"type", "Programming Language"}}},
-	{"iUI", {{"keyword", "iUI,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"ChartJS", {{"keyword", "Chart.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"DHTML", {{"keyword", "DHTML"}, {"type", "Programming Language"}}},
-	{"Apache HTTP", {{"keyword", "Apache HTTP Server"}, {"type", "Web Server,Apache Framework"}}},
-	{"CloudStack", {{"keyword", "Apache CloudStack"}, {"type", "Apache Framework"}}},
-	{"Zeus Web Server", {{"keyword", "Zeus Web Server"}, {"type", "Web Server"}}},
-	{"AutoIt", {{"keyword", "AutoIt"}, {"type", "Programming Language"}}},
-	{"Lo-dash", {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"MASM Microsoft Assembly x86", {{"keyword", "MASM Microsoft Assembly x86"}, {"type", "Programming Language"}}},
-	{"uikit", {{"keyword", "uikit,CSS"}, {"type", "CSS Framework"}}},
-	{"Obj-C", {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}}},
-	{"Saetta Web Server", {{"keyword", "Saetta Web Server"}, {"type", "Web Server"}}},
-	{"Smalltalk", {{"keyword", "Smalltalk"}, {"type", "Programming Language"}}},
-	{"FP", {{"keyword", "FP"}, {"type", "Programming Language"}}},
-	{"Sencha", {{"keyword", "Sencha Touch,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"Yii", {{"keyword", "Yii,PHP"}, {"type", "Web Framework"}}},
-	{"Mahout", {{"keyword", "Apache Mahout"}, {"type", "Apache Framework"}}},
-	{"SML", {{"keyword", "SML"}, {"type", "Programming Language"}}},
-	{"Empress Embedded Database", {{"keyword", "Empress Embedded Database,SQL"}, {"type", "Database"}}},
-	{"FL", {{"keyword", "FL"}, {"type", "Programming Language"}}},
-	{"Oxygene", {{"keyword", "Oxygene"}, {"type", "Programming Language"}}},
-	{"OpenMaker Software", {{"keyword", "OpenMaker Software"}, {"type", "Configuration Management Tools"}}},
-	{"MDL", {{"keyword", "MDL"}, {"type", "Programming Language"}}},
-	{"Elastic MapReduce", {{"keyword", "Amazon Elastic MapReduce"}, {"type", "Amazon Web Services Product"}}},
-	{"CruiseControl", {{"keyword", "CruiseControl"}, {"type", "Continuous Integration Tools"}}},
-	{"HSQLDB", {{"keyword", "HSQLDB,SQL"}, {"type", "Database"}}},
-	{"SQL Anywhere", {{"keyword", "SQL Anywhere,SQL"}, {"type", "Database"}}},
-	{"Solr", {{"keyword", "Apache Solr,Lucene"}, {"type", "Search Server,Apache Framework"}}},
-	{"Big-Data", {{"keyword", "Big Data"}, {"type", "Keyword"}}},
-	{"Amazon Elastic Block Store", {{"keyword", "Amazon Elastic Block Store"}, {"type", "Amazon Web Services Product"}}},
-	{"Hartmann pipelines", {{"keyword", "Hartmann pipelines"}, {"type", "Programming Language"}}},
-	{"Claire", {{"keyword", "Claire"}, {"type", "Programming Language"}}},
-	{"Hiawatha", {{"keyword", "Hiawatha"}, {"type", "Web Server"}}},
-	{"Bottle", {{"keyword", "Bottle,Python"}, {"type", "Web Framework"}}},
-	{"JEE", {{"keyword", "Java EE,Java"}, {"type", "Programming Language"}}},
-	{"Lambda", {{"keyword", "Amazon Lambda"}, {"type", "Amazon Web Services Product"}}},
-	{"Maya (MEL)", {{"keyword", "Maya (MEL)"}, {"type", "Programming Language"}}},
-	{"ALF", {{"keyword", "ALF"}, {"type", "Programming Language"}}},
-	{"ChucK", {{"keyword", "ChucK"}, {"type", "Programming Language"}}},
-	{"ZOPL", {{"keyword", "ZOPL"}, {"type", "Programming Language"}}},
-	{"F#", {{"keyword", "F#"}, {"type", "Programming Language"}}},
-	{"Grails/Groovy", {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}}},
-	{"Neko", {{"keyword", "Neko"}, {"type", "Programming Language"}}},
-	{"Camping", {{"keyword", "Camping,Ruby"}, {"type", "Web Framework"}}},
-	{"LiveScript", {{"keyword", "LiveScript"}, {"type", "Programming Language"}}},
-	{"Ubercode", {{"keyword", "Ubercode"}, {"type", "Programming Language"}}},
-	{"TOM", {{"keyword", "TOM"}, {"type", "Programming Language"}}},
-	{"Scheme", {{"keyword", "Scheme"}, {"type", "Programming Language"}}},
-	{"Node.js", {{"keyword", "Node.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"FLOW-MATIC", {{"keyword", "FLOW-MATIC"}, {"type", "Programming Language"}}},
-	{"CUBRID", {{"keyword", "CUBRID,SQL"}, {"type", "Database"}}},
-	{"EXEC", {{"keyword", "EXEC"}, {"type", "Programming Language"}}},
-	{"Wave", {{"keyword", "Apache Wave"}, {"type", "Apache Framework"}}},
-	{"LiteSpeed Web Server", {{"keyword", "LiteSpeed Web Server"}, {"type", "Web Server"}}},
-	{"Jspx-bay", {{"keyword", "Jspx-bay,Java"}, {"type", "Web Framework"}}},
-	{"ABC", {{"keyword", "ABC"}, {"type", "Programming Language"}}},
-	{"BuildMaster", {{"keyword", "BuildMaster"}, {"type", "Continuous Integration Tools"}}},
-	{"Hive", {{"keyword", "Apache Hive"}, {"type", "Apache Framework"}}},
-	{"Q", {{"keyword", "Q"}, {"type", "Programming Language"}}},
-	{"Blackberry", {{"keyword", "Blackberry OS"}, {"type", "Mobile Operating System"}}},
-	{"X10", {{"keyword", "X10"}, {"type", "Programming Language"}}},
-	{"PRADO", {{"keyword", "PRADO,PHP"}, {"type", "Web Framework"}}},
-	{"Selenium", {{"keyword", "Selenium"}, {"type", "Keyword"}}},
-	{"Orwell", {{"keyword", "Orwell"}, {"type", "Programming Language"}}},
-	{"NMake", {{"keyword", "NMake"}, {"type", "Build Automation Tool"}}},
-	{"Grub", {{"keyword", "Grub"}, {"type", "Search Server"}}},
-	{"SiMPLE", {{"keyword", "SiMPLE"}, {"type", "Programming Language"}}},
-	{"SIGNAL", {{"keyword", "SIGNAL"}, {"type", "Programming Language"}}},
-	{"NodeJS", {{"keyword", "Node.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"HandlebarsJS", {{"keyword", "Handlebars.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"XPL0", {{"keyword", "XPL0"}, {"type", "Programming Language"}}},
-	{"PL/11", {{"keyword", "PL-11"}, {"type", "Programming Language"}}},
-	{"Handlebars.js", {{"keyword", "Handlebars.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"VueJS", {{"keyword", "Vue.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Mirah", {{"keyword", "Mirah"}, {"type", "Programming Language"}}},
-	{"EASYTRIEVE PLUS", {{"keyword", "EASYTRIEVE PLUS"}, {"type", "Programming Language"}}},
-	{"OptimJ", {{"keyword", "OptimJ"}, {"type", "Programming Language"}}},
-	{"Visual Build", {{"keyword", "Visual Build"}, {"type", "Build Automation Tool"}}},
-	{"InfiniteGraph", {{"keyword", "InfiniteGraph,Graph databases"}, {"type", "Database"}}},
-	{"Ceylon", {{"keyword", "Ceylon"}, {"type", "Programming Language"}}},
-	{"S-Lang", {{"keyword", "S-Lang"}, {"type", "Programming Language"}}},
-	{"EGL", {{"keyword", "EGL"}, {"type", "Programming Language"}}},
-	{"Solace Systems", {{"keyword", "Solace Systems"}, {"type", "Message Broker"}}},
-	{"Shell", {{"keyword", "Shell,Unix"}, {"type", "Programming Language"}}},
-	{"GroveSite", {{"keyword", "GroveSite,SQL"}, {"type", "Database"}}},
-	{"SPSS", {{"keyword", "SPSS"}, {"type", "Programming Language"}}},
-	{"Spanner", {{"keyword", "Spanner,NewSQL"}, {"type", "Database"}}},
-	{"Amazon Virtual Private Cloud", {{"keyword", "Amazon VPC"}, {"type", "Amazon Web Services Product"}}},
-	{"ItsNat", {{"keyword", "ItsNat,Java"}, {"type", "Web Framework"}}},
-	{"FOIL", {{"keyword", "FOIL"}, {"type", "Programming Language"}}},
-	{"iPhone", {{"keyword", "iOS"}, {"type", "Mobile Operating System"}}},
-	{"LPC", {{"keyword", "LPC"}, {"type", "Programming Language"}}},
-	{"P''", {{"keyword", "P"}, {"type", "Programming Language"}}},
-	{"Kylin", {{"keyword", "Apache Kylin"}, {"type", "Apache Framework"}}},
-	{"CLIST", {{"keyword", "CLIST"}, {"type", "Programming Language"}}},
-	{"A-A-P", {{"keyword", "A-A-P,C"}, {"type", "Build Automation Tool"}}},
-	{"Responsive Grid System", {{"keyword", "Responsive Grid System,CSS"}, {"type", "CSS Framework"}}},
-	{"Informix", {{"keyword", "Informix,SQL"}, {"type", "Database"}}},
-	{"jQuery", {{"keyword", "jQuery,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Bertrand", {{"keyword", "Bertrand"}, {"type", "Programming Language"}}},
-	{"Ada", {{"keyword", "Ada"}, {"type", "Programming Language"}}},
-	{"ABSET", {{"keyword", "ABSET"}, {"type", "Programming Language"}}},
-	{"STAF", {{"keyword", "STAF"}, {"type", "Configuration Management Tools"}}},
-	{"SciDB", {{"keyword", "SciDB,NoSQL"}, {"type", "Database"}}},
-	{"Giraph", {{"keyword", "Apache Giraph"}, {"type", "Apache Framework"}}},
-	{"JBoss EAP", {{"keyword", "JBoss EAP"}, {"type", "Web Server"}}},
-	{"Maven", {{"keyword", "Apache Maven,Java"}, {"type", "Build Automation Tool,Apache Framework"}}},
-	{"Snowball", {{"keyword", "Snowball"}, {"type", "Programming Language"}}},
-	{"Percona", {{"keyword", "Percona,NewSQL"}, {"type", "Database"}}},
-	{"MarkLogic", {{"keyword", "MarkLogic,Graph databases"}, {"type", "Database"}}},
-	{"LilyPond", {{"keyword", "LilyPond"}, {"type", "Programming Language"}}},
-	{"PortablE", {{"keyword", "PortablE"}, {"type", "Programming Language"}}},
-	{"Angular.js", {{"keyword", "AngularJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"CSP", {{"keyword", "CSP"}, {"type", "Programming Language"}}},
-	{"CSS", {{"keyword", "CSS"}, {"type", "Programming Language"}}},
-	{"PHP", {{"keyword", "PHP"}, {"type", "Programming Language"}}},
-	{"Ruby-on-Rails", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"Metafont", {{"keyword", "Metafont"}, {"type", "Programming Language"}}},
-	{"FileMaker Pro", {{"keyword", "FileMaker Pro,SQL"}, {"type", "Database"}}},
-	{"C#/.NET", {{"keyword", "C#"}, {"type", "Programming Language"}}},
-	{"JustOneDB", {{"keyword", "JustOneDB,NewSQL"}, {"type", "Database"}}},
-	{"BlueBream", {{"keyword", "BlueBream,Python"}, {"type", "Web Framework"}}},
-	{"Cocoon", {{"keyword", "Apache Cocoon"}, {"type", "Apache Framework"}}},
-	{"IBM Integration Bus", {{"keyword", "IBM Integration Bus"}, {"type", "Message Broker"}}},
-	{"RethinkDB", {{"keyword", "RethinkDB,NoSQL"}, {"type", "Database"}}},
-	{"ASP", {{"keyword", "ASP.NET,.NET"}, {"type", "Web Framework"}}},
-	{"Excalibur", {{"keyword", "Apache Excalibur"}, {"type", "Apache Framework"}}},
-	{"Vala", {{"keyword", "Vala"}, {"type", "Programming Language"}}},
-	{"Oracle WebLogic Server", {{"keyword", "Oracle WebLogic Server"}, {"type", "Web Server"}}},
-	{"CMS Pipelines", {{"keyword", "CMS Pipelines"}, {"type", "Programming Language"}}},
-	{"R", {{"keyword", "R"}, {"type", "Programming Language"}}},
-	{"Boomerang", {{"keyword", "Boomerang"}, {"type", "Programming Language"}}},
-	{"REFAL", {{"keyword", "REFAL"}, {"type", "Programming Language"}}},
-	{"Santuario", {{"keyword", "Apache Santuario"}, {"type", "Apache Framework"}}},
-	{"Buildbot", {{"keyword", "Buildbot"}, {"type", "Continuous Integration Tools"}}},
-	{"Turbo C++", {{"keyword", "Turbo C++,C++"}, {"type", "Programming Language"}}},
-	{"Span", {{"keyword", "Span"}, {"type", "Programming Language"}}},
-	{"Gearman", {{"keyword", "Gearman"}, {"type", "Message Broker"}}},
-	{"Flex", {{"keyword", "Apache Flex"}, {"type", "Apache Framework"}}},
-	{"Cascade Framework Light", {{"keyword", "Cascade Framework Light,CSS"}, {"type", "CSS Framework"}}},
-	{"Require.js", {{"keyword", "Require.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"BackboneJS", {{"keyword", "Backbone.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"cdist", {{"keyword", "cdist"}, {"type", "Configuration Management Tools"}}},
-	{"Action!", {{"keyword", "Action!"}, {"type", "Programming Language"}}},
-	{"Buildr", {{"keyword", "Apache Buildr,Java"}, {"type", "Build Automation Tool,Apache Framework"}}},
-	{"Lodash", {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Trac", {{"keyword", "Trac"}, {"type", "Programming Language"}}},
-	{"C++", {{"keyword", "C++"}, {"type", "Programming Language"}}},
-	{"Godiva", {{"keyword", "Godiva"}, {"type", "Programming Language"}}},
-	{"Vaadin", {{"keyword", "Vaadin,Java"}, {"type", "Web Framework"}}},
-	{"Buddy", {{"keyword", "Buddy"}, {"type", "Continuous Integration Tools"}}},
-	{"UIMA", {{"keyword", "Apache UIMA"}, {"type", "Apache Framework"}}},
-	{"BoxySheets", {{"keyword", "BoxySheets,CSS"}, {"type", "CSS Framework"}}},
-	{"MIVA Script", {{"keyword", "MIVA Script"}, {"type", "Programming Language"}}},
-	{"FORMAC", {{"keyword", "FORMAC"}, {"type", "Programming Language"}}},
-	{"Kali Linux", {{"keyword", "Kali Linux,Linux"}, {"type", "Operating System"}}},
-	{"Semaphore", {{"keyword", "Semaphore"}, {"type", "Continuous Integration Tools"}}},
-	{"Zest", {{"keyword", "Apache Zest"}, {"type", "Apache Framework"}}},
-	{"Android Studio/Java", {{"keyword", "Android,Java"}, {"type", "Mobile Operating System"}}},
-	{"Ruby on Rails", {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}}},
-	{"Oracle RDBMS", {{"keyword", "Oracle,SQL"}, {"type", "Database"}}},
-	{"GulpJS", {{"keyword", "Gulp.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Transcript", {{"keyword", "Transcript"}, {"type", "Programming Language"}}},
-	{"ksh", {{"keyword", "ksh"}, {"type", "Programming Language"}}},
-	{"Thrift", {{"keyword", "Apache Thrift"}, {"type", "Apache Framework"}}},
-	{"Probo.CI", {{"keyword", "Probo.CI"}, {"type", "Continuous Integration Tools"}}},
-	{"Objective-C", {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}}},
-	{"Parquet", {{"keyword", "Apache Parquet,NoSQL"}, {"type", "Database,Apache Framework"}}},
-	{"XHTML", {{"keyword", "XHTML"}, {"type", "Programming Language"}}},
-	{"Objective-J", {{"keyword", "Objective J"}, {"type", "Programming Language"}}},
-	{"Zsh", {{"keyword", "Zsh"}, {"type", "Programming Language"}}},
-	{"GEORGE", {{"keyword", "GEORGE"}, {"type", "Programming Language"}}},
-	{"SAP Sybase", {{"keyword", "SAP Sybase,SQL"}, {"type", "Database"}}},
-	{"Gosu", {{"keyword", "Gosu"}, {"type", "Programming Language"}}},
-	{"EmberJS", {{"keyword", "Ember.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Component Pascal", {{"keyword", "Component Pascal"}, {"type", "Programming Language"}}},
-	{"Ansible", {{"keyword", "Ansible"}, {"type", "Configuration Management Tools"}}},
-	{"OODT", {{"keyword", "Apache OODT"}, {"type", "Apache Framework"}}},
-	{"Draco", {{"keyword", "Draco"}, {"type", "Programming Language"}}},
-	{"KIF", {{"keyword", "KIF"}, {"type", "Programming Language"}}},
-	{"Stackless Python", {{"keyword", "Stackless Python"}, {"type", "Programming Language"}}},
-	{"Euphoria", {{"keyword", "Euphoria"}, {"type", "Programming Language"}}},
-	{"Unity", {{"keyword", "Unity"}, {"type", "Programming Language"}}},
-	{"CABIE", {{"keyword", "CABIE"}, {"type", "Continuous Integration Tools"}}},
-	{"Lagoona", {{"keyword", "Lagoona"}, {"type", "Programming Language"}}},
-	{"SQL Azure", {{"keyword", "SQL Azure,SQL"}, {"type", "Database"}}},
-	{"Jenkins", {{"keyword", "Jenkins"}, {"type", "Continuous Integration Tools"}}},
-	{"MIIS", {{"keyword", "MIIS"}, {"type", "Programming Language"}}},
-	{"Python/Flask", {{"keyword", "Flask,Python"}, {"type", "Web Framework"}}},
-	{"HLSL", {{"keyword", "HLSL"}, {"type", "Programming Language"}}},
-	{"P4", {{"keyword", "Perforce"}, {"type", "Version Control"}}},
-	{"Adenine", {{"keyword", "Adenine"}, {"type", "Programming Language"}}},
-	{"G-code", {{"keyword", "G-code"}, {"type", "Programming Language"}}},
-	{"DRAKON", {{"keyword", "DRAKON"}, {"type", "Programming Language"}}},
-	{"Tcl/Tk", {{"keyword", "Tcl/Tk"}, {"type", "Programming Language"}}},
-	{"P#", {{"keyword", "P#"}, {"type", "Programming Language"}}},
-	{"S", {{"keyword", "S"}, {"type", "Programming Language"}}},
-	{"A-0 System", {{"keyword", "A-0 System"}, {"type", "Programming Language"}}},
-	{"Stanbol", {{"keyword", "Apache Stanbol"}, {"type", "Apache Framework"}}},
-	{"MapReduce", {{"keyword", "MapReduce"}, {"type", "Keyword"}}},
-	{"dBase", {{"keyword", "dBase,SQL"}, {"type", "Database"}}},
-	{"Allura", {{"keyword", "Apache Allura"}, {"type", "Apache Framework"}}},
-	{"OPL", {{"keyword", "OPL"}, {"type", "Programming Language"}}},
-	{"Grunt.js", {{"keyword", "Grunt.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Axis", {{"keyword", "Apache Axis"}, {"type", "Apache Framework"}}},
-	{"Model 204", {{"keyword", "Model 204"}, {"type", "Programming Language"}}},
-	{"Solr/Lucene", {{"keyword", "Apache Solr,Lucene"}, {"type", "Search Server,Apache Framework"}}},
-	{"Visual Fortran", {{"keyword", "Visual Fortran,Fortran"}, {"type", "Programming Language"}}},
-	{"Xerces", {{"keyword", "Apache Xerces"}, {"type", "Apache Framework"}}},
-	{"OpenLiteSpeed", {{"keyword", "OpenLiteSpeed"}, {"type", "Web Server"}}},
-	{"Visual J++", {{"keyword", "Visual J++,Java"}, {"type", "Programming Language"}}},
-	{"Net.Data", {{"keyword", "Net.Data"}, {"type", "Programming Language"}}},
-	{"Fuse Message Broker", {{"keyword", "Fuse Message Broker"}, {"type", "Message Broker"}}},
-	{"Oracle Spatial and Graph", {{"keyword", "Oracle Spatial and Graph,Graph databases"}, {"type", "Database"}}},
-	{"SCSS", {{"keyword", "SCSS"}, {"type", "Programming Language"}}},
-	{"HTML/DHTML", {{"keyword", "DHTML"}, {"type", "Programming Language"}}},
-	{"Pylons", {{"keyword", "Pylons,Python"}, {"type", "Web Framework"}}},
-	{"Neural-Networks", {{"keyword", "Neural Networks"}, {"type", "Keyword"}}},
-	{"Not eXactly C", {{"keyword", "Not eXactly C,C"}, {"type", "Programming Language"}}},
-	{".NET", {{"keyword", ".NET"}, {"type", "Programming Language"}}},
-	{"Bloodhound", {{"keyword", "Apache Bloodhound"}, {"type", "Apache Framework"}}},
-	{"Cryptol", {{"keyword", "Cryptol"}, {"type", "Programming Language"}}},
-	{"Resin", {{"keyword", "Resin"}, {"type", "Web Server"}}},
-	{"JOVIAL", {{"keyword", "JOVIAL"}, {"type", "Programming Language"}}},
-	{"MUMPS", {{"keyword", "MUMPS"}, {"type", "Programming Language"}}},
-	{"Scilab", {{"keyword", "Scilab"}, {"type", "Programming Language"}}},
-	{"PARI/GP", {{"keyword", "PARI/GP"}, {"type", "Programming Language"}}},
-	{"ELAN", {{"keyword", "ELAN"}, {"type", "Programming Language"}}},
-	{"Ant", {{"keyword", "Apache Ant,Java"}, {"type", "Build Automation Tool,Apache Framework"}}},
-	{"RHEL", {{"keyword", "RedHat Linux,Linux"}, {"type", "Operating System"}}},
-	{"Common.js", {{"keyword", "CommonJS,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Schema UI", {{"keyword", "Schema UI,CSS"}, {"type", "CSS Framework"}}},
-	{"Machine-learning", {{"keyword", "Machine learning"}, {"type", "Keyword"}}},
-	{"Profium", {{"keyword", "Profium,Graph databases"}, {"type", "Database"}}},
-	{"Panorama", {{"keyword", "Panorama,SQL"}, {"type", "Database"}}},
-	{"SP/k", {{"keyword", "SP/k"}, {"type", "Programming Language"}}},
-	{"Umple", {{"keyword", "Umple"}, {"type", "Programming Language"}}},
-	{"NEWP", {{"keyword", "NEWP"}, {"type", "Programming Language"}}},
-	{"Hope", {{"keyword", "Hope"}, {"type", "Programming Language"}}},
-	{"RhoMobile", {{"keyword", "RhoMobile,HTML,Ruby,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"Hopscotch", {{"keyword", "Hopscotch"}, {"type", "Programming Language"}}},
-	{"SOL", {{"keyword", "SOL"}, {"type", "Programming Language"}}},
-	{"PPL", {{"keyword", "PPL"}, {"type", "Programming Language"}}},
-	{"Beam", {{"keyword", "Apache Beam"}, {"type", "Apache Framework"}}},
-	{"FreeBSD", {{"keyword", "FreeBSD,BSD"}, {"type", "Operating System"}}},
-	{"LuntBuild", {{"keyword", "LuntBuild"}, {"type", "Continuous Integration Tools"}}},
-	{"Vue", {{"keyword", "Vue.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"ScaleDB", {{"keyword", "ScaleDB,NewSQL"}, {"type", "Database"}}},
-	{"HTML/XHTML", {{"keyword", "XHTML"}, {"type", "Programming Language"}}},
-	{"Reia", {{"keyword", "Reia"}, {"type", "Programming Language"}}},
-	{"Logo", {{"keyword", "Logo"}, {"type", "Programming Language"}}},
-	{"Netezza", {{"keyword", "Netezza,SQL"}, {"type", "Database"}}},
-	{"Perforce Jam", {{"keyword", "Perforce Jam"}, {"type", "Build Automation Tool"}}},
-	{"WebDNA", {{"keyword", "WebDNA"}, {"type", "Programming Language"}}},
-	{"W3.CSS", {{"keyword", "W3.CSS,CSS"}, {"type", "CSS Framework"}}},
-	{"CFML", {{"keyword", "CFML"}, {"type", "Programming Language"}}},
-	{"Spring", {{"keyword", "Spring Framework,Java"}, {"type", "Web Framework"}}},
-	{"ScaleBase", {{"keyword", "ScaleBase,NewSQL"}, {"type", "Database"}}},
-	{"Julia", {{"keyword", "Julia"}, {"type", "Programming Language"}}},
-	{"ABC ALGOL", {{"keyword", "ABC ALGOL"}, {"type", "Programming Language"}}},
-	{"IBM DB2", {{"keyword", "IBM DB2,SQL"}, {"type", "Database"}}},
-	{"Hypertable", {{"keyword", "Hypertable"}, {"type", "Database"}}},
-	{"Visual FoxPro", {{"keyword", "Visual FoxPro"}, {"type", "Programming Language"}}},
-	{"MacOS", {{"keyword", "OS X"}, {"type", "Operating System"}}},
-	{"TypeScript", {{"keyword", "TypeScript,JavaScript"}, {"type", "Programming Language"}}},
-	{"WebQL", {{"keyword", "WebQL"}, {"type", "Programming Language"}}},
-	{"TIE", {{"keyword", "TIE"}, {"type", "Programming Language"}}},
-	{"AspectJ", {{"keyword", "AspectJ"}, {"type", "Programming Language"}}},
-	{"iOS", {{"keyword", "iOS"}, {"type", "Mobile Operating System"}}},
-	{"Bistro", {{"keyword", "Bistro"}, {"type", "Programming Language"}}},
-	{"Splunk", {{"keyword", "Splunk"}, {"type", "Search Server"}}},
-	{"Visual Studio Team Services", {{"keyword", "Visual Studio Team Services"}, {"type", "Continuous Integration Tools"}}},
-	{"TACPOL", {{"keyword", "TACPOL"}, {"type", "Programming Language"}}},
-	{"Continuum", {{"keyword", "Apache Continuum"}, {"type", "Continuous Integration Tools"}}},
-	{"Drupal", {{"keyword", "Drupal,PHP"}, {"type", "Web Framework"}}},
-	{"CruiseControl.NET", {{"keyword", "CruiseControl.NET"}, {"type", "Continuous Integration Tools"}}},
-	{"Gulp.js", {{"keyword", "Gulp.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"CentOS", {{"keyword", "CentOS,Linux"}, {"type", "Operating System"}}},
-	{"SQR", {{"keyword", "SQR"}, {"type", "Programming Language"}}},
-	{"Bash Scripting", {{"keyword", "Bash,Linux"}, {"type", "Programming Language"}}},
-	{"NewtonScript", {{"keyword", "NewtonScript"}, {"type", "Programming Language"}}},
-	{"Google Web Toolkit", {{"keyword", "Google Web Toolkit,Java"}, {"type", "Web Framework"}}},
-	{"LYaPAS", {{"keyword", "LYaPAS"}, {"type", "Programming Language"}}},
-	{"SQL", {{"keyword", "SQL"}, {"type", "Database Type"}}},
-	{"Scala", {{"keyword", "Scala,Java"}, {"type", "Programming Language"}}},
-	{"ICI", {{"keyword", "ICI"}, {"type", "Programming Language"}}},
-	{"GT.M", {{"keyword", "GT.M,SQL"}, {"type", "Database"}}},
-	{"Crosswalk", {{"keyword", "Crosswalk Project,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}}},
-	{"Forth", {{"keyword", "Forth"}, {"type", "Programming Language"}}},
-	{"Wolfram", {{"keyword", "Wolfram"}, {"type", "Programming Language"}}},
-	{"OSX", {{"keyword", "OS X"}, {"type", "Operating System"}}},
-	{"FoxPro", {{"keyword", "FoxPro"}, {"type", "Programming Language"}}},
-	{"NewLISP", {{"keyword", "NewLISP"}, {"type", "Programming Language"}}},
-	{"Mustache.js", {{"keyword", "Mustache.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Zend Framework", {{"keyword", "Zend Framework,PHP"}, {"type", "Web Framework"}}},
-	{"Strand", {{"keyword", "Strand"}, {"type", "Programming Language"}}},
-	{"Planner", {{"keyword", "Planner"}, {"type", "Programming Language"}}},
-	{"PCASTL", {{"keyword", "PCASTL"}, {"type", "Programming Language"}}},
-	{"Prolog", {{"keyword", "Prolog"}, {"type", "Programming Language"}}},
-	{"OpenJPA", {{"keyword", "Apache OpenJPA"}, {"type", "Apache Framework"}}},
-	{"Qalb", {{"keyword", "Qalb"}, {"type", "Programming Language"}}},
-	{"SocketIO", {{"keyword", "Socket.io,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Cayenne", {{"keyword", "Apache Cayenne"}, {"type", "Apache Framework"}}},
-	{"IDL", {{"keyword", "IDL"}, {"type", "Programming Language"}}},
-	{"CDuce", {{"keyword", "CDuce"}, {"type", "Programming Language"}}},
-	{"Stripes", {{"keyword", "Stripes,Java"}, {"type", "Web Framework"}}},
-	{"NetLogo", {{"keyword", "NetLogo"}, {"type", "Programming Language"}}},
-	{"TACTIC", {{"keyword", "TACTIC,Python"}, {"type", "Web Framework"}}},
-	{"Log4js", {{"keyword", "Log4js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Qpid", {{"keyword", "Apache Qpid"}, {"type", "Message Broker"}}},
-	{"NXT-G", {{"keyword", "NXT-G"}, {"type", "Programming Language"}}},
-	{"MINA", {{"keyword", "Apache MINA"}, {"type", "Apache Framework"}}},
-	{"TeX", {{"keyword", "TeX"}, {"type", "Programming Language"}}},
-	{"JScript .NET", {{"keyword", "JScript .NET,.NET"}, {"type", "Programming Language"}}},
-	{"Mustache", {{"keyword", "Mustache.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Grunt", {{"keyword", "Grunt.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Tea", {{"keyword", "Tea"}, {"type", "Programming Language"}}},
-	{"Golo", {{"keyword", "Golo"}, {"type", "Programming Language"}}},
-	{"IBM RPG", {{"keyword", "IBM RPG"}, {"type", "Programming Language"}}},
-	{"InterSystems Cache", {{"keyword", "InterSystems Cache,SQL"}, {"type", "Database"}}},
-	{"Open Build Service", {{"keyword", "Open Build Service"}, {"type", "Build Automation Tool"}}},
-	{"CIL", {{"keyword", "CIL"}, {"type", "Programming Language"}}},
-	{"OpenEdge ABL", {{"keyword", "OpenEdge ABL"}, {"type", "Programming Language"}}},
-	{"MSL", {{"keyword", "MSL"}, {"type", "Programming Language"}}},
-	{"Topspeed", {{"keyword", "Topspeed"}, {"type", "Programming Language"}}},
-	{"Lithium", {{"keyword", "Lithium,PHP"}, {"type", "Web Framework"}}},
-	{"Natural-Language-Processing", {{"keyword", "Natural Language Processing"}, {"type", "Keyword"}}},
-	{"Spread Toolkit", {{"keyword", "Spread Toolkit"}, {"type", "Message Broker"}}},
-	{"Shale", {{"keyword", "Apache Shale"}, {"type", "Apache Framework"}}},
-	{"Strider", {{"keyword", "Strider"}, {"type", "Continuous Integration Tools"}}},
-	{"JEAN", {{"keyword", "JEAN"}, {"type", "Programming Language"}}},
-	{"Polymer.js", {{"keyword", "Polymer.js,JavaScript"}, {"type", "Javascript Library"}}},
-	{"Artificial-Intelligence", {{"keyword", "Artificial Intelligence"}, {"type", "Keyword"}}},
-	{"@Formula", {{"keyword", "@Formula"}, {"type", "Programming Language"}}},
-	{"Modest Grid", {{"keyword", "Modest Grid,CSS"}, {"type", "CSS Framework"}}},
-	{"Visual DataFlex", {{"keyword", "Visual DataFlex"}, {"type", "Programming Language"}}},
-	{"ABSYS", {{"keyword", "ABSYS"}, {"type", "Programming Language"}}},
-	{"continuousphp", {{"keyword", "continuousphp"}, {"type", "Continuous Integration Tools"}}},
-	{"Nemerle", {{"keyword", "Nemerle"}, {"type", "Programming Language"}}},
-	{"Maple", {{"keyword", "Maple"}, {"type", "Programming Language"}}},
-	{"Game Maker Language", {{"keyword", "Game Maker Language"}, {"type", "Programming Language"}}},
-	{"Integrity", {{"keyword", "Integrity"}, {"type", "Continuous Integration Tools"}}}
-};
+unordered_map<string, unordered_map<string, string> > keywords;
+
+void Keyword_Extractor_Model::init(){
+	keywords["Simulink"] = {{"keyword", "Simulink"}, {"type", "Programming Language"}};
+	keywords["KRL"] = {{"keyword", "KRL"}, {"type", "Programming Language"}};
+	keywords["NoSQL"] = {{"keyword", "NoSQL"}, {"type", "Database Type"}};
+	keywords["GoCD"] = {{"keyword", "GoCD"}, {"type", "Continuous Integration Tools"}};
+	keywords["Fortran"] = {{"keyword", "Fortran"}, {"type", "Programming Language"}};
+	keywords["ACL2"] = {{"keyword", "ACL2"}, {"type", "Programming Language"}};
+	keywords["Zope"] = {{"keyword", "Zope,Python"}, {"type", "Web Framework"}};
+	keywords["Foundation"] = {{"keyword", "Foundation,CSS"}, {"type", "CSS Framework"}};
+	keywords["PHPixie"] = {{"keyword", "PHPixie,PHP"}, {"type", "Web Framework"}};
+	keywords["SPS"] = {{"keyword", "SPS"}, {"type", "Programming Language"}};
+	keywords["Active Server Pages"] = {{"keyword", "ASP.NET,.NET"}, {"type", "Web Framework"}};
+	keywords["C--"] = {{"keyword", "C--"}, {"type", "Programming Language"}};
+	keywords["XPL"] = {{"keyword", "XPL"}, {"type", "Programming Language"}};
+	keywords["Banshee"] = {{"keyword", "Banshee,PHP"}, {"type", "Web Framework"}};
+	keywords["Ch"] = {{"keyword", "Ch"}, {"type", "Programming Language"}};
+	keywords["GM"] = {{"keyword", "GM"}, {"type", "Programming Language"}};
+	keywords["GJ"] = {{"keyword", "GJ"}, {"type", "Programming Language"}};
+	keywords["MPW Make"] = {{"keyword", "MPW Make"}, {"type", "Build Automation Tool"}};
+	keywords["IBM HAScript"] = {{"keyword", "IBM HAScript"}, {"type", "Programming Language"}};
+	keywords["XBL"] = {{"keyword", "XBL"}, {"type", "Programming Language"}};
+	keywords["Ateji PX"] = {{"keyword", "Ateji PX"}, {"type", "Programming Language"}};
+	keywords["Visual Basic .NET"] = {{"keyword", "Visual Basic .NET,.NET"}, {"type", "Programming Language"}};
+	keywords["COBOL"] = {{"keyword", "COBOL"}, {"type", "Programming Language"}};
+	keywords["MAD"] = {{"keyword", "MAD"}, {"type", "Programming Language"}};
+	keywords["Go"] = {{"keyword", "Go"}, {"type", "Programming Language"}};
+	keywords["MAT LAB"] = {{"keyword", "MATLAB"}, {"type", "Programming Language"}};
+	keywords["Makefile"] = {{"keyword", "Make"}, {"type", "Build Automation Tool"}};
+	keywords["Agilent VEE"] = {{"keyword", "Agilent VEE"}, {"type", "Programming Language"}};
+	keywords["C/AL"] = {{"keyword", "C/AL"}, {"type", "Programming Language"}};
+	keywords["FormEngine"] = {{"keyword", "FormEngine,Java"}, {"type", "Web Framework"}};
+	keywords["C#/Visual Studio"] = {{"keyword", "C#"}, {"type", "Programming Language"}};
+	keywords["LSE"] = {{"keyword", "LSE"}, {"type", "Programming Language"}};
+	keywords["MicroScript"] = {{"keyword", "MicroScript"}, {"type", "Programming Language"}};
+	keywords["SQL Server"] = {{"keyword", "MSSQL,SQL"}, {"type", "Database"}};
+	keywords["LSL"] = {{"keyword", "LSL"}, {"type", "Programming Language"}};
+	keywords["Mimer SQL"] = {{"keyword", "Mimer SQL,SQL"}, {"type", "Database"}};
+	keywords["TTM"] = {{"keyword", "TTM"}, {"type", "Programming Language"}};
+	keywords["SIMSCRIPT"] = {{"keyword", "SIMSCRIPT"}, {"type", "Programming Language"}};
+	keywords["Whiley"] = {{"keyword", "Whiley"}, {"type", "Programming Language"}};
+	keywords["RCFile"] = {{"keyword", "RCFile"}, {"type", "Database"}};
+	keywords["Bcfg2"] = {{"keyword", "Bcfg2"}, {"type", "Configuration Management Tools"}};
+	keywords["ZK"] = {{"keyword", "ZK,Java"}, {"type", "Web Framework"}};
+	keywords["Clarion"] = {{"keyword", "Clarion,SQL"}, {"type", "Programming Language"}};
+	keywords["A++"] = {{"keyword", "A++"}, {"type", "Programming Language"}};
+	keywords["Mohol"] = {{"keyword", "Mohol"}, {"type", "Programming Language"}};
+	keywords["Curry"] = {{"keyword", "Curry"}, {"type", "Programming Language"}};
+	keywords["AmbientTalk"] = {{"keyword", "AmbientTalk"}, {"type", "Programming Language"}};
+	keywords["CMake"] = {{"keyword", "CMake"}, {"type", "Build Automation Tool"}};
+	keywords["CA IDMS"] = {{"keyword", "CA IDMS,SQL"}, {"type", "Database"}};
+	keywords["xHarbour"] = {{"keyword", "xHarbour"}, {"type", "Programming Language"}};
+	keywords["MustacheJS"] = {{"keyword", "Mustache.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["VBA"] = {{"keyword", "Visual Basic for Applications"}, {"type", "Programming Language"}};
+	keywords["Boot"] = {{"keyword", "Boot,Clojure,Java"}, {"type", "Build Automation Tool"}};
+	keywords["TUTOR"] = {{"keyword", "TUTOR"}, {"type", "Programming Language"}};
+	keywords["Mulgara"] = {{"keyword", "Mulgara,Graph databases"}, {"type", "Database"}};
+	keywords["SAP PI"] = {{"keyword", "SAP PI"}, {"type", "Message Broker"}};
+	keywords["Stateflow"] = {{"keyword", "Stateflow"}, {"type", "Programming Language"}};
+	keywords["ReactJS"] = {{"keyword", "React.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Database Management Library"] = {{"keyword", "Database Management Library"}, {"type", "Database"}};
+	keywords["Moment"] = {{"keyword", "Moment.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["SilverStripe"] = {{"keyword", "SilverStripe,PHP"}, {"type", "Web Framework"}};
+	keywords["AngularJS"] = {{"keyword", "AngularJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Charity"] = {{"keyword", "Charity"}, {"type", "Programming Language"}};
+	keywords["ActiveMQ"] = {{"keyword", "Apache ActiveMQ"}, {"type", "Message Broker"}};
+	keywords["Obliq"] = {{"keyword", "Obliq"}, {"type", "Programming Language"}};
+	keywords["Inform"] = {{"keyword", "Inform"}, {"type", "Programming Language"}};
+	keywords["Docker"] = {{"keyword", "Docker"}, {"type", "Virtual Machine Environment"}};
+	keywords["ParaSail"] = {{"keyword", "ParaSail"}, {"type", "Programming Language"}};
+	keywords["MAPPER"] = {{"keyword", "MAPPER"}, {"type", "Programming Language"}};
+	keywords["Neo4j"] = {{"keyword", "Neo4j,Graph databases"}, {"type", "Database"}};
+	keywords["JavaScript"] = {{"keyword", "JavaScript"}, {"type", "Programming Language"}};
+	keywords["Jembe"] = {{"keyword", "Jembe,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["ABAP"] = {{"keyword", "ABAP"}, {"type", "Programming Language"}};
+	keywords["Franz Lisp"] = {{"keyword", "Franz Lisp"}, {"type", "Programming Language"}};
+	keywords["Blazegraph"] = {{"keyword", "Blazegraph,Graph databases"}, {"type", "Database"}};
+	keywords["Erlang"] = {{"keyword", "Erlang"}, {"type", "Programming Language"}};
+	keywords["Synctool"] = {{"keyword", "Synctool"}, {"type", "Configuration Management Tools"}};
+	keywords["Accumulo"] = {{"keyword", "Apache Accumulo,NoSQL"}, {"type", "Database,Apache Framework"}};
+	keywords["IIS"] = {{"keyword", "IIS"}, {"type", "Web Server"}};
+	keywords["Sather"] = {{"keyword", "Sather"}, {"type", "Programming Language"}};
+	keywords["Polyhedra"] = {{"keyword", "Polyhedra,SQL"}, {"type", "Database"}};
+	keywords["OpenLink Virtuoso"] = {{"keyword", "OpenLink Virtuoso"}, {"type", "Web Server"}};
+	keywords["Miranda"] = {{"keyword", "Miranda"}, {"type", "Programming Language"}};
+	keywords["Falcon"] = {{"keyword", "Falcon"}, {"type", "Programming Language"}};
+	keywords["PILOT"] = {{"keyword", "PILOT"}, {"type", "Programming Language"}};
+	keywords["Dylan"] = {{"keyword", "Dylan"}, {"type", "Programming Language"}};
+	keywords["Makefiles"] = {{"keyword", "Make"}, {"type", "Build Automation Tool"}};
+	keywords["SequenceL"] = {{"keyword", "SequenceL"}, {"type", "Programming Language"}};
+	keywords["Bootstrap"] = {{"keyword", "Bootstrap,CSS"}, {"type", "CSS Framework"}};
+	keywords["Django"] = {{"keyword", "Django,Python"}, {"type", "Web Framework"}};
+	keywords["CSS3"] = {{"keyword", "CSS"}, {"type", "Programming Language"}};
+	keywords["Tntnet"] = {{"keyword", "Tntnet,C++"}, {"type", "Web Framework"}};
+	keywords["Python"] = {{"keyword", "Python"}, {"type", "Programming Language"}};
+	keywords["Haskell"] = {{"keyword", "Haskell"}, {"type", "Programming Language"}};
+	keywords["Jackrabbit"] = {{"keyword", "Apache Jackrabbit"}, {"type", "Apache Framework"}};
+	keywords["Blue"] = {{"keyword", "Blue"}, {"type", "Programming Language"}};
+	keywords["RAPID"] = {{"keyword", "RAPID"}, {"type", "Programming Language"}};
+	keywords["Capistrano"] = {{"keyword", "Capistrano,Ruby"}, {"type", "Build Automation Tool"}};
+	keywords["ORCA/Modula-2"] = {{"keyword", "ORCA/Modula-2"}, {"type", "Programming Language"}};
+	keywords["DB2"] = {{"keyword", "IBM DB2,SQL"}, {"type", "Database"}};
+	keywords["POP-11"] = {{"keyword", "POP-11"}, {"type", "Programming Language"}};
+	keywords["Emerald"] = {{"keyword", "Emerald"}, {"type", "Programming Language"}};
+	keywords["SAS"] = {{"keyword", "SAS"}, {"type", "Programming Language"}};
+	keywords["Calpont InfiniDB"] = {{"keyword", "Calpont InfiniDB,SQL"}, {"type", "Database"}};
+	keywords["Lucene/Solr"] = {{"keyword", "Apache Solr,Lucene"}, {"type", "Search Server,Apache Framework"}};
+	keywords["SA-C"] = {{"keyword", "SA-C"}, {"type", "Programming Language"}};
+	keywords["AnthillPro"] = {{"keyword", "AnthillPro"}, {"type", "Continuous Integration Tools"}};
+	keywords["Visual J#"] = {{"keyword", "Visual J#,Java"}, {"type", "Programming Language"}};
+	keywords["CHR"] = {{"keyword", "CHR"}, {"type", "Programming Language"}};
+	keywords["Arrow"] = {{"keyword", "Apache Arrow"}, {"type", "Database,Apache Framework"}};
+	keywords["Kixtart"] = {{"keyword", "Kixtart"}, {"type", "Programming Language"}};
+	keywords["APR"] = {{"keyword", "Apache APR"}, {"type", "Apache Framework"}};
+	keywords["Baseguide"] = {{"keyword", "Baseguide,CSS"}, {"type", "CSS Framework"}};
+	keywords["Pharo"] = {{"keyword", "Pharo"}, {"type", "Programming Language"}};
+	keywords["APL"] = {{"keyword", "APL"}, {"type", "Programming Language"}};
+	keywords["SAP Sybase Adaptive Server Enterprise"] = {{"keyword", "SAP Sybase Adaptive Server Enterprise,SQL"}, {"type", "Database"}};
+	keywords["Sawzall"] = {{"keyword", "Sawzall"}, {"type", "Programming Language"}};
+	keywords["Mouse"] = {{"keyword", "Mouse"}, {"type", "Programming Language"}};
+	keywords["Timber"] = {{"keyword", "Timber"}, {"type", "Programming Language"}};
+	keywords["Windows Mobile"] = {{"keyword", "Windows Mobile,C#"}, {"type", "Mobile Operating System"}};
+	keywords["Vue.js"] = {{"keyword", "Vue.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Factor"] = {{"keyword", "Factor"}, {"type", "Programming Language"}};
+	keywords["Cyclone"] = {{"keyword", "Cyclone"}, {"type", "Programming Language"}};
+	keywords["Tokutek"] = {{"keyword", "Tokutek,NewSQL"}, {"type", "Database"}};
+	keywords["Postgres"] = {{"keyword", "PostgreSQL,SQL"}, {"type", "Database"}};
+	keywords["VB .NET"] = {{"keyword", "Visual Basic .NET,.NET"}, {"type", "Programming Language"}};
+	keywords["Muse"] = {{"keyword", "Apache Muse"}, {"type", "Apache Framework"}};
+	keywords["Ingres"] = {{"keyword", "Ingres,SQL"}, {"type", "Database"}};
+	keywords["Underscore"] = {{"keyword", "Underscore.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["rc"] = {{"keyword", "rc"}, {"type", "Programming Language"}};
+	keywords["Joule"] = {{"keyword", "Joule"}, {"type", "Programming Language"}};
+	keywords["Xcode/Objective-C"] = {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}};
+	keywords["Cypher Query Language"] = {{"keyword", "Cypher Query Language,Graph databases"}, {"type", "Database"}};
+	keywords["Visual Objects"] = {{"keyword", "Visual Objects"}, {"type", "Programming Language"}};
+	keywords["Common JS"] = {{"keyword", "CommonJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Kathamo"] = {{"keyword", "Kathamo,CSS"}, {"type", "CSS Framework"}};
+	keywords["High Level Assembly"] = {{"keyword", "High Level Assembly"}, {"type", "Programming Language"}};
+	keywords["ASP.NET"] = {{"keyword", "ASP.NET,.NET"}, {"type", "Web Framework"}};
+	keywords["InterBase"] = {{"keyword", "InterBase,SQL"}, {"type", "Database"}};
+	keywords["Kivy"] = {{"keyword", "Kivy,Python"}, {"type", "Mobile Framework"}};
+	keywords["Curl"] = {{"keyword", "Curl"}, {"type", "Programming Language"}};
+	keywords["SAM76"] = {{"keyword", "SAM76"}, {"type", "Programming Language"}};
+	keywords["Lasso"] = {{"keyword", "Lasso"}, {"type", "Programming Language"}};
+	keywords["OpenCL"] = {{"keyword", "OpenCL"}, {"type", "Programming Language"}};
+	keywords["TADS"] = {{"keyword", "TADS"}, {"type", "Programming Language"}};
+	keywords["Groovy on Grails"] = {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}};
+	keywords["JBoss Seam"] = {{"keyword", "JBoss Seam,Java"}, {"type", "Web Framework"}};
+	keywords["Mercury.js"] = {{"keyword", "Mercury.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Play (Scala)"] = {{"keyword", "Play Framework,Java,Scala"}, {"type", "Web Framework"}};
+	keywords["ISLISP"] = {{"keyword", "ISLISP"}, {"type", "Programming Language"}};
+	keywords["SAND CDBMS"] = {{"keyword", "SAND CDBMS,SQL"}, {"type", "Database"}};
+	keywords["Google Fusion Tables"] = {{"keyword", "Google Fusion Tables"}, {"type", "Database"}};
+	keywords["Pike"] = {{"keyword", "Pike"}, {"type", "Programming Language"}};
+	keywords["Express.js"] = {{"keyword", "Express.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["C/C++"] = {{"keyword", "C++,C"}, {"type", "Programming Language"}};
+	keywords["Accent"] = {{"keyword", "Accent"}, {"type", "Programming Language"}};
+	keywords["lighttpd"] = {{"keyword", "lighttpd"}, {"type", "Web Server"}};
+	keywords["Machine learning"] = {{"keyword", "Machine learning"}, {"type", "Keyword"}};
+	keywords["BETA"] = {{"keyword", "BETA"}, {"type", "Programming Language"}};
+	keywords["EC2"] = {{"keyword", "Amazon EC2"}, {"type", "Amazon Web Services Product"}};
+	keywords["Oracle"] = {{"keyword", "Oracle,SQL"}, {"type", "Database"}};
+	keywords["Velocity"] = {{"keyword", "Apache Velocity"}, {"type", "Apache Framework"}};
+	keywords["MSBuild"] = {{"keyword", "MSBuild"}, {"type", "Build Automation Tool"}};
+	keywords["o:XML"] = {{"keyword", "o:XML"}, {"type", "Programming Language"}};
+	keywords["MongoDB"] = {{"keyword", "MongoDB,NoSQL"}, {"type", "Database"}};
+	keywords["CHIP-8"] = {{"keyword", "CHIP-8"}, {"type", "Programming Language"}};
+	keywords["Zettair"] = {{"keyword", "Zettair"}, {"type", "Search Server"}};
+	keywords["Objective C"] = {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}};
+	keywords["Unix"] = {{"keyword", "Unix"}, {"type", "Operating System"}};
+	keywords["Sed"] = {{"keyword", "Sed"}, {"type", "Programming Language"}};
+	keywords["UnrealScript"] = {{"keyword", "UnrealScript"}, {"type", "Programming Language"}};
+	keywords["Cassandra"] = {{"keyword", "Apache Cassandra,NoSQL"}, {"type", "Database,Apache Framework"}};
+	keywords["Tarantool"] = {{"keyword", "Tarantool,NoSQL"}, {"type", "Database"}};
+	keywords["Rudder"] = {{"keyword", "Rudder"}, {"type", "Configuration Management Tools"}};
+	keywords["Isearch"] = {{"keyword", "Isearch"}, {"type", "Search Server"}};
+	keywords["FlooP"] = {{"keyword", "FlooP"}, {"type", "Programming Language"}};
+	keywords["TSQL"] = {{"keyword", "T-SQL,SQL"}, {"type", "Database"}};
+	keywords["RDM Server"] = {{"keyword", "RDM Server,SQL"}, {"type", "Database"}};
+	keywords["POI"] = {{"keyword", "Apache POI"}, {"type", "Apache Framework"}};
+	keywords["Unisys RDMS 2200"] = {{"keyword", "Unisys RDMS 2200,SQL"}, {"type", "Database"}};
+	keywords["Lucy"] = {{"keyword", "Apache Lucy"}, {"type", "Apache Framework"}};
+	keywords["Beehive"] = {{"keyword", "Apache Beehive"}, {"type", "Apache Framework"}};
+	keywords["TeamCity"] = {{"keyword", "TeamCity"}, {"type", "Continuous Integration Tools"}};
+	keywords["Lynx"] = {{"keyword", "Lynx"}, {"type", "Programming Language"}};
+	keywords["Oracle Rdb"] = {{"keyword", "Oracle,SQL"}, {"type", "Database"}};
+	keywords["Cobra"] = {{"keyword", "Cobra"}, {"type", "Programming Language"}};
+	keywords["Scratch"] = {{"keyword", "Scratch"}, {"type", "Programming Language"}};
+	keywords["Java Script"] = {{"keyword", "JavaScript"}, {"type", "Programming Language"}};
+	keywords["DataEase"] = {{"keyword", "DataEase,SQL"}, {"type", "Database"}};
+	keywords["Socket.io"] = {{"keyword", "Socket.io,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["DataFlex"] = {{"keyword", "keyword"}, {"type", "Programming Language"}};
+	keywords["Bower.js"] = {{"keyword", "Bower.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Racket"] = {{"keyword", "Racket"}, {"type", "Programming Language"}};
+	keywords["Neural Networks"] = {{"keyword", "Neural Networks"}, {"type", "Keyword"}};
+	keywords["Flask"] = {{"keyword", "Flask,Python"}, {"type", "Web Framework"}};
+	keywords["Hadoop"] = {{"keyword", "Apache Hadoop,NoSQL"}, {"type", "Database"}};
+	keywords["Concourse"] = {{"keyword", "Concourse"}, {"type", "Continuous Integration Tools"}};
+	keywords["SmallSQL"] = {{"keyword", "SmallSQL,SQL"}, {"type", "Database"}};
+	keywords["Riak"] = {{"keyword", "Riak,NoSQL"}, {"type", "Database"}};
+	keywords["DCL"] = {{"keyword", "DCL"}, {"type", "Programming Language"}};
+	keywords["RuneScript"] = {{"keyword", "RuneScript"}, {"type", "Programming Language"}};
+	keywords["Virtuoso Universal Server"] = {{"keyword", "Virtuoso Universal Server,NoSQL"}, {"type", "Database"}};
+	keywords["Eiffel"] = {{"keyword", "Eiffel"}, {"type", "Programming Language"}};
+	keywords["AWS"] = {{"keyword", "Amazon Web Services"}, {"type", "Keyword"}};
+	keywords["AWK"] = {{"keyword", "AWK"}, {"type", "Programming Language"}};
+	keywords["Octave"] = {{"keyword", "Octave"}, {"type", "Programming Language"}};
+	keywords["Hamilton C shell"] = {{"keyword", "Hamilton C shell"}, {"type", "Programming Language"}};
+	keywords["GPSS"] = {{"keyword", "GPSS"}, {"type", "Programming Language"}};
+	keywords["Spacewalk"] = {{"keyword", "Spacewalk"}, {"type", "Configuration Management Tools"}};
+	keywords["dc"] = {{"keyword", "dc"}, {"type", "Programming Language"}};
+	keywords["IPTSCRAE"] = {{"keyword", "IPTSCRAE"}, {"type", "Programming Language"}};
+	keywords["Phrogram"] = {{"keyword", "Phrogram"}, {"type", "Programming Language"}};
+	keywords["Microsoft Jet Database Engine"] = {{"keyword", "Microsoft Jet Database Engine"}, {"type", "Database"}};
+	keywords["Namazu"] = {{"keyword", "Namazu"}, {"type", "Search Server"}};
+	keywords["VoltDB"] = {{"keyword", "VoltDB,NewSQL"}, {"type", "Database"}};
+	keywords["Subtext"] = {{"keyword", "Subtext"}, {"type", "Programming Language"}};
+	keywords["Modula-2"] = {{"keyword", "Modula-2"}, {"type", "Programming Language"}};
+	keywords["ARexx"] = {{"keyword", "ARexx"}, {"type", "Programming Language"}};
+	keywords["Android"] = {{"keyword", "Android"}, {"type", "Mobile Operating System"}};
+	keywords["SabreTalk"] = {{"keyword", "SabreTalk"}, {"type", "Programming Language"}};
+	keywords["The SAS system"] = {{"keyword", "The SAS system,SQL"}, {"type", "Database"}};
+	keywords["COMIT"] = {{"keyword", "COMIT"}, {"type", "Programming Language"}};
+	keywords["J++"] = {{"keyword", "J++"}, {"type", "Programming Language"}};
+	keywords["C"] = {{"keyword", "C"}, {"type", "Programming Language"}};
+	keywords["TELCOMP"] = {{"keyword", "TELCOMP"}, {"type", "Programming Language"}};
+	keywords["SpamAssassin"] = {{"keyword", "Apache SpamAssassin"}, {"type", "Apache Framework"}};
+	keywords["Argus"] = {{"keyword", "Argus"}, {"type", "Programming Language"}};
+	keywords["openSUSE"] = {{"keyword", "openSUSE,Linux"}, {"type", "Operating System"}};
+	keywords["REBOL"] = {{"keyword", "REBOL"}, {"type", "Programming Language"}};
+	keywords["Genie"] = {{"keyword", "Genie"}, {"type", "Programming Language"}};
+	keywords["4th Dimension"] = {{"keyword", "4th Dimension,SQL"}, {"type", "Database"}};
+	keywords["Karel"] = {{"keyword", "Karel"}, {"type", "Programming Language"}};
+	keywords["MOO"] = {{"keyword", "MOO"}, {"type", "Programming Language"}};
+	keywords["Rails3"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["Amazon Lambda"] = {{"keyword", "Amazon Lambda"}, {"type", "Amazon Web Services Product"}};
+	keywords["OpenXava"] = {{"keyword", "JVx,Java"}, {"type", "Web Framework"}};
+	keywords["Searchdaimon"] = {{"keyword", "Searchdaimon"}, {"type", "Search Server"}};
+	keywords["Samza"] = {{"keyword", "Apache Samza"}, {"type", "Apache Framework"}};
+	keywords["CICS"] = {{"keyword", "CICS"}, {"type", "Programming Language"}};
+	keywords["SenseiDB"] = {{"keyword", "SenseiDB,NewSQL"}, {"type", "Database"}};
+	keywords["C#"] = {{"keyword", "C#"}, {"type", "Programming Language"}};
+	keywords["Object Pascal"] = {{"keyword", "Object Pascal"}, {"type", "Programming Language"}};
+	keywords["COWSEL"] = {{"keyword", "COWSEL"}, {"type", "Programming Language"}};
+	keywords["DataStax"] = {{"keyword", "DataStax,Graph databases"}, {"type", "Database"}};
+	keywords["Prograph"] = {{"keyword", "Prograph"}, {"type", "Programming Language"}};
+	keywords["DocumentDB"] = {{"keyword", "DocumentDB,NoSQL"}, {"type", "Database"}};
+	keywords["CL"] = {{"keyword", "CL"}, {"type", "Programming Language"}};
+	keywords["Couchbase"] = {{"keyword", "Couchbase,NoSQL"}, {"type", "Database"}};
+	keywords["ScalArc"] = {{"keyword", "ScalArc,NewSQL"}, {"type", "Database"}};
+	keywords["PROMAL"] = {{"keyword", "PROMAL"}, {"type", "Programming Language"}};
+	keywords["occam"] = {{"keyword", "occam"}, {"type", "Programming Language"}};
+	keywords["ALGOL W"] = {{"keyword", "ALGOL W"}, {"type", "Programming Language"}};
+	keywords["Cg"] = {{"keyword", "Cg"}, {"type", "Programming Language"}};
+	keywords["Drizzle"] = {{"keyword", "Drizzle,NewSQL"}, {"type", "Database"}};
+	keywords["Clickhouse"] = {{"keyword", "Clickhouse"}, {"type", "Database"}};
+	keywords["NCSA HTTPd"] = {{"keyword", "NCSA HTTPd"}, {"type", "Web Server"}};
+	keywords["SAIL"] = {{"keyword", "SAIL"}, {"type", "Programming Language"}};
+	keywords["T SQL"] = {{"keyword", "T-SQL,SQL"}, {"type", "Database"}};
+	keywords["CVS"] = {{"keyword", "CVS"}, {"type", "Version Control"}};
+	keywords["Ratfiv"] = {{"keyword", "Ratfiv"}, {"type", "Programming Language"}};
+	keywords["Cordova"] = {{"keyword", "Apache Cordova,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework,Apache Framework"}};
+	keywords["Autocoder"] = {{"keyword", "Autocoder"}, {"type", "Programming Language"}};
+	keywords["Akiban"] = {{"keyword", "Akiban,NewSQL"}, {"type", "Database"}};
+	keywords["M2001"] = {{"keyword", "M2001"}, {"type", "Programming Language"}};
+	keywords["Tornado"] = {{"keyword", "Tornado,Python"}, {"type", "Web Framework"}};
+	keywords["easyCIS"] = {{"keyword", "easyCIS"}, {"type", "Continuous Integration Tools"}};
+	keywords["log4j"] = {{"keyword", "Apache log4j"}, {"type", "Apache Framework"}};
+	keywords["Chapel"] = {{"keyword", "Chapel"}, {"type", "Programming Language"}};
+	keywords["VB"] = {{"keyword", "Visual Basic"}, {"type", "Programming Language"}};
+	keywords["CircleCI"] = {{"keyword", "CircleCI"}, {"type", "Continuous Integration Tools"}};
+	keywords["Jakarta"] = {{"keyword", "Apache Jakarta"}, {"type", "Apache Framework"}};
+	keywords["EusLisp Robot"] = {{"keyword", "EusLisp Robot"}, {"type", "Programming Language"}};
+	keywords["Commons"] = {{"keyword", "Apache Commons"}, {"type", "Apache Framework"}};
+	keywords["NWScript"] = {{"keyword", "NWScript"}, {"type", "Programming Language"}};
+	keywords["TACL"] = {{"keyword", "TACL"}, {"type", "Programming Language"}};
+	keywords["HTML5"] = {{"keyword", "HTML"}, {"type", "Programming Language"}};
+	keywords["Kaleidoscope"] = {{"keyword", "Kaleidoscope"}, {"type", "Programming Language"}};
+	keywords["Flexify"] = {{"keyword", "Flexify,CSS"}, {"type", "CSS Framework"}};
+	keywords["Object Lisp"] = {{"keyword", "Object Lisp,Lisp"}, {"type", "Programming Language"}};
+	keywords["FOCUS"] = {{"keyword", "FOCUS"}, {"type", "Programming Language"}};
+	keywords["Snap!"] = {{"keyword", "Snap!"}, {"type", "Programming Language"}};
+	keywords["EBS"] = {{"keyword", "Amazon EBS"}, {"type", "Amazon Web Services Product"}};
+	keywords["Oz"] = {{"keyword", "Oz"}, {"type", "Programming Language"}};
+	keywords["Flavors"] = {{"keyword", "Flavors"}, {"type", "Programming Language"}};
+	keywords["Rapira"] = {{"keyword", "Rapira"}, {"type", "Programming Language"}};
+	keywords["CSQL"] = {{"keyword", "CSQL,SQL"}, {"type", "Database"}};
+	keywords["Frege"] = {{"keyword", "Frege"}, {"type", "Programming Language"}};
+	keywords["Mach-II"] = {{"keyword", "Mach-II,ColdFusion"}, {"type", "Web Framework"}};
+	keywords["Flink"] = {{"keyword", "Apache Flink"}, {"type", "Apache Framework"}};
+	keywords["SCons"] = {{"keyword", "SCons"}, {"type", "Build Automation Tool"}};
+	keywords["BuildAMation"] = {{"keyword", "BuildAMation"}, {"type", "Build Automation Tool"}};
+	keywords["CommonJS"] = {{"keyword", "CommonJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Xapian"] = {{"keyword", "Xapian"}, {"type", "Search Server"}};
+	keywords["D"] = {{"keyword", "D"}, {"type", "Programming Language"}};
+	keywords["Recoll"] = {{"keyword", "Recoll"}, {"type", "Search Server"}};
+	keywords["James"] = {{"keyword", "Apache James"}, {"type", "Apache Framework"}};
+	keywords["Ember"] = {{"keyword", "Ember.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Alice"] = {{"keyword", "Alice"}, {"type", "Programming Language"}};
+	keywords["React.js"] = {{"keyword", "React.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Ruby/Ruby on Rails"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["CakePHP"] = {{"keyword", "CakePHP,PHP"}, {"type", "Web Framework"}};
+	keywords["Android Studio"] = {{"keyword", "Android,Java"}, {"type", "Mobile Operating System"}};
+	keywords["Mongo"] = {{"keyword", "MongoDB,NoSQL"}, {"type", "Database"}};
+	keywords["Redshift"] = {{"keyword", "Amazon Redshift"}, {"type", "Amazon Web Services Product"}};
+	keywords["Wakanda Server"] = {{"keyword", "Wakanda Server"}, {"type", "Web Server"}};
+	keywords["Arc"] = {{"keyword", "Arc"}, {"type", "Programming Language"}};
+	keywords["CXF"] = {{"keyword", "Apache CXF"}, {"type", "Apache Framework"}};
+	keywords["XSB"] = {{"keyword", "XSB"}, {"type", "Programming Language"}};
+	keywords["PostScript"] = {{"keyword", "PostScript"}, {"type", "Programming Language"}};
+	keywords["Seed7"] = {{"keyword", "Seed7"}, {"type", "Programming Language"}};
+	keywords["Haxe"] = {{"keyword", "Haxe"}, {"type", "Programming Language"}};
+	keywords["GraphTalk"] = {{"keyword", "GraphTalk"}, {"type", "Programming Language"}};
+	keywords["Jmango360"] = {{"keyword", "Jmango360,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["Sling"] = {{"keyword", "Apache Sling,Java"}, {"type", "Web Framework,Apache Framework"}};
+	keywords["AureliaJS"] = {{"keyword", "Aurelia.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["TTCN"] = {{"keyword", "TTCN"}, {"type", "Programming Language"}};
+	keywords["Harrow"] = {{"keyword", "Harrow"}, {"type", "Continuous Integration Tools"}};
+	keywords["Logtalk"] = {{"keyword", "Logtalk"}, {"type", "Programming Language"}};
+	keywords["Stratos"] = {{"keyword", "Apache Stratos"}, {"type", "Apache Framework"}};
+	keywords["ASDF"] = {{"keyword", "ASDF,Lisp"}, {"type", "Build Automation Tool"}};
+	keywords["MPD"] = {{"keyword", "MPD"}, {"type", "Programming Language"}};
+	keywords["AMPL"] = {{"keyword", "AMPL"}, {"type", "Programming Language"}};
+	keywords["H2"] = {{"keyword", "H2,SQL"}, {"type", "Database"}};
+	keywords["Flowtracer"] = {{"keyword", "Flowtracer"}, {"type", "Build Automation Tool"}};
+	keywords["MPL"] = {{"keyword", "MPL"}, {"type", "Programming Language"}};
+	keywords["NCache"] = {{"keyword", "NCache"}, {"type", "Data Structure Server"}};
+	keywords["Kafka"] = {{"keyword", "Apache Kafka"}, {"type", "Message Broker"}};
+	keywords["JBoss"] = {{"keyword", "JBoss EAP"}, {"type", "Web Server"}};
+	keywords["BREW"] = {{"keyword", "BREW"}, {"type", "Programming Language"}};
+	keywords["YQL"] = {{"keyword", "YQL"}, {"type", "Programming Language"}};
+	keywords["Express"] = {{"keyword", "Express.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["GAMS"] = {{"keyword", "GAMS"}, {"type", "Programming Language"}};
+	keywords["Make"] = {{"keyword", "Make"}, {"type", "Build Automation Tool"}};
+	keywords["F-Script"] = {{"keyword", "F-Script"}, {"type", "Programming Language"}};
+	keywords["mSQL"] = {{"keyword", "mSQL,SQL"}, {"type", "Database"}};
+	keywords["GRASS"] = {{"keyword", "GRASS"}, {"type", "Programming Language"}};
+	keywords["awsm.css"] = {{"keyword", "awsm.css,CSS"}, {"type", "CSS Framework"}};
+	keywords["HyperDex"] = {{"keyword", "HyperDex,NoSQL"}, {"type", "Database"}};
+	keywords["Ubuntu"] = {{"keyword", "Ubuntu,Linux"}, {"type", "Operating System"}};
+	keywords["ProvideX"] = {{"keyword", "ProvideX"}, {"type", "Programming Language"}};
+	keywords["Materialize"] = {{"keyword", "Materialize,CSS"}, {"type", "CSS Framework"}};
+	keywords["Resin Open Source"] = {{"keyword", "Resin"}, {"type", "Web Server"}};
+	keywords["PL/SQL"] = {{"keyword", "PL-SQL,SQL"}, {"type", "Programming Language"}};
+	keywords["OS X"] = {{"keyword", "OS X"}, {"type", "Operating System"}};
+	keywords["Napier88"] = {{"keyword", "Napier88"}, {"type", "Programming Language"}};
+	keywords["thttpd"] = {{"keyword", "thttpd"}, {"type", "Web Server"}};
+	keywords["Ruby/Rails"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["KnockoutJS"] = {{"keyword", "Knockout.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Puppet"] = {{"keyword", "Puppet"}, {"type", "Configuration Management Tools"}};
+	keywords["MATH-MATIC"] = {{"keyword", "MATH-MATIC"}, {"type", "Programming Language"}};
+	keywords["Ioke"] = {{"keyword", "Ioke"}, {"type", "Programming Language"}};
+	keywords["Tibero"] = {{"keyword", "Tibero,SQL"}, {"type", "Database"}};
+	keywords["Hudson"] = {{"keyword", "Hudson"}, {"type", "Continuous Integration Tools"}};
+	keywords["Moment.js"] = {{"keyword", "Moment.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Underscore.js"] = {{"keyword", "Underscore.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["ES7"] = {{"keyword", "ECMAScript"}, {"type", "Programming Language"}};
+	keywords["ES6"] = {{"keyword", "ECMAScript"}, {"type", "Programming Language"}};
+	keywords["SQLite"] = {{"keyword", "SQLite,SQL"}, {"type", "Database"}};
+	keywords["Greenplum"] = {{"keyword", "Greenplum,PostgreSQL"}, {"type", "Database"}};
+	keywords["Promela"] = {{"keyword", "Promela"}, {"type", "Programming Language"}};
+	keywords["Common Lisp"] = {{"keyword", "Common Lisp"}, {"type", "Programming Language"}};
+	keywords["Sparksee"] = {{"keyword", "Sparksee,Graph databases"}, {"type", "Database"}};
+	keywords["E"] = {{"keyword", "E"}, {"type", "Programming Language"}};
+	keywords["Windows"] = {{"keyword", "Windows"}, {"type", "Operating System"}};
+	keywords["DynamoDB"] = {{"keyword", "Amazon DynamoDB"}, {"type", "Amazon Web Services Product"}};
+	keywords["Elasticsearch"] = {{"keyword", "Elasticsearch,Lucene"}, {"type", "Search Server"}};
+	keywords["DeployBot"] = {{"keyword", "DeployBot"}, {"type", "Continuous Integration Tools"}};
+	keywords["QuakeC"] = {{"keyword", "QuakeC"}, {"type", "Programming Language"}};
+	keywords["Symfony"] = {{"keyword", "Symfony,PHP"}, {"type", "Web Framework"}};
+	keywords["PostgreSQL"] = {{"keyword", "PostgreSQL,SQL"}, {"type", "Database"}};
+	keywords["Progress Software"] = {{"keyword", "Progress Software,SQL"}, {"type", "Database"}};
+	keywords["MonetDB"] = {{"keyword", "MonetDB,SQL"}, {"type", "Database"}};
+	keywords["MSSQL"] = {{"keyword", "MSSQL,SQL"}, {"type", "Database"}};
+	keywords["Artificial Intelligence"] = {{"keyword", "Artificial Intelligence"}, {"type", "Keyword"}};
+	keywords["X++"] = {{"keyword", "X++"}, {"type", "Programming Language"}};
+	keywords["MoSync"] = {{"keyword", "MoSync,C/C++,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["FuelPHP"] = {{"keyword", "FuelPHP,PHP"}, {"type", "Web Framework"}};
+	keywords["Nutch"] = {{"keyword", "Nutch"}, {"type", "Search Server"}};
+	keywords["Visual Studio/C#"] = {{"keyword", "C#"}, {"type", "Programming Language"}};
+	keywords["UniVerse"] = {{"keyword", "UniVerse,SQL"}, {"type", "Database"}};
+	keywords["Deesel"] = {{"keyword", "Deesel"}, {"type", "Programming Language"}};
+	keywords["Visual Prolog"] = {{"keyword", "Visual Prolog"}, {"type", "Programming Language"}};
+	keywords["ztemplates"] = {{"keyword", "ztemplates,Java"}, {"type", "Web Framework"}};
+	keywords["HBase"] = {{"keyword", "Apache HBase,NoSQL"}, {"type", "Database,Apache Framework"}};
+	keywords["App Inventor for Android"] = {{"keyword", "App Inventor for Android"}, {"type", "Programming Language"}};
+	keywords["VirtualBox"] = {{"keyword", "VirtualBox"}, {"type", "Virtual Machine Environment"}};
+	keywords["Drone.io"] = {{"keyword", "Drone.io"}, {"type", "Continuous Integration Tools"}};
+	keywords["Meteor.js"] = {{"keyword", "Meteor.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Pure CSS"] = {{"keyword", "Pure CSS,CSS"}, {"type", "CSS Framework"}};
+	keywords["IBM HTTP Server"] = {{"keyword", "IBM HTTP Server"}, {"type", "Web Server"}};
+	keywords["Pro*C"] = {{"keyword", "Pro*C"}, {"type", "Programming Language"}};
+	keywords["AOLserver"] = {{"keyword", "AOLserver"}, {"type", "Web Server"}};
+	keywords["LaTeX"] = {{"keyword", "LaTeX"}, {"type", "Programming Language"}};
+	keywords["Rex"] = {{"keyword", "Rex"}, {"type", "Configuration Management Tools"}};
+	keywords["M#"] = {{"keyword", "M#"}, {"type", "Programming Language"}};
+	keywords["txtSQL"] = {{"keyword", "txtSQL,SQL"}, {"type", "Database"}};
+	keywords["Mathcad"] = {{"keyword", "Mathcad"}, {"type", "Programming Language"}};
+	keywords["NESL"] = {{"keyword", "NESL"}, {"type", "Programming Language"}};
+	keywords["NaviServer"] = {{"keyword", "NaviServer"}, {"type", "Web Server"}};
+	keywords["PCF"] = {{"keyword", "PCF"}, {"type", "Programming Language"}};
+	keywords["Graph databases"] = {{"keyword", "Graph database"}, {"type", "Database Type"}};
+	keywords["Seeks"] = {{"keyword", "Seeks"}, {"type", "Search Server"}};
+	keywords["Visual DialogScript"] = {{"keyword", "Visual DialogScript"}, {"type", "Programming Language"}};
+	keywords["bc"] = {{"keyword", "bc"}, {"type", "Programming Language"}};
+	keywords["Script.NET"] = {{"keyword", "Script.NET"}, {"type", "Programming Language"}};
+	keywords["CouchDB"] = {{"keyword", "Apache CouchDB,NewSQL"}, {"type", "Database,Apache Framework"}};
+	keywords["TYPO3"] = {{"keyword", "TYPO3,PHP"}, {"type", "Web Framework"}};
+	keywords["Knockout"] = {{"keyword", "Knockout.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["ML"] = {{"keyword", "ML"}, {"type", "Programming Language"}};
+	keywords["VSXu"] = {{"keyword", "VSXu"}, {"type", "Programming Language"}};
+	keywords["Clipper"] = {{"keyword", "Clipper"}, {"type", "Programming Language"}};
+	keywords["PROIV"] = {{"keyword", "PROIV"}, {"type", "Programming Language"}};
+	keywords["Amazon Route 53"] = {{"keyword", "Amazon Route 53"}, {"type", "Amazon Web Services Product"}};
+	keywords["Codeship"] = {{"keyword", "Codeship"}, {"type", "Continuous Integration Tools"}};
+	keywords["NonStop SQL"] = {{"keyword", "NonStop SQL,SQL"}, {"type", "Database"}};
+	keywords["Uniface"] = {{"keyword", "Uniface"}, {"type", "Programming Language"}};
+	keywords["OmniMark"] = {{"keyword", "OmniMark"}, {"type", "Programming Language"}};
+	keywords["Limbo"] = {{"keyword", "Limbo"}, {"type", "Programming Language"}};
+	keywords["Node"] = {{"keyword", "Node.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Clojure"] = {{"keyword", "Clojure"}, {"type", "Programming Language"}};
+	keywords["SETL"] = {{"keyword", "SETL"}, {"type", "Programming Language"}};
+	keywords["RIFE"] = {{"keyword", "RIFE,Java"}, {"type", "Web Framework"}};
+	keywords["BSD"] = {{"keyword", "BSD,Unix"}, {"type", "Operating System"}};
+	keywords["IBM Basic assembly language"] = {{"keyword", "IBM Basic assembly language"}, {"type", "Programming Language"}};
+	keywords["Chart.js"] = {{"keyword", "Chart.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["F"] = {{"keyword", "F"}, {"type", "Programming Language"}};
+	keywords["Elixir"] = {{"keyword", "Elixir"}, {"type", "Programming Language"}};
+	keywords["Agora"] = {{"keyword", "Agora"}, {"type", "Programming Language"}};
+	keywords["Travis CI"] = {{"keyword", "Travis-CI"}, {"type", "Continuous Integration Tools"}};
+	keywords["Pyramid"] = {{"keyword", "Pyramid,Python"}, {"type", "Web Framework"}};
+	keywords["Concise"] = {{"keyword", "Concise,CSS"}, {"type", "CSS Framework"}};
+	keywords["Xitami"] = {{"keyword", "Xitami"}, {"type", "Web Server"}};
+	keywords["Little b"] = {{"keyword", "Little b"}, {"type", "Programming Language"}};
+	keywords["Agda"] = {{"keyword", "Agda"}, {"type", "Programming Language"}};
+	keywords["Archiva"] = {{"keyword", "Apache Archiva"}, {"type", "Apache Framework"}};
+	keywords["SBL"] = {{"keyword", "SBL"}, {"type", "Programming Language"}};
+	keywords["PL-SQL"] = {{"keyword", "PL-SQL,SQL"}, {"type", "Programming Language"}};
+	keywords["Openbase"] = {{"keyword", "Openbase,SQL"}, {"type", "Database"}};
+	keywords["Emacs Lisp"] = {{"keyword", "Emacs Lisp"}, {"type", "Programming Language"}};
+	keywords["Processing.js"] = {{"keyword", "Processing.js,JavaScript"}, {"type", "Programming Language"}};
+	keywords["Hume"] = {{"keyword", "Hume"}, {"type", "Programming Language"}};
+	keywords["Oberon"] = {{"keyword", "Oberon"}, {"type", "Programming Language"}};
+	keywords["UnderscoreJS"] = {{"keyword", "Underscore.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Onyx"] = {{"keyword", "Onyx"}, {"type", "Programming Language"}};
+	keywords["Perforce"] = {{"keyword", "Perforce"}, {"type", "Version Control"}};
+	keywords["Unsemantic"] = {{"keyword", "Unsemantic,CSS"}, {"type", "CSS Framework"}};
+	keywords["Unicon"] = {{"keyword", "Unicon"}, {"type", "Programming Language"}};
+	keywords["Snap CI"] = {{"keyword", "Snap CI"}, {"type", "Continuous Integration Tools"}};
+	keywords["Fortress"] = {{"keyword", "Fortress"}, {"type", "Programming Language"}};
+	keywords["GitLab CI"] = {{"keyword", "GitLab CI"}, {"type", "Continuous Integration Tools"}};
+	keywords["L# .NET"] = {{"keyword", "L# .NET,.NET"}, {"type", "Programming Language"}};
+	keywords["NCI"] = {{"keyword", "NCI"}, {"type", "Continuous Integration Tools"}};
+	keywords["QuickBuild"] = {{"keyword", "QuickBuild"}, {"type", "Continuous Integration Tools"}};
+	keywords["Euclid"] = {{"keyword", "Euclid"}, {"type", "Programming Language"}};
+	keywords["Angular"] = {{"keyword", "AngularJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["LESS"] = {{"keyword", "LESS"}, {"type", "Programming Language"}};
+	keywords["LIL"] = {{"keyword", "LIL"}, {"type", "Programming Language"}};
+	keywords["Powerhouse"] = {{"keyword", "Powerhouse"}, {"type", "Programming Language"}};
+	keywords["PROTEL"] = {{"keyword", "PROTEL"}, {"type", "Programming Language"}};
+	keywords["LIS"] = {{"keyword", "LIS"}, {"type", "Programming Language"}};
+	keywords["QPL"] = {{"keyword", "QPL"}, {"type", "Programming Language"}};
+	keywords["PIKT"] = {{"keyword", "PIKT"}, {"type", "Configuration Management Tools"}};
+	keywords["Trafodion"] = {{"keyword", "Trafodion,NoSQL,Hadoop,HBase"}, {"type", "Database"}};
+	keywords["Buck"] = {{"keyword", "Buck"}, {"type", "Build Automation Tool"}};
+	keywords["JCL"] = {{"keyword", "JCL"}, {"type", "Programming Language"}};
+	keywords["Cesil"] = {{"keyword", "Cesil"}, {"type", "Programming Language"}};
+	keywords["UCSD Pascal"] = {{"keyword", "UCSD Pascal"}, {"type", "Programming Language"}};
+	keywords["Altibase"] = {{"keyword", "Altibase,NoSQL"}, {"type", "Database"}};
+	keywords["TPU"] = {{"keyword", "TPU"}, {"type", "Programming Language"}};
+	keywords["AllegroGraph"] = {{"keyword", "AllegroGraph,Graph databases"}, {"type", "Database"}};
+	keywords["SenseTalk"] = {{"keyword", "SenseTalk"}, {"type", "Programming Language"}};
+	keywords["Chopstick"] = {{"keyword", "Chopstick,CSS"}, {"type", "CSS Framework"}};
+	keywords["Milk"] = {{"keyword", "Milk"}, {"type", "Programming Language"}};
+	keywords["DinkC"] = {{"keyword", "DinkC"}, {"type", "Programming Language"}};
+	keywords["YaCy"] = {{"keyword", "YaCy"}, {"type", "Search Server"}};
+	keywords["Perl"] = {{"keyword", "Perl"}, {"type", "Programming Language"}};
+	keywords["Lua"] = {{"keyword", "Lua"}, {"type", "Programming Language"}};
+	keywords["Natural Language Processing"] = {{"keyword", "Natural Language Processing"}, {"type", "Keyword"}};
+	keywords["es"] = {{"keyword", "es"}, {"type", "Programming Language"}};
+	keywords["Play Framework"] = {{"keyword", "Play Framework,Java,Scala"}, {"type", "Web Framework"}};
+	keywords["Joy"] = {{"keyword", "Joy"}, {"type", "Programming Language"}};
+	keywords["DIBOL"] = {{"keyword", "DIBOL"}, {"type", "Programming Language"}};
+	keywords["Solano CI"] = {{"keyword", "Solano CI"}, {"type", "Continuous Integration Tools"}};
+	keywords["Microsoft Access"] = {{"keyword", "Microsoft Access"}, {"type", "Database"}};
+	keywords["Alma-0"] = {{"keyword", "Alma-0"}, {"type", "Programming Language"}};
+	keywords["SIMPOL"] = {{"keyword", "SIMPOL"}, {"type", "Programming Language"}};
+	keywords["G"] = {{"keyword", "G"}, {"type", "Programming Language"}};
+	keywords["CratelO"] = {{"keyword", "CratelO,NoSQL"}, {"type", "Database"}};
+	keywords["Batik"] = {{"keyword", "Apache Batik"}, {"type", "Apache Framework"}};
+	keywords["Fusebox"] = {{"keyword", "Fusebox,PHP"}, {"type", "Web Framework"}};
+	keywords["OpenOffice"] = {{"keyword", "Apache OpenOffice"}, {"type", "Apache Framework"}};
+	keywords["Groovy-on-Grails"] = {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}};
+	keywords["Modelica"] = {{"keyword", "Modelica"}, {"type", "Programming Language"}};
+	keywords["Bamboo"] = {{"keyword", "Bamboo"}, {"type", "Continuous Integration Tools"}};
+	keywords["Pervasive PSQL"] = {{"keyword", "Pervasive PSQL,SQL"}, {"type", "Database"}};
+	keywords["ColdFusion"] = {{"keyword", "ColdFusion"}, {"type", "Programming Language"}};
+	keywords["Harbour"] = {{"keyword", "Harbour"}, {"type", "Programming Language"}};
+	keywords["cTAKES"] = {{"keyword", "Apache cTAKES"}, {"type", "Apache Framework"}};
+	keywords["Beanstalk"] = {{"keyword", "Amazon Elastic Beanstalk"}, {"type", "Amazon Web Services Product"}};
+	keywords["Kepler"] = {{"keyword", "Kepler,Lua"}, {"type", "Web Framework"}};
+	keywords["Xojo"] = {{"keyword", "Xojo"}, {"type", "Programming Language"}};
+	keywords["DYNAMO"] = {{"keyword", "DYNAMO"}, {"type", "Programming Language"}};
+	keywords["CMS EXEC"] = {{"keyword", "CMS EXEC"}, {"type", "Programming Language"}};
+	keywords["Arduino"] = {{"keyword", "Arduino"}, {"type", "Programming Language"}};
+	keywords["ATS"] = {{"keyword", "ATS"}, {"type", "Programming Language"}};
+	keywords["Pure"] = {{"keyword", "Pure"}, {"type", "Programming Language"}};
+	keywords["Pyjs"] = {{"keyword", "Pyjs,Python"}, {"type", "Web Framework"}};
+	keywords["SASS"] = {{"keyword", "SASS"}, {"type", "Programming Language"}};
+	keywords["CMS-2"] = {{"keyword", "CMS-2"}, {"type", "Programming Language"}};
+	keywords["Join Java"] = {{"keyword", "Join Java,Java"}, {"type", "Programming Language"}};
+	keywords["Marionette"] = {{"keyword", "Marionette.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Squeak"] = {{"keyword", "Squeak"}, {"type", "Programming Language"}};
+	keywords["SASL"] = {{"keyword", "SASL"}, {"type", "Programming Language"}};
+	keywords["Debian"] = {{"keyword", "Fedora,Linux"}, {"type", "Operating System"}};
+	keywords["Clusterpoint"] = {{"keyword", "Clusterpoint,NoSQL"}, {"type", "Database"}};
+	keywords["Tomcat"] = {{"keyword", "Apache Tomcat"}, {"type", "Web Server,Apache Framework"}};
+	keywords["JRuby"] = {{"keyword", "JRuby,Ruby"}, {"type", "Programming Language"}};
+	keywords["IMP"] = {{"keyword", "IMP"}, {"type", "Programming Language"}};
+	keywords["PDL"] = {{"keyword", "PDL"}, {"type", "Programming Language"}};
+	keywords["Ruby/Ror"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["CLU"] = {{"keyword", "CLU"}, {"type", "Programming Language"}};
+	keywords["PHP7"] = {{"keyword", "PHP"}, {"type", "Programming Language"}};
+	keywords["Nette"] = {{"keyword", "Nette Framework,PHP"}, {"type", "Web Framework"}};
+	keywords["BowerJS"] = {{"keyword", "Bower.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["C Shell"] = {{"keyword", "Shell,Unix"}, {"type", "Programming Language"}};
+	keywords["Magma"] = {{"keyword", "Magma"}, {"type", "Programming Language"}};
+	keywords["GlassFish"] = {{"keyword", "GlassFish"}, {"type", "Web Server"}};
+	keywords["LISA"] = {{"keyword", "LISA"}, {"type", "Programming Language"}};
+	keywords["mnoGoSearch"] = {{"keyword", "mnoGoSearch"}, {"type", "Search Server"}};
+	keywords["VMWare"] = {{"keyword", "VMWare"}, {"type", "Virtual Machine Environment"}};
+	keywords["PDFBox"] = {{"keyword", "Apache PDFBox"}, {"type", "Apache Framework"}};
+	keywords["COMPASS"] = {{"keyword", "COMPASS"}, {"type", "Programming Language"}};
+	keywords["Clustrix"] = {{"keyword", "Clustrix,NewSQL"}, {"type", "Database"}};
+	keywords["FinalBuilder"] = {{"keyword", "FinalBuilder"}, {"type", "Build Automation Tool"}};
+	keywords["GOM"] = {{"keyword", "GOM"}, {"type", "Programming Language"}};
+	keywords["Geronimo"] = {{"keyword", "Apache Geronimo"}, {"type", "Web Server,Apache Framework"}};
+	keywords["IBM DB2 Express-C"] = {{"keyword", "IBM DB2 Express-C,SQL"}, {"type", "Database"}};
+	keywords["Leda"] = {{"keyword", "Leda"}, {"type", "Programming Language"}};
+	keywords["Mac OS"] = {{"keyword", "OS X"}, {"type", "Operating System"}};
+	keywords["Amazon Simple Storage Service"] = {{"keyword", "Amazon S3"}, {"type", "Amazon Web Services Product"}};
+	keywords["Modula"] = {{"keyword", "Modula"}, {"type", "Programming Language"}};
+	keywords["Chef"] = {{"keyword", "Chef"}, {"type", "Configuration Management Tools"}};
+	keywords["Bigwig"] = {{"keyword", "Bigwig"}, {"type", "Programming Language"}};
+	keywords["Rampart"] = {{"keyword", "Apache Rampart"}, {"type", "Apache Framework"}};
+	keywords["D3"] = {{"keyword", "D3.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["LC-3"] = {{"keyword", "LC-3"}, {"type", "Programming Language"}};
+	keywords["Wee"] = {{"keyword", "Wee,CSS"}, {"type", "CSS Framework"}};
+	keywords["IBM Notes"] = {{"keyword", "IBM Notes,NoSQL"}, {"type", "Database"}};
+	keywords["Amazon Aurora"] = {{"keyword", "Amazon Aurora,SQL"}, {"type", "Database"}};
+	keywords["TouchDevelop"] = {{"keyword", "TouchDevelop"}, {"type", "Programming Language"}};
+	keywords["KRYPTON"] = {{"keyword", "KRYPTON"}, {"type", "Programming Language"}};
+	keywords["Oracle iPlanet Web Server"] = {{"keyword", "Oracle iPlanet Web Server"}, {"type", "Web Server"}};
+	keywords["Codename One"] = {{"keyword", "Codename One,Java,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["Wt"] = {{"keyword", "Wt,C++"}, {"type", "Web Framework"}};
+	keywords["Octopus Deploy"] = {{"keyword", "Octopus Deploy,ASP.NET,C#,.NET"}, {"type", "Build Automation Tool"}};
+	keywords["Presto"] = {{"keyword", "Presto,SQL"}, {"type", "Database"}};
+	keywords["Object REXX"] = {{"keyword", "Object REXX"}, {"type", "Programming Language"}};
+	keywords["MomentJS"] = {{"keyword", "Moment.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Manjaro"] = {{"keyword", "Manjaro,Linux"}, {"type", "Operating System"}};
+	keywords["Dojo"] = {{"keyword", "Dojo,CSS"}, {"type", "CSS Framework"}};
+	keywords["TokuDB"] = {{"keyword", "TokuDB,NewSQL"}, {"type", "Database"}};
+	keywords["Felix"] = {{"keyword", "Apache Felix"}, {"type", "Apache Framework"}};
+	keywords["IBM Lotus Approach"] = {{"keyword", "IBM Lotus Approach,SQL"}, {"type", "Database"}};
+	keywords["AutoLISP"] = {{"keyword", "AutoLISP"}, {"type", "Programming Language"}};
+	keywords["BitC"] = {{"keyword", "BitC"}, {"type", "Programming Language"}};
+	keywords["CoffeeScript"] = {{"keyword", "CoffeeScript,JavaScript"}, {"type", "Programming Language"}};
+	keywords["ROOP"] = {{"keyword", "ROOP"}, {"type", "Programming Language"}};
+	keywords["HTML 5"] = {{"keyword", "HTML"}, {"type", "Programming Language"}};
+	keywords["Curator"] = {{"keyword", "Apache Curator"}, {"type", "Apache Framework"}};
+	keywords["Easy PL/I"] = {{"keyword", "Easy PL/I"}, {"type", "Programming Language"}};
+	keywords["FOP"] = {{"keyword", "Apache FOP"}, {"type", "Apache Framework"}};
+	keywords["Model-Glue"] = {{"keyword", "Model-Glue,ColdFusion"}, {"type", "Web Framework"}};
+	keywords["MercuryJS"] = {{"keyword", "Mercury.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Sones GraphDB"] = {{"keyword", "Sones GraphDB,Graph databases"}, {"type", "Database"}};
+	keywords["Tcl"] = {{"keyword", "Tcl"}, {"type", "Programming Language"}};
+	keywords["Xtend"] = {{"keyword", "Xtend"}, {"type", "Programming Language"}};
+	keywords["Python/Django"] = {{"keyword", "Django,Python"}, {"type", "Web Framework"}};
+	keywords["Marionette.js"] = {{"keyword", "Marionette.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Assembly"] = {{"keyword", "Assembly"}, {"type", "Programming Language"}};
+	keywords["Turing"] = {{"keyword", "Turing"}, {"type", "Programming Language"}};
+	keywords["Ladder"] = {{"keyword", "Ladder"}, {"type", "Programming Language"}};
+	keywords["AppVeyor"] = {{"keyword", "AppVeyor"}, {"type", "Continuous Integration Tools"}};
+	keywords["GenieDB"] = {{"keyword", "GenieDB,NewSQL"}, {"type", "Database"}};
+	keywords["LabVIEW"] = {{"keyword", "LabVIEW"}, {"type", "Programming Language"}};
+	keywords["Amazon SimpleDB"] = {{"keyword", "Amazon SimpleDB,NoSQL"}, {"type", "Database"}};
+	keywords["Converge"] = {{"keyword", "Converge"}, {"type", "Programming Language"}};
+	keywords["CobolScript"] = {{"keyword", "CobolScript"}, {"type", "Programming Language"}};
+	keywords["Elastic Search"] = {{"keyword", "Elasticsearch"}, {"type", "Search Server"}};
+	keywords["Jexus"] = {{"keyword", "Jexus"}, {"type", "Web Server"}};
+	keywords["BlooP"] = {{"keyword", "BlooP"}, {"type", "Programming Language"}};
+	keywords["Redis"] = {{"keyword", "Redis"}, {"type", "Data Structure Server"}};
+	keywords["Leiningen"] = {{"keyword", "Leiningen,Clojure,Java"}, {"type", "Build Automation Tool"}};
+	keywords["Diisba framework"] = {{"keyword", "Diisba framework,CSS"}, {"type", "CSS Framework"}};
+	keywords["Three.js"] = {{"keyword", "Three.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Bulma"] = {{"keyword", "Bulma,CSS"}, {"type", "CSS Framework"}};
+	keywords["Charm"] = {{"keyword", "Charm"}, {"type", "Programming Language"}};
+	keywords["MSIL"] = {{"keyword", "MSIL"}, {"type", "Programming Language"}};
+	keywords["ACT-III"] = {{"keyword", "ACT-III"}, {"type", "Programming Language"}};
+	keywords["Mortran"] = {{"keyword", "Mortran"}, {"type", "Programming Language"}};
+	keywords["Lisaac"] = {{"keyword", "Lisaac"}, {"type", "Programming Language"}};
+	keywords["OBJ2"] = {{"keyword", "OBJ2"}, {"type", "Programming Language"}};
+	keywords["Kule Lazy"] = {{"keyword", "Kule Lazy,CSS"}, {"type", "CSS Framework"}};
+	keywords["Clean"] = {{"keyword", "Clean"}, {"type", "Programming Language"}};
+	keywords["Tika"] = {{"keyword", "Apache Tika"}, {"type", "Apache Framework"}};
+	keywords["MAD/I"] = {{"keyword", "MAD/I"}, {"type", "Programming Language"}};
+	keywords["SyncCharts"] = {{"keyword", "SyncCharts"}, {"type", "Programming Language"}};
+	keywords["JAL"] = {{"keyword", "JAL"}, {"type", "Programming Language"}};
+	keywords["Golang"] = {{"keyword", "Go"}, {"type", "Programming Language"}};
+	keywords["Io"] = {{"keyword", "Io"}, {"type", "Programming Language"}};
+	keywords["nesC"] = {{"keyword", "nesC"}, {"type", "Programming Language"}};
+	keywords["Material Design Lite"] = {{"keyword", "Material Design Lite,CSS"}, {"type", "CSS Framework"}};
+	keywords["GruntJS"] = {{"keyword", "Grunt.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["RabbitMQ"] = {{"keyword", "RabbitMQ"}, {"type", "Message Broker"}};
+	keywords["EPL"] = {{"keyword", "EPL"}, {"type", "Programming Language"}};
+	keywords["WEBrick"] = {{"keyword", "WEBrick"}, {"type", "Web Server"}};
+	keywords["Monkey HTTP Server"] = {{"keyword", "Monkey HTTP Server"}, {"type", "Web Server"}};
+	keywords["AppleScript"] = {{"keyword", "AppleScript"}, {"type", "Programming Language"}};
+	keywords["SuperCollider"] = {{"keyword", "SuperCollider"}, {"type", "Programming Language"}};
+	keywords["JOSS"] = {{"keyword", "JOSS"}, {"type", "Programming Language"}};
+	keywords["Wyvern"] = {{"keyword", "Wyvern"}, {"type", "Programming Language"}};
+	keywords["UniData"] = {{"keyword", "UniData,SQL"}, {"type", "Database"}};
+	keywords["SVN"] = {{"keyword", "Apache Subversion"}, {"type", "Version Control,Apache Framework"}};
+	keywords["Alpha Five"] = {{"keyword", "Alpha Five"}, {"type", "Database"}};
+	keywords["Hyper-V"] = {{"keyword", "Hyper-V"}, {"type", "Virtual Machine Environment"}};
+	keywords["OrientDB"] = {{"keyword", "OrientDB,NoSQL,Graph databases"}, {"type", "Database"}};
+	keywords["Caml"] = {{"keyword", "Caml"}, {"type", "Programming Language"}};
+	keywords["web2py"] = {{"keyword", "web2py,Python"}, {"type", "Web Framework"}};
+	keywords["JVx"] = {{"keyword", "JVx,Java"}, {"type", "Web Framework"}};
+	keywords["Handlebars"] = {{"keyword", "Handlebars.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Xcode/Objective C"] = {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}};
+	keywords["Pig"] = {{"keyword", "Apache Pig"}, {"type", "Apache Framework"}};
+	keywords["GOTRAN"] = {{"keyword", "GOTRAN"}, {"type", "Programming Language"}};
+	keywords["Struts"] = {{"keyword", "Apache Struts,Java"}, {"type", "Web Framework,Apache Framework"}};
+	keywords["Vectorwise"] = {{"keyword", "Vectorwise,SQL"}, {"type", "Database"}};
+	keywords["Apache HTTP Server"] = {{"keyword", "Apache HTTP Server"}, {"type", "Web Server,Apache Framework"}};
+	keywords["Mary"] = {{"keyword", "Mary"}, {"type", "Programming Language"}};
+	keywords["Team Foundation Server"] = {{"keyword", "Team Foundation Server"}, {"type", "Continuous Integration Tools"}};
+	keywords["Rake"] = {{"keyword", "Rake,Ruby"}, {"type", "Build Automation Tool"}};
+	keywords["GameMonkey Script"] = {{"keyword", "GameMonkey Script"}, {"type", "Programming Language"}};
+	keywords["MeteorJS"] = {{"keyword", "Meteor.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["VB.NET"] = {{"keyword", "Visual Basic .NET"}, {"type", "Programming Language"}};
+	keywords["Ruby"] = {{"keyword", "Ruby"}, {"type", "Programming Language"}};
+	keywords["Oriel"] = {{"keyword", "Oriel"}, {"type", "Programming Language"}};
+	keywords["AutoHotkey"] = {{"keyword", "AutoHotkey"}, {"type", "Programming Language"}};
+	keywords["MARK-IV"] = {{"keyword", "MARK-IV"}, {"type", "Programming Language"}};
+	keywords["AIMMS"] = {{"keyword", "AIMMS"}, {"type", "Programming Language"}};
+	keywords["eXtremeDB"] = {{"keyword", "eXtremeDB,SQL"}, {"type", "Database"}};
+	keywords["Ember.js"] = {{"keyword", "Ember.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["ServiceMix"] = {{"keyword", "Apache ServiceMix"}, {"type", "Apache Framework"}};
+	keywords["Kajona"] = {{"keyword", "Kajona,PHP"}, {"type", "Web Framework"}};
+	keywords["Csound"] = {{"keyword", "Csound"}, {"type", "Programming Language"}};
+	keywords["JADE"] = {{"keyword", "JADE"}, {"type", "Programming Language"}};
+	keywords["Jetty"] = {{"keyword", "Jetty"}, {"type", "Web Server"}};
+	keywords["Lava"] = {{"keyword", "Lava"}, {"type", "Programming Language"}};
+	keywords["WATFIV, WATFOR"] = {{"keyword", "WATFIV, WATFOR"}, {"type", "Programming Language"}};
+	keywords["Storm"] = {{"keyword", "Apache Storm"}, {"type", "Apache Framework"}};
+	keywords["Citrine"] = {{"keyword", "Citrine"}, {"type", "Programming Language"}};
+	keywords["Nu"] = {{"keyword", "Nu"}, {"type", "Programming Language"}};
+	keywords["Teradata"] = {{"keyword", "Teradata,SQL"}, {"type", "Database"}};
+	keywords["Axum"] = {{"keyword", "Axum"}, {"type", "Programming Language"}};
+	keywords["CodeIgniter"] = {{"keyword", "CodeIgniter,PHP"}, {"type", "Web Framework"}};
+	keywords["NO"] = {{"keyword", "NO"}, {"type", "Programming Language"}};
+	keywords["Executable UML"] = {{"keyword", "Executable UML"}, {"type", "Programming Language"}};
+	keywords["Silex"] = {{"keyword", "Silex,PHP"}, {"type", "Web Framework"}};
+	keywords["TECO"] = {{"keyword", "TECO"}, {"type", "Programming Language"}};
+	keywords["Bower"] = {{"keyword", "Bower,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Kube"] = {{"keyword", "Kube,CSS"}, {"type", "CSS Framework"}};
+	keywords["Sphinx"] = {{"keyword", "Sphinx"}, {"type", "Search Server"}};
+	keywords["Firebird"] = {{"keyword", "Firebird,SQL"}, {"type", "Database"}};
+	keywords["Aerospike"] = {{"keyword", "Aerospike,NoSQL"}, {"type", "Database"}};
+	keywords["J"] = {{"keyword", "J"}, {"type", "Programming Language"}};
+	keywords["Macsyma"] = {{"keyword", "Macsyma"}, {"type", "Programming Language"}};
+	keywords["Dataphor"] = {{"keyword", "Dataphor,SQL"}, {"type", "Database"}};
+	keywords["Cabal"] = {{"keyword", "Cabal,Haskell"}, {"type", "Build Automation Tool"}};
+	keywords["ObjectLOGO"] = {{"keyword", "ObjectLOGO"}, {"type", "Programming Language"}};
+	keywords["Resin Professional"] = {{"keyword", "Resin"}, {"type", "Web Server"}};
+	keywords["JORAM"] = {{"keyword", "JORAM"}, {"type", "Message Broker"}};
+	keywords["SmartFrog"] = {{"keyword", "SmartFrog"}, {"type", "Configuration Management Tools"}};
+	keywords["Mongoose"] = {{"keyword", "Mongoose"}, {"type", "Web Server"}};
+	keywords["Adabas D"] = {{"keyword", "Adabas D,SQL"}, {"type", "Database"}};
+	keywords["Assertible"] = {{"keyword", "Assertible"}, {"type", "Continuous Integration Tools"}};
+	keywords["Mathematica"] = {{"keyword", "Mathematica"}, {"type", "Programming Language"}};
+	keywords["Wicket"] = {{"keyword", "Apache Wicket,Java"}, {"type", "Web Framework,Apache Framework"}};
+	keywords["MIMIC"] = {{"keyword", "MIMIC"}, {"type", "Programming Language"}};
+	keywords["Hop"] = {{"keyword", "Hop"}, {"type", "Programming Language"}};
+	keywords["CFEngine"] = {{"keyword", "CFEngine"}, {"type", "Configuration Management Tools"}};
+	keywords["Jako"] = {{"keyword", "Jako"}, {"type", "Programming Language"}};
+	keywords["Dart"] = {{"keyword", "Dart"}, {"type", "Programming Language"}};
+	keywords["React"] = {{"keyword", "React.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["XQuery"] = {{"keyword", "XQuery"}, {"type", "Programming Language"}};
+	keywords["PL-0"] = {{"keyword", "PL-0"}, {"type", "Programming Language"}};
+	keywords["PL-M"] = {{"keyword", "PL-M"}, {"type", "Programming Language"}};
+	keywords["PL-I"] = {{"keyword", "PL-I"}, {"type", "Programming Language"}};
+	keywords["Lordui"] = {{"keyword", "Lordui"}, {"type", "Continuous Integration Tools"}};
+	keywords["PL-C"] = {{"keyword", "PL-C"}, {"type", "Programming Language"}};
+	keywords["PL-B"] = {{"keyword", "PL-B"}, {"type", "Programming Language"}};
+	keywords["BeanShell"] = {{"keyword", "BeanShell"}, {"type", "Programming Language"}};
+	keywords["Alef"] = {{"keyword", "Alef"}, {"type", "Programming Language"}};
+	keywords["PL-P"] = {{"keyword", "PL-P"}, {"type", "Programming Language"}};
+	keywords["SchemafreeDB"] = {{"keyword", "SchemafreeDB,NewSQL"}, {"type", "Database"}};
+	keywords["Torque"] = {{"keyword", "Apache Torque"}, {"type", "Apache Framework"}};
+	keywords["Enduro/X "] = {{"keyword", "Enduro/X "}, {"type", "Message Broker"}};
+	keywords["FPr"] = {{"keyword", "FPr"}, {"type", "Programming Language"}};
+	keywords["Phalcon"] = {{"keyword", "Phalcon,PHP"}, {"type", "Web Framework"}};
+	keywords["CHILL"] = {{"keyword", "CHILL"}, {"type", "Programming Language"}};
+	keywords["Wavemaker"] = {{"keyword", "Wavemaker,Java"}, {"type", "Web Framework"}};
+	keywords["Graph database"] = {{"keyword", "Graph database"}, {"type", "Database Type"}};
+	keywords["Delphi"] = {{"keyword", "Delphi"}, {"type", "Programming Language"}};
+	keywords["Euler"] = {{"keyword", "Euler"}, {"type", "Programming Language"}};
+	keywords["JScript"] = {{"keyword", "JScript"}, {"type", "Programming Language"}};
+	keywords["Brazel"] = {{"keyword", "Brazel"}, {"type", "Build Automation Tool"}};
+	keywords["TAL"] = {{"keyword", "TAL"}, {"type", "Programming Language"}};
+	keywords["Salt"] = {{"keyword", "Salt"}, {"type", "Configuration Management Tools"}};
+	keywords["ObjectiveC"] = {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}};
+	keywords["NPL"] = {{"keyword", "NPL"}, {"type", "Programming Language"}};
+	keywords["Portals"] = {{"keyword", "Apache Portals"}, {"type", "Apache Framework"}};
+	keywords["Infobright"] = {{"keyword", "Infobright,SQL"}, {"type", "Database"}};
+	keywords["Marmotta"] = {{"keyword", "Apache Marmotta"}, {"type", "Apache Framework"}};
+	keywords["Cool"] = {{"keyword", "Cool"}, {"type", "Programming Language"}};
+	keywords["R++"] = {{"keyword", "R++"}, {"type", "Programming Language"}};
+	keywords["Backbone.js"] = {{"keyword", "Backbone.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Ease"] = {{"keyword", "Ease"}, {"type", "Programming Language"}};
+	keywords["FAUST"] = {{"keyword", "FAUST"}, {"type", "Programming Language"}};
+	keywords["ECMAScript"] = {{"keyword", "ECMAScript"}, {"type", "Programming Language"}};
+	keywords["Windows PowerShell"] = {{"keyword", "PowerShell,Windows"}, {"type", "Programming Language"}};
+	keywords["Cherokee HTTP Server"] = {{"keyword", "Cherokee HTTP Server"}, {"type", "Web Server"}};
+	keywords["Speedcode"] = {{"keyword", "Speedcode"}, {"type", "Programming Language"}};
+	keywords["Modula-3"] = {{"keyword", "Modula-3"}, {"type", "Programming Language"}};
+	keywords["Amiga E"] = {{"keyword", "Amiga E"}, {"type", "Programming Language"}};
+	keywords["Traffic Server"] = {{"keyword", "Traffic Server"}, {"type", "Apache Framework"}};
+	keywords["K"] = {{"keyword", "K"}, {"type", "Programming Language"}};
+	keywords["jclouds"] = {{"keyword", "Apache jclouds"}, {"type", "Apache Framework"}};
+	keywords["Red Hat Linux"] = {{"keyword", "RedHat Linux,Linux"}, {"type", "Operating System"}};
+	keywords["Rust"] = {{"keyword", "Rust"}, {"type", "Programming Language"}};
+	keywords["HandlerSocket"] = {{"keyword", "Percona,NewSQL"}, {"type", "Database"}};
+	keywords["Hyper V"] = {{"keyword", "Hyper-V"}, {"type", "Virtual Machine Environment"}};
+	keywords["JBoss Messaging"] = {{"keyword", "JBoss Messaging"}, {"type", "Message Broker"}};
+	keywords["LotusScript"] = {{"keyword", "LotusScript"}, {"type", "Programming Language"}};
+	keywords["Epigram"] = {{"keyword", "Epigram"}, {"type", "Programming Language"}};
+	keywords["Oracle HTTP Server"] = {{"keyword", "Oracle HTTP Server"}, {"type", "Web Server"}};
+	keywords["HAL/S"] = {{"keyword", "HAL/S"}, {"type", "Programming Language"}};
+	keywords["Forrest"] = {{"keyword", "Apache Forrest"}, {"type", "Apache Framework"}};
+	keywords["GLSL"] = {{"keyword", "GLSL"}, {"type", "Programming Language"}};
+	keywords["RTL/2"] = {{"keyword", "RTL/2"}, {"type", "Programming Language"}};
+	keywords["S3"] = {{"keyword", "Amazon S3"}, {"type", "Amazon Web Services Product"}};
+	keywords["S2"] = {{"keyword", "S2"}, {"type", "Programming Language"}};
+	keywords["Coral 66"] = {{"keyword", "Coral 66"}, {"type", "Programming Language"}};
+	keywords["Not Quite C"] = {{"keyword", "Not Quite C,C"}, {"type", "Programming Language"}};
+	keywords["Corn"] = {{"keyword", "Corn"}, {"type", "Programming Language"}};
+	keywords["Stardog"] = {{"keyword", "Stardog,Graph databases"}, {"type", "Database"}};
+	keywords["Tuscany"] = {{"keyword", "Apache Tuscany"}, {"type", "Apache Framework"}};
+	keywords["Oak"] = {{"keyword", "Oak"}, {"type", "Programming Language"}};
+	keywords["NexusDB"] = {{"keyword", "NexusDB,SQL"}, {"type", "Database"}};
+	keywords["SPIN"] = {{"keyword", "SPIN"}, {"type", "Programming Language"}};
+	keywords["Lingo"] = {{"keyword", "Lingo"}, {"type", "Programming Language"}};
+	keywords["Gigablast"] = {{"keyword", "Gigablast"}, {"type", "Search Server"}};
+	keywords["SR"] = {{"keyword", "SR"}, {"type", "Programming Language"}};
+	keywords["OpenCog"] = {{"keyword", "OpenCog,Graph databases"}, {"type", "Database"}};
+	keywords["ALGOL 68"] = {{"keyword", "ALGOL 68"}, {"type", "Programming Language"}};
+	keywords["Ink"] = {{"keyword", "Ink,CSS"}, {"type", "CSS Framework"}};
+	keywords["ALGOL 60"] = {{"keyword", "ALGOL 60"}, {"type", "Programming Language"}};
+	keywords["Phantom"] = {{"keyword", "PhantomJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Windows Phone"] = {{"keyword", "Windows Mobile,C#"}, {"type", "Mobile Operating System"}};
+	keywords["Aurelia.js"] = {{"keyword", "Aurelia.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Map/Reduce"] = {{"keyword", "MapReduce"}, {"type", "Keyword"}};
+	keywords["Redcode"] = {{"keyword", "Redcode"}, {"type", "Programming Language"}};
+	keywords["Sierra SCSS Library"] = {{"keyword", "Sierra SCSS Library,CSS"}, {"type", "CSS Framework"}};
+	keywords["Obj C"] = {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}};
+	keywords["PL-11"] = {{"keyword", "PL-11"}, {"type", "Programming Language"}};
+	keywords["csh"] = {{"keyword", "csh"}, {"type", "Programming Language"}};
+	keywords["React Native"] = {{"keyword", "React Native,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["Fat-Free"] = {{"keyword", "Fat-Free Framework,PHP"}, {"type", "Web Framework"}};
+	keywords["Tacit"] = {{"keyword", "Tacit,CSS"}, {"type", "CSS Framework"}};
+	keywords["CUDA"] = {{"keyword", "CUDA"}, {"type", "Programming Language"}};
+	keywords["Spark"] = {{"keyword", "Apache Spark"}, {"type", "Apache Framework"}};
+	keywords["Meson build system"] = {{"keyword", "Meson build system"}, {"type", "Build Automation Tool"}};
+	keywords["Esterel"] = {{"keyword", "Esterel"}, {"type", "Programming Language"}};
+	keywords["Shippable"] = {{"keyword", "Shippable"}, {"type", "Continuous Integration Tools"}};
+	keywords["XMLBeans"] = {{"keyword", "Apache XMLBeans"}, {"type", "Apache Framework"}};
+	keywords["Lisp"] = {{"keyword", "Lisp"}, {"type", "Programming Language"}};
+	keywords["SuperTalk"] = {{"keyword", "SuperTalk"}, {"type", "Programming Language"}};
+	keywords["Dog"] = {{"keyword", "Dog"}, {"type", "Programming Language"}};
+	keywords["Gradle"] = {{"keyword", "Gradle"}, {"type", "Build Automation Tool"}};
+	keywords["PEARL"] = {{"keyword", "PEARL"}, {"type", "Programming Language"}};
+	keywords["RequireJS"] = {{"keyword", "Require.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["RSL"] = {{"keyword", "RSL"}, {"type", "Programming Language"}};
+	keywords["Solaris"] = {{"keyword", "Solaris,Unix"}, {"type", "Operating System"}};
+	keywords["Semantic UI"] = {{"keyword", "Semantic UI,CSS"}, {"type", "CSS Framework"}};
+	keywords["D3JS"] = {{"keyword", "D3.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Linux"] = {{"keyword", "Linux,Unix"}, {"type", "Operating System"}};
+	keywords["iPFaces"] = {{"keyword", "iPFaces,PHP,ASP.NET,Java,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["TransLattice"] = {{"keyword", "TransLattice,NewSQL"}, {"type", "Database"}};
+	keywords["J2EE"] = {{"keyword", "Java EE,Java"}, {"type", "Programming Language"}};
+	keywords["TurboGears"] = {{"keyword", "TurboGears,Python"}, {"type", "Web Framework"}};
+	keywords["GAP"] = {{"keyword", "GAP"}, {"type", "Programming Language"}};
+	keywords["LINC"] = {{"keyword", "LINC"}, {"type", "Programming Language"}};
+	keywords["BPEL"] = {{"keyword", "BPEL"}, {"type", "Programming Language"}};
+	keywords["Unix shell"] = {{"keyword", "Shell,Unix"}, {"type", "Programming Language"}};
+	keywords["Enyo"] = {{"keyword", "Enyo,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["Cascade Framework"] = {{"keyword", "Cascade Framework,CSS"}, {"type", "CSS Framework"}};
+	keywords["Legoscript"] = {{"keyword", "Legoscript"}, {"type", "Programming Language"}};
+	keywords["Nginx"] = {{"keyword", "Nginx"}, {"type", "Web Server"}};
+	keywords["PhantomJS"] = {{"keyword", "PhantomJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Kotlin"] = {{"keyword", "Kotlin,Java"}, {"type", "Programming Language"}};
+	keywords["Joomla"] = {{"keyword", "Joomla,PHP"}, {"type", "Web Framework"}};
+	keywords["CockroachDB"] = {{"keyword", "CockroachDB,NoSQL"}, {"type", "Database"}};
+	keywords["MaxDB"] = {{"keyword", "MaxDB,SQL"}, {"type", "Database"}};
+	keywords["IPL"] = {{"keyword", "IPL"}, {"type", "Programming Language"}};
+	keywords["PLEXIL"] = {{"keyword", "PLEXIL"}, {"type", "Programming Language"}};
+	keywords["QtScript"] = {{"keyword", "QtScript"}, {"type", "Programming Language"}};
+	keywords["NGL"] = {{"keyword", "NGL"}, {"type", "Programming Language"}};
+	keywords["E#"] = {{"keyword", "E#"}, {"type", "Programming Language"}};
+	keywords["FOCAL"] = {{"keyword", "FOCAL"}, {"type", "Programming Language"}};
+	keywords["MemSQL"] = {{"keyword", "MemSQL,NewSQL"}, {"type", "Database"}};
+	keywords["sbt"] = {{"keyword", "sbt,Scala"}, {"type", "Build Automation Tool"}};
+	keywords["Caudium"] = {{"keyword", "Caudium"}, {"type", "Web Server"}};
+	keywords["Sybase Advantage Database Server"] = {{"keyword", "Sybase Advantage Database Server,SQL"}, {"type", "Database"}};
+	keywords["JavaServer Faces"] = {{"keyword", "JavaServer Faces,Java"}, {"type", "Web Framework"}};
+	keywords["Tajo"] = {{"keyword", "Apache Tajo"}, {"type", "Apache Framework"}};
+	keywords["HornetQ"] = {{"keyword", "HornetQ"}, {"type", "Message Broker"}};
+	keywords["Big Data"] = {{"keyword", "Big Data"}, {"type", "Keyword"}};
+	keywords["OpenNLP"] = {{"keyword", "Apache OpenNLP"}, {"type", "Apache Framework"}};
+	keywords["ScimoreDB"] = {{"keyword", "ScimoreDB,SQL"}, {"type", "Database"}};
+	keywords["PROSE"] = {{"keyword", "PROSE"}, {"type", "Programming Language"}};
+	keywords["Amazon Web Services"] = {{"keyword", "Amazon Web Services"}, {"type", "Keyword"}};
+	keywords["NASM"] = {{"keyword", "NASM"}, {"type", "Programming Language"}};
+	keywords["Hugo"] = {{"keyword", "Hugo"}, {"type", "Programming Language"}};
+	keywords["Sybase"] = {{"keyword", "SAP Sybase,SQL"}, {"type", "Database"}};
+	keywords["Lithe"] = {{"keyword", "Lithe"}, {"type", "Programming Language"}};
+	keywords["SMALL"] = {{"keyword", "SMALL"}, {"type", "Programming Language"}};
+	keywords["X#"] = {{"keyword", "X#"}, {"type", "Programming Language"}};
+	keywords["SALSA"] = {{"keyword", "SALSA"}, {"type", "Programming Language"}};
+	keywords["XL"] = {{"keyword", "XL"}, {"type", "Programming Language"}};
+	keywords["XC"] = {{"keyword", "XC"}, {"type", "Programming Language"}};
+	keywords["Tweaker"] = {{"keyword", "Tweaker"}, {"type", "Build Automation Tool"}};
+	keywords["Natural-Language Processing"] = {{"keyword", "Natural Language Processing"}, {"type", "Keyword"}};
+	keywords["ISPF"] = {{"keyword", "ISPF"}, {"type", "Programming Language"}};
+	keywords["PL360"] = {{"keyword", "PL360"}, {"type", "Programming Language"}};
+	keywords["IncrediBuild"] = {{"keyword", "IncrediBuild"}, {"type", "Build Automation Tool"}};
+	keywords["SQLBase"] = {{"keyword", "SQLBase,SQL"}, {"type", "Database"}};
+	keywords["M4"] = {{"keyword", "M4"}, {"type", "Programming Language"}};
+	keywords["KEE"] = {{"keyword", "KEE"}, {"type", "Programming Language"}};
+	keywords["FrontBase"] = {{"keyword", "FrontBase,SQL"}, {"type", "Database"}};
+	keywords["Cecil"] = {{"keyword", "Cecil"}, {"type", "Programming Language"}};
+	keywords["Subversion"] = {{"keyword", "Apache Subversion"}, {"type", "Version Control,Apache Framework"}};
+	keywords["BLISS"] = {{"keyword", "BLISS"}, {"type", "Programming Language"}};
+	keywords["Calcite"] = {{"keyword", "Apache Calcite"}, {"type", "Apache Framework"}};
+	keywords["RedHat Linux"] = {{"keyword", "RedHat Linux,Linux"}, {"type", "Operating System"}};
+	keywords["Nim"] = {{"keyword", "Nim"}, {"type", "Programming Language"}};
+	keywords["Phantom.js"] = {{"keyword", "PhantomJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Lucid"] = {{"keyword", "Lucid"}, {"type", "Programming Language"}};
+	keywords["Amazon VPC"] = {{"keyword", "Amazon VPC"}, {"type", "Amazon Web Services Product"}};
+	keywords["Druid"] = {{"keyword", "Druid,NoSQL"}, {"type", "Database"}};
+	keywords["Red"] = {{"keyword", "Red"}, {"type", "Programming Language"}};
+	keywords["ALGOL 58"] = {{"keyword", "ALGOL 58"}, {"type", "Programming Language"}};
+	keywords["Google Apps Script"] = {{"keyword", "Google Apps Script"}, {"type", "Programming Language"}};
+	keywords["S/SL"] = {{"keyword", "S/SL"}, {"type", "Programming Language"}};
+	keywords["RPL"] = {{"keyword", "RPL"}, {"type", "Programming Language"}};
+	keywords["Groovy"] = {{"keyword", "Groovy,Java"}, {"type", "Programming Language"}};
+	keywords["HiveMind"] = {{"keyword", "Apache HiveMind"}, {"type", "Apache Framework"}};
+	keywords["C++/C"] = {{"keyword", "C,C++"}, {"type", "Programming Language"}};
+	keywords["OFBiz"] = {{"keyword", "Apache OFBiz,Java"}, {"type", "Web Framework,Apache Framework"}};
+	keywords["ColdBox"] = {{"keyword", "ColdBox,ColdFusion"}, {"type", "Web Framework"}};
+	keywords["Id"] = {{"keyword", "Id"}, {"type", "Programming Language"}};
+	keywords["Groovy/Grails"] = {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}};
+	keywords["Tapestry"] = {{"keyword", "Apache Tapestry,Java"}, {"type", "Web Framework,Apache Framework"}};
+	keywords["SYMPL"] = {{"keyword", "SYMPL"}, {"type", "Programming Language"}};
+	keywords["Sencha Touch"] = {{"keyword", "Sencha Touch,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["JS"] = {{"keyword", "JavaScript"}, {"type", "Programming Language"}};
+	keywords["Aurelia"] = {{"keyword", "Aurelia.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["MySQL"] = {{"keyword", "MySQL,SQL"}, {"type", "Database"}};
+	keywords["PL/0"] = {{"keyword", "PL-0"}, {"type", "Programming Language"}};
+	keywords["Helix database"] = {{"keyword", "Helix database,SQL"}, {"type", "Database"}};
+	keywords["Responsee"] = {{"keyword", "Responsee,CSS"}, {"type", "CSS Framework"}};
+	keywords["PeopleCode"] = {{"keyword", "PeopleCode"}, {"type", "Programming Language"}};
+	keywords["Opa"] = {{"keyword", "Opa"}, {"type", "Programming Language"}};
+	keywords["NAnt"] = {{"keyword", "NAnt,.NET"}, {"type", "Build Automation Tool"}};
+	keywords["Bash"] = {{"keyword", "Bash,Linux"}, {"type", "Programming Language"}};
+	keywords["PL/P"] = {{"keyword", "PL-P"}, {"type", "Programming Language"}};
+	keywords["Xalan"] = {{"keyword", "Apache Xalan"}, {"type", "Apache Framework"}};
+	keywords["PowerBuilder"] = {{"keyword", "PowerBuilder"}, {"type", "Programming Language"}};
+	keywords["Magik"] = {{"keyword", "Magik"}, {"type", "Programming Language"}};
+	keywords["Batch"] = {{"keyword", "Batch"}, {"type", "Programming Language"}};
+	keywords["DASL"] = {{"keyword", "DASL"}, {"type", "Programming Language"}};
+	keywords["PL/C"] = {{"keyword", "PL-C"}, {"type", "Programming Language"}};
+	keywords["PL/B"] = {{"keyword", "PL-B"}, {"type", "Programming Language"}};
+	keywords["PL/M"] = {{"keyword", "PL-M"}, {"type", "Programming Language"}};
+	keywords["Monaca"] = {{"keyword", "Monaca,HTML,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["T-SQL"] = {{"keyword", "T-SQL,SQL"}, {"type", "Database"}};
+	keywords["PL/I"] = {{"keyword", "PL-I"}, {"type", "Programming Language"}};
+	keywords["Maxima"] = {{"keyword", "Maxima"}, {"type", "Programming Language"}};
+	keywords["Polymer"] = {{"keyword", "Polymer.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["MySQL/MariaDB"] = {{"keyword", "MySQL,MariaDB,SQL"}, {"type", "Database"}};
+	keywords["Olingo"] = {{"keyword", "Apache Olingo"}, {"type", "Apache Framework"}};
+	keywords["Visual Basic"] = {{"keyword", "Visual Basic,.NET"}, {"type", "Programming Language"}};
+	keywords["MariaDB"] = {{"keyword", "MariaDB,MySQL,SQL"}, {"type", "Database"}};
+	keywords["J#"] = {{"keyword", "J#"}, {"type", "Programming Language"}};
+	keywords["Kojo"] = {{"keyword", "Kojo"}, {"type", "Programming Language"}};
+	keywords["Glacier"] = {{"keyword", "Amazon Glacier"}, {"type", "Amazon Web Services Product"}};
+	keywords["Linter"] = {{"keyword", "Linter,SQL"}, {"type", "Database"}};
+	keywords["Nial"] = {{"keyword", "Nial"}, {"type", "Programming Language"}};
+	keywords["Jalsonic Opinion"] = {{"keyword", "Jalsonic Opinion,CSS"}, {"type", "CSS Framework"}};
+	keywords["Psake"] = {{"keyword", "Psake,PowerShell"}, {"type", "Build Automation Tool"}};
+	keywords["DATATRIEVE"] = {{"keyword", "DATATRIEVE"}, {"type", "Programming Language"}};
+	keywords["Celix"] = {{"keyword", "Apache Celix"}, {"type", "Apache Framework"}};
+	keywords["Edinburgh IMP"] = {{"keyword", "Edinburgh IMP"}, {"type", "Programming Language"}};
+	keywords["Idris"] = {{"keyword", "Idris"}, {"type", "Programming Language"}};
+	keywords["MaxScript internal language 3D Studio Max"] = {{"keyword", "MaxScript internal language 3D Studio Max"}, {"type", "Programming Language"}};
+	keywords["TUX web server"] = {{"keyword", "TUX Web server"}, {"type", "Web Server"}};
+	keywords["Janus"] = {{"keyword", "Janus"}, {"type", "Programming Language"}};
+	keywords["floatz"] = {{"keyword", "floatz,CSS"}, {"type", "CSS Framework"}};
+	keywords["Ionic"] = {{"keyword", "Ionic,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["MS SQL"] = {{"keyword", "MSSQL,SQL"}, {"type", "Database"}};
+	keywords["Click"] = {{"keyword", "Apache Click,Java"}, {"type", "Web Framework,Apache Framework"}};
+	keywords["Pivot"] = {{"keyword", "Apache Pivot"}, {"type", "Apache Framework"}};
+	keywords["Buildout"] = {{"keyword", "Buildout"}, {"type", "Continuous Integration Tools"}};
+	keywords["Waf"] = {{"keyword", "Waf"}, {"type", "Build Automation Tool"}};
+	keywords["Visual LISP"] = {{"keyword", "Visual LISP"}, {"type", "Programming Language"}};
+	keywords["C#/VB.NET"] = {{"keyword", "C#"}, {"type", "Programming Language"}};
+	keywords["TMG"] = {{"keyword", "TMG"}, {"type", "Programming Language"}};
+	keywords["REXX"] = {{"keyword", "REXX"}, {"type", "Programming Language"}};
+	keywords["Aster Data"] = {{"keyword", "Aster Data,SQL"}, {"type", "Database"}};
+	keywords["Play"] = {{"keyword", "Play Framework,Java,Scala"}, {"type", "Web Framework"}};
+	keywords["Processing"] = {{"keyword", "Processing"}, {"type", "Programming Language"}};
+	keywords["Yaws"] = {{"keyword", "Yaws"}, {"type", "Web Server"}};
+	keywords["iBATIS"] = {{"keyword", "Apache iBATIS"}, {"type", "Apache Framework"}};
+	keywords["NSIS"] = {{"keyword", "NSIS"}, {"type", "Programming Language"}};
+	keywords["MATLAB"] = {{"keyword", "MATLAB"}, {"type", "Programming Language"}};
+	keywords["Picolisp"] = {{"keyword", "Picolisp"}, {"type", "Programming Language"}};
+	keywords["Cilk"] = {{"keyword", "Cilk"}, {"type", "Programming Language"}};
+	keywords["CA Datacom"] = {{"keyword", "CA Datacom,SQL"}, {"type", "Database"}};
+	keywords["XSLT"] = {{"keyword", "XSLT"}, {"type", "Programming Language"}};
+	keywords["Pict"] = {{"keyword", "Pict"}, {"type", "Programming Language"}};
+	keywords["Babbage"] = {{"keyword", "Babbage"}, {"type", "Programming Language"}};
+	keywords["Pico"] = {{"keyword", "Pico"}, {"type", "Programming Language"}};
+	keywords["CSS/CSS3"] = {{"keyword", "CSS"}, {"type", "Programming Language"}};
+	keywords["BCPL"] = {{"keyword", "BCPL"}, {"type", "Programming Language"}};
+	keywords["SLIP"] = {{"keyword", "SLIP"}, {"type", "Programming Language"}};
+	keywords["KRC"] = {{"keyword", "KRC"}, {"type", "Programming Language"}};
+	keywords["HyperTalk"] = {{"keyword", "HyperTalk"}, {"type", "Programming Language"}};
+	keywords["Celery"] = {{"keyword", "Celery"}, {"type", "Message Broker"}};
+	keywords["GOAL"] = {{"keyword", "GOAL"}, {"type", "Programming Language"}};
+	keywords["Crosswalk Project"] = {{"keyword", "Crosswalk Project,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["OCaml"] = {{"keyword", "OCaml"}, {"type", "Programming Language"}};
+	keywords["ElectricCommander"] = {{"keyword", "ElectricCommander"}, {"type", "Build Automation Tool"}};
+	keywords["OpenOffice.org Base"] = {{"keyword", "OpenOffice.org Base"}, {"type", "Database"}};
+	keywords["JavaFX Script"] = {{"keyword", "JavaFX Script,Java"}, {"type", "Programming Language"}};
+	keywords["CherryPy"] = {{"keyword", "CherryPy,Python"}, {"type", "Web Framework"}};
+	keywords["Sinatra"] = {{"keyword", "Sinatra,Ruby"}, {"type", "Web Framework"}};
+	keywords["Radmind"] = {{"keyword", "Radmind"}, {"type", "Configuration Management Tools"}};
+	keywords["Jython"] = {{"keyword", "Jython"}, {"type", "Programming Language"}};
+	keywords["Small Basic"] = {{"keyword", "Small Basic"}, {"type", "Programming Language"}};
+	keywords["Squirrel"] = {{"keyword", "Squirrel"}, {"type", "Programming Language"}};
+	keywords["Dockunit"] = {{"keyword", "Dockunit"}, {"type", "Continuous Integration Tools"}};
+	keywords["Knockout.js"] = {{"keyword", "Knockout.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Coq"] = {{"keyword", "Coq"}, {"type", "Programming Language"}};
+	keywords["MariaDB/MySQL"] = {{"keyword", "MariaDB,MySQL,SQL"}, {"type", "Database"}};
+	keywords["SISAL"] = {{"keyword", "SISAL"}, {"type", "Programming Language"}};
+	keywords["LodashJS"] = {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Ace DASL"] = {{"keyword", "Ace DASL"}, {"type", "Programming Language"}};
+	keywords["LANSA"] = {{"keyword", "LANSA"}, {"type", "Programming Language"}};
+	keywords["Zeno"] = {{"keyword", "Zeno"}, {"type", "Programming Language"}};
+	keywords["Camel"] = {{"keyword", "Apache Camel"}, {"type", "Apache Framework"}};
+	keywords["IBM Informix-4GL"] = {{"keyword", "IBM Informix-4GL"}, {"type", "Programming Language"}};
+	keywords["Lustre"] = {{"keyword", "Lustre"}, {"type", "Programming Language"}};
+	keywords["Microsoft BizTalk Server"] = {{"keyword", "Microsoft BizTalk Server"}, {"type", "Message Broker"}};
+	keywords["Lite-C"] = {{"keyword", "Lite-C"}, {"type", "Programming Language"}};
+	keywords["PLANC"] = {{"keyword", "PLANC"}, {"type", "Programming Language"}};
+	keywords["PowerShell"] = {{"keyword", "PowerShell,Windows"}, {"type", "Programming Language"}};
+	keywords["Rlab"] = {{"keyword", "Rlab"}, {"type", "Programming Language"}};
+	keywords["Unix/Linux"] = {{"keyword", "Unix"}, {"type", "Operating System"}};
+	keywords["Webpack"] = {{"keyword", "Webpack,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["MarionetteJS"] = {{"keyword", "Marionette.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["VMDS"] = {{"keyword", "VMDS,SQL"}, {"type", "Database"}};
+	keywords["JASS"] = {{"keyword", "JASS"}, {"type", "Programming Language"}};
+	keywords["Icon"] = {{"keyword", "Icon"}, {"type", "Programming Language"}};
+	keywords["RPG"] = {{"keyword", "RPG"}, {"type", "Programming Language"}};
+	keywords["Winbatch"] = {{"keyword", "Winbatch"}, {"type", "Programming Language"}};
+	keywords["Mercurial"] = {{"keyword", "Mercurial"}, {"type", "Version Control"}};
+	keywords["Opal"] = {{"keyword", "Opal"}, {"type", "Programming Language"}};
+	keywords["EnterpriseDB"] = {{"keyword", "EnterpriseDB,SQL"}, {"type", "Database"}};
+	keywords["Grails"] = {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}};
+	keywords["Linux/Unix"] = {{"keyword", "Linux,Unix"}, {"type", "Operating System"}};
+	keywords["EXASolution"] = {{"keyword", "EXASolution,SQL"}, {"type", "Database"}};
+	keywords["ZPL"] = {{"keyword", "ZPL"}, {"type", "Programming Language"}};
+	keywords["Quattor"] = {{"keyword", "Quattor"}, {"type", "Configuration Management Tools"}};
+	keywords["Visual Component Library (VCL)"] = {{"keyword", "Visual Component Library (VCL),CSS"}, {"type", "CSS Framework"}};
+	keywords["Microcode"] = {{"keyword", "Microcode"}, {"type", "Programming Language"}};
+	keywords["ISconf"] = {{"keyword", "ISconf"}, {"type", "Configuration Management Tools"}};
+	keywords["ESPOL"] = {{"keyword", "ESPOL"}, {"type", "Programming Language"}};
+	keywords["JDO"] = {{"keyword", "Apache JDO"}, {"type", "Apache Framework"}};
+	keywords["Java"] = {{"keyword", "Java"}, {"type", "Programming Language"}};
+	keywords["WebObjects"] = {{"keyword", "WebObjects,Java"}, {"type", "Web Framework"}};
+	keywords["Webware"] = {{"keyword", "Webware,Python"}, {"type", "Web Framework"}};
+	keywords["Gulp"] = {{"keyword", "Gulp.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["CorVision"] = {{"keyword", "CorVision"}, {"type", "Programming Language"}};
+	keywords["Ontotext"] = {{"keyword", "Ontotext,Graph databases"}, {"type", "Database"}};
+	keywords["Etoys"] = {{"keyword", "Etoys"}, {"type", "Programming Language"}};
+	keywords["NetRexx"] = {{"keyword", "NetRexx"}, {"type", "Programming Language"}};
+	keywords["PolymerJS"] = {{"keyword", "Polymer.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Starlogo"] = {{"keyword", "Starlogo"}, {"type", "Programming Language"}};
+	keywords["FoxBase"] = {{"keyword", "FoxBase"}, {"type", "Programming Language"}};
+	keywords["Hack"] = {{"keyword", "Hack,PHP"}, {"type", "Programming Language"}};
+	keywords["Z notation"] = {{"keyword", "Z notation"}, {"type", "Programming Language"}};
+	keywords["PLEX"] = {{"keyword", "PLEX"}, {"type", "Programming Language"}};
+	keywords["Lucene"] = {{"keyword", "Apache Lucene"}, {"type", "Search Server,Apache Framework"}};
+	keywords["Boo"] = {{"keyword", "Boo"}, {"type", "Programming Language"}};
+	keywords["Boa"] = {{"keyword", "Boa"}, {"type", "Web Server"}};
+	keywords["CppCMS"] = {{"keyword", "CppCMS,C++"}, {"type", "Web Framework"}};
+	keywords["chomski"] = {{"keyword", "chomski"}, {"type", "Programming Language"}};
+	keywords["ElastiCache"] = {{"keyword", "Amazon ElastiCache"}, {"type", "Amazon Web Services Product"}};
+	keywords["Bourne shell"] = {{"keyword", "Bourne shell"}, {"type", "Programming Language"}};
+	keywords["ACC"] = {{"keyword", "ACC"}, {"type", "Programming Language"}};
+	keywords["Elm"] = {{"keyword", "Elm"}, {"type", "Programming Language"}};
+	keywords["ObjectScript"] = {{"keyword", "ObjectScript"}, {"type", "Programming Language"}};
+	keywords["HFS"] = {{"keyword", "HFS"}, {"type", "Web Server"}};
+	keywords["EXEC 2"] = {{"keyword", "EXEC 2"}, {"type", "Programming Language"}};
+	keywords["Klerer-May System"] = {{"keyword", "Klerer-May System"}, {"type", "Programming Language"}};
+	keywords["Meteor"] = {{"keyword", "Meteor.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Flume"] = {{"keyword", "Apache Flume"}, {"type", "Apache Framework"}};
+	keywords["Mac OS X"] = {{"keyword", "OS X"}, {"type", "Operating System"}};
+	keywords["Backbone"] = {{"keyword", "Backbone.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Caddy"] = {{"keyword", "Caddy"}, {"type", "Web Server"}};
+	keywords["Stripes MVC"] = {{"keyword", "Stripes,Java"}, {"type", "Web Framework"}};
+	keywords["inuitcss"] = {{"keyword", "inuitcss,CSS"}, {"type", "CSS Framework"}};
+	keywords["RDM Embedded"] = {{"keyword", "RDM Embedded,SQL"}, {"type", "Database"}};
+	keywords["Responsive BP"] = {{"keyword", "Responsive BP,CSS"}, {"type", "CSS Framework"}};
+	keywords["Fantom"] = {{"keyword", "Fantom"}, {"type", "Programming Language"}};
+	keywords["Abdera"] = {{"keyword", "Apache Abdera"}, {"type", "Apache Framework"}};
+	keywords["Vertica"] = {{"keyword", "Vertica,SQL"}, {"type", "Database"}};
+	keywords["Datalog"] = {{"keyword", "Datalog"}, {"type", "Programming Language"}};
+	keywords["COMAL"] = {{"keyword", "COMAL"}, {"type", "Programming Language"}};
+	keywords["Lenya"] = {{"keyword", "Apache Lenya"}, {"type", "Apache Framework"}};
+	keywords["Newspeak"] = {{"keyword", "Newspeak"}, {"type", "Programming Language"}};
+	keywords["Pascal"] = {{"keyword", "Pascal"}, {"type", "Programming Language"}};
+	keywords["ActionScript"] = {{"keyword", "ActionScript"}, {"type", "Programming Language"}};
+	keywords["AMOS"] = {{"keyword", "AMOS"}, {"type", "Programming Language"}};
+	keywords["GDL"] = {{"keyword", "GDL"}, {"type", "Programming Language"}};
+	keywords["Cython"] = {{"keyword", "Cython"}, {"type", "Programming Language"}};
+	keywords["Phoenix"] = {{"keyword", "Apache Phoenix,SQL,HBase"}, {"type", "Database,Apache Framework"}};
+	keywords["Apex"] = {{"keyword", "Apex"}, {"type", "Programming Language"}};
+	keywords["Vagrant"] = {{"keyword", "Vagrant"}, {"type", "Virtual Machine Environment"}};
+	keywords["D3.js"] = {{"keyword", "D3.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Singa"] = {{"keyword", "Apache Singa"}, {"type", "Apache Framework"}};
+	keywords["OPS5"] = {{"keyword", "OPS5"}, {"type", "Programming Language"}};
+	keywords["ECMAScript6"] = {{"keyword", "ECMAScript"}, {"type", "Programming Language"}};
+	keywords["ECMAScript7"] = {{"keyword", "ECMAScript"}, {"type", "Programming Language"}};
+	keywords["A#"] = {{"keyword", "A#"}, {"type", "Programming Language"}};
+	keywords["TXL"] = {{"keyword", "TXL"}, {"type", "Programming Language"}};
+	keywords["LibreOffice Base"] = {{"keyword", "LibreOffice Base"}, {"type", "Database"}};
+	keywords["Max"] = {{"keyword", "Max"}, {"type", "Programming Language"}};
+	keywords["A+"] = {{"keyword", "A+"}, {"type", "Programming Language"}};
+	keywords["vvvv"] = {{"keyword", "vvvv"}, {"type", "Programming Language"}};
+	keywords["Karel++"] = {{"keyword", "Karel++"}, {"type", "Programming Language"}};
+	keywords["Mac"] = {{"keyword", "OS X"}, {"type", "Operating System"}};
+	keywords["Oozie"] = {{"keyword", "Apache Oozie"}, {"type", "Apache Framework"}};
+	keywords["Simula"] = {{"keyword", "Simula"}, {"type", "Programming Language"}};
+	keywords["Fedora"] = {{"keyword", "Fedora,Linux"}, {"type", "Operating System"}};
+	keywords["SystemVerilog"] = {{"keyword", "SystemVerilog"}, {"type", "Programming Language"}};
+	keywords["Laravel"] = {{"keyword", "Laravel,PHP"}, {"type", "Web Framework"}};
+	keywords["XOTcl"] = {{"keyword", "XOTcl"}, {"type", "Programming Language"}};
+	keywords["Escher"] = {{"keyword", "Escher"}, {"type", "Programming Language"}};
+	keywords["Derby"] = {{"keyword", "Apache Derby,SQL"}, {"type", "Database,Apache Framework"}};
+	keywords["QDB"] = {{"keyword", "QDB"}, {"type", "Message Broker"}};
+	keywords["Mageia"] = {{"keyword", "Mageia,Linux"}, {"type", "Operating System"}};
+	keywords["Gump"] = {{"keyword", "Apache Gump"}, {"type", "Continuous Integration Tools"}};
+	keywords["OpenMake Software"] = {{"keyword", "OpenMake Software"}, {"type", "Build Automation Tool"}};
+	keywords["Mercury"] = {{"keyword", "Mercury"}, {"type", "Programming Language"}};
+	keywords["Git"] = {{"keyword", "Git"}, {"type", "Version Control"}};
+	keywords["CPL"] = {{"keyword", "CPL"}, {"type", "Programming Language"}};
+	keywords["Limnor"] = {{"keyword", "Limnor"}, {"type", "Programming Language"}};
+	keywords["Self"] = {{"keyword", "Self"}, {"type", "Programming Language"}};
+	keywords["Rails"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["Averest"] = {{"keyword", "Averest"}, {"type", "Programming Language"}};
+	keywords["Smart.Framework"] = {{"keyword", "Smart.Framework,PHP"}, {"type", "Web Framework"}};
+	keywords["Microsoft Visual FoxPro"] = {{"keyword", "Microsoft Visual FoxPro"}, {"type", "Database"}};
+	keywords["ThreeJS"] = {{"keyword", "Three.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Ratfor"] = {{"keyword", "Ratfor"}, {"type", "Programming Language"}};
+	keywords["Juju"] = {{"keyword", "Juju"}, {"type", "Configuration Management Tools"}};
+	keywords["Internet Information Services"] = {{"keyword", "IIS"}, {"type", "Web Server"}};
+	keywords["SWISH-E"] = {{"keyword", "SWISH-E"}, {"type", "Search Server"}};
+	keywords["Yorick"] = {{"keyword", "Yorick"}, {"type", "Programming Language"}};
+	keywords["GNU E"] = {{"keyword", "GNU E"}, {"type", "Programming Language"}};
+	keywords["Rhodes"] = {{"keyword", "RhoMobile,HTML,Ruby,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["solidDB"] = {{"keyword", "solidDB,SQL"}, {"type", "Database"}};
+	keywords["Perl6"] = {{"keyword", "Perl"}, {"type", "Programming Language"}};
+	keywords["TimesTen"] = {{"keyword", "TimesTen,SQL"}, {"type", "Database"}};
+	keywords["SAP HANA"] = {{"keyword", "SAP HANA,SQL"}, {"type", "Database"}};
+	keywords["Zookeeper"] = {{"keyword", "Apache Zookeeper"}, {"type", "Apache Framework"}};
+	keywords["FFP"] = {{"keyword", "FFP"}, {"type", "Programming Language"}};
+	keywords["NuoDB"] = {{"keyword", "NuoDB,NewSQL"}, {"type", "Database"}};
+	keywords["S-PLUS"] = {{"keyword", "S-PLUS"}, {"type", "Programming Language"}};
+	keywords["R:Base"] = {{"keyword", "R:Base,SQL"}, {"type", "Database"}};
+	keywords["MyFaces"] = {{"keyword", "Apache MyFaces"}, {"type", "Apache Framework"}};
+	keywords["Blockly"] = {{"keyword", "Blockly"}, {"type", "Programming Language"}};
+	keywords["BitBake"] = {{"keyword", "BitBake"}, {"type", "Build Automation Tool"}};
+	keywords["Stata"] = {{"keyword", "Stata"}, {"type", "Programming Language"}};
+	keywords["NewSQL"] = {{"keyword", "NewSQL"}, {"type", "Database Type"}};
+	keywords["Nickle"] = {{"keyword", "Nickle"}, {"type", "Programming Language"}};
+	keywords["Memcached"] = {{"keyword", "Memcached"}, {"type", "Data Structure Server"}};
+	keywords["Continua CI"] = {{"keyword", "Continua CI"}, {"type", "Continuous Integration Tools"}};
+	keywords["Stonehenge"] = {{"keyword", "Apache Stonehenge"}, {"type", "Apache Framework"}};
+	keywords["ISWIM"] = {{"keyword", "ISWIM"}, {"type", "Programming Language"}};
+	keywords["Lodash.js"] = {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Rails/Ruby"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["HTML"] = {{"keyword", "HTML"}, {"type", "Programming Language"}};
+	keywords["SNOBOL"] = {{"keyword", "SNOBOL"}, {"type", "Programming Language"}};
+	keywords["Swift"] = {{"keyword", "Swift,iOS"}, {"type", "Programming Language"}};
+	keywords["Orc"] = {{"keyword", "Orc"}, {"type", "Programming Language"}};
+	keywords["iUI"] = {{"keyword", "iUI,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["ChartJS"] = {{"keyword", "Chart.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["DHTML"] = {{"keyword", "DHTML"}, {"type", "Programming Language"}};
+	keywords["Apache HTTP"] = {{"keyword", "Apache HTTP Server"}, {"type", "Web Server,Apache Framework"}};
+	keywords["CloudStack"] = {{"keyword", "Apache CloudStack"}, {"type", "Apache Framework"}};
+	keywords["Zeus Web Server"] = {{"keyword", "Zeus Web Server"}, {"type", "Web Server"}};
+	keywords["AutoIt"] = {{"keyword", "AutoIt"}, {"type", "Programming Language"}};
+	keywords["Lo-dash"] = {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["MASM Microsoft Assembly x86"] = {{"keyword", "MASM Microsoft Assembly x86"}, {"type", "Programming Language"}};
+	keywords["uikit"] = {{"keyword", "uikit,CSS"}, {"type", "CSS Framework"}};
+	keywords["Obj-C"] = {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}};
+	keywords["Saetta Web Server"] = {{"keyword", "Saetta Web Server"}, {"type", "Web Server"}};
+	keywords["Smalltalk"] = {{"keyword", "Smalltalk"}, {"type", "Programming Language"}};
+	keywords["FP"] = {{"keyword", "FP"}, {"type", "Programming Language"}};
+	keywords["Sencha"] = {{"keyword", "Sencha Touch,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["Yii"] = {{"keyword", "Yii,PHP"}, {"type", "Web Framework"}};
+	keywords["Mahout"] = {{"keyword", "Apache Mahout"}, {"type", "Apache Framework"}};
+	keywords["SML"] = {{"keyword", "SML"}, {"type", "Programming Language"}};
+	keywords["Empress Embedded Database"] = {{"keyword", "Empress Embedded Database,SQL"}, {"type", "Database"}};
+	keywords["FL"] = {{"keyword", "FL"}, {"type", "Programming Language"}};
+	keywords["Oxygene"] = {{"keyword", "Oxygene"}, {"type", "Programming Language"}};
+	keywords["OpenMaker Software"] = {{"keyword", "OpenMaker Software"}, {"type", "Configuration Management Tools"}};
+	keywords["MDL"] = {{"keyword", "MDL"}, {"type", "Programming Language"}};
+	keywords["Elastic MapReduce"] = {{"keyword", "Amazon Elastic MapReduce"}, {"type", "Amazon Web Services Product"}};
+	keywords["CruiseControl"] = {{"keyword", "CruiseControl"}, {"type", "Continuous Integration Tools"}};
+	keywords["HSQLDB"] = {{"keyword", "HSQLDB,SQL"}, {"type", "Database"}};
+	keywords["SQL Anywhere"] = {{"keyword", "SQL Anywhere,SQL"}, {"type", "Database"}};
+	keywords["Solr"] = {{"keyword", "Apache Solr,Lucene"}, {"type", "Search Server,Apache Framework"}};
+	keywords["Big-Data"] = {{"keyword", "Big Data"}, {"type", "Keyword"}};
+	keywords["Amazon Elastic Block Store"] = {{"keyword", "Amazon Elastic Block Store"}, {"type", "Amazon Web Services Product"}};
+	keywords["Hartmann pipelines"] = {{"keyword", "Hartmann pipelines"}, {"type", "Programming Language"}};
+	keywords["Claire"] = {{"keyword", "Claire"}, {"type", "Programming Language"}};
+	keywords["Hiawatha"] = {{"keyword", "Hiawatha"}, {"type", "Web Server"}};
+	keywords["Bottle"] = {{"keyword", "Bottle,Python"}, {"type", "Web Framework"}};
+	keywords["JEE"] = {{"keyword", "Java EE,Java"}, {"type", "Programming Language"}};
+	keywords["Lambda"] = {{"keyword", "Amazon Lambda"}, {"type", "Amazon Web Services Product"}};
+	keywords["Maya (MEL)"] = {{"keyword", "Maya (MEL)"}, {"type", "Programming Language"}};
+	keywords["ALF"] = {{"keyword", "ALF"}, {"type", "Programming Language"}};
+	keywords["ChucK"] = {{"keyword", "ChucK"}, {"type", "Programming Language"}};
+	keywords["ZOPL"] = {{"keyword", "ZOPL"}, {"type", "Programming Language"}};
+	keywords["F#"] = {{"keyword", "F#"}, {"type", "Programming Language"}};
+	keywords["Grails/Groovy"] = {{"keyword", "Groovy on Grails,Groovy"}, {"type", "Web Framework"}};
+	keywords["Neko"] = {{"keyword", "Neko"}, {"type", "Programming Language"}};
+	keywords["Camping"] = {{"keyword", "Camping,Ruby"}, {"type", "Web Framework"}};
+	keywords["LiveScript"] = {{"keyword", "LiveScript"}, {"type", "Programming Language"}};
+	keywords["Ubercode"] = {{"keyword", "Ubercode"}, {"type", "Programming Language"}};
+	keywords["TOM"] = {{"keyword", "TOM"}, {"type", "Programming Language"}};
+	keywords["Scheme"] = {{"keyword", "Scheme"}, {"type", "Programming Language"}};
+	keywords["Node.js"] = {{"keyword", "Node.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["FLOW-MATIC"] = {{"keyword", "FLOW-MATIC"}, {"type", "Programming Language"}};
+	keywords["CUBRID"] = {{"keyword", "CUBRID,SQL"}, {"type", "Database"}};
+	keywords["EXEC"] = {{"keyword", "EXEC"}, {"type", "Programming Language"}};
+	keywords["Wave"] = {{"keyword", "Apache Wave"}, {"type", "Apache Framework"}};
+	keywords["LiteSpeed Web Server"] = {{"keyword", "LiteSpeed Web Server"}, {"type", "Web Server"}};
+	keywords["Jspx-bay"] = {{"keyword", "Jspx-bay,Java"}, {"type", "Web Framework"}};
+	keywords["ABC"] = {{"keyword", "ABC"}, {"type", "Programming Language"}};
+	keywords["BuildMaster"] = {{"keyword", "BuildMaster"}, {"type", "Continuous Integration Tools"}};
+	keywords["Hive"] = {{"keyword", "Apache Hive"}, {"type", "Apache Framework"}};
+	keywords["Q"] = {{"keyword", "Q"}, {"type", "Programming Language"}};
+	keywords["Blackberry"] = {{"keyword", "Blackberry OS"}, {"type", "Mobile Operating System"}};
+	keywords["X10"] = {{"keyword", "X10"}, {"type", "Programming Language"}};
+	keywords["PRADO"] = {{"keyword", "PRADO,PHP"}, {"type", "Web Framework"}};
+	keywords["Selenium"] = {{"keyword", "Selenium"}, {"type", "Keyword"}};
+	keywords["Orwell"] = {{"keyword", "Orwell"}, {"type", "Programming Language"}};
+	keywords["NMake"] = {{"keyword", "NMake"}, {"type", "Build Automation Tool"}};
+	keywords["Grub"] = {{"keyword", "Grub"}, {"type", "Search Server"}};
+	keywords["SiMPLE"] = {{"keyword", "SiMPLE"}, {"type", "Programming Language"}};
+	keywords["SIGNAL"] = {{"keyword", "SIGNAL"}, {"type", "Programming Language"}};
+	keywords["NodeJS"] = {{"keyword", "Node.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["HandlebarsJS"] = {{"keyword", "Handlebars.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["XPL0"] = {{"keyword", "XPL0"}, {"type", "Programming Language"}};
+	keywords["PL/11"] = {{"keyword", "PL-11"}, {"type", "Programming Language"}};
+	keywords["Handlebars.js"] = {{"keyword", "Handlebars.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["VueJS"] = {{"keyword", "Vue.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Mirah"] = {{"keyword", "Mirah"}, {"type", "Programming Language"}};
+	keywords["EASYTRIEVE PLUS"] = {{"keyword", "EASYTRIEVE PLUS"}, {"type", "Programming Language"}};
+	keywords["OptimJ"] = {{"keyword", "OptimJ"}, {"type", "Programming Language"}};
+	keywords["Visual Build"] = {{"keyword", "Visual Build"}, {"type", "Build Automation Tool"}};
+	keywords["InfiniteGraph"] = {{"keyword", "InfiniteGraph,Graph databases"}, {"type", "Database"}};
+	keywords["Ceylon"] = {{"keyword", "Ceylon"}, {"type", "Programming Language"}};
+	keywords["S-Lang"] = {{"keyword", "S-Lang"}, {"type", "Programming Language"}};
+	keywords["EGL"] = {{"keyword", "EGL"}, {"type", "Programming Language"}};
+	keywords["Solace Systems"] = {{"keyword", "Solace Systems"}, {"type", "Message Broker"}};
+	keywords["Shell"] = {{"keyword", "Shell,Unix"}, {"type", "Programming Language"}};
+	keywords["GroveSite"] = {{"keyword", "GroveSite,SQL"}, {"type", "Database"}};
+	keywords["SPSS"] = {{"keyword", "SPSS"}, {"type", "Programming Language"}};
+	keywords["Spanner"] = {{"keyword", "Spanner,NewSQL"}, {"type", "Database"}};
+	keywords["Amazon Virtual Private Cloud"] = {{"keyword", "Amazon VPC"}, {"type", "Amazon Web Services Product"}};
+	keywords["ItsNat"] = {{"keyword", "ItsNat,Java"}, {"type", "Web Framework"}};
+	keywords["FOIL"] = {{"keyword", "FOIL"}, {"type", "Programming Language"}};
+	keywords["iPhone"] = {{"keyword", "iOS"}, {"type", "Mobile Operating System"}};
+	keywords["LPC"] = {{"keyword", "LPC"}, {"type", "Programming Language"}};
+	keywords["P''"] = {{"keyword", "P"}, {"type", "Programming Language"}};
+	keywords["Kylin"] = {{"keyword", "Apache Kylin"}, {"type", "Apache Framework"}};
+	keywords["CLIST"] = {{"keyword", "CLIST"}, {"type", "Programming Language"}};
+	keywords["A-A-P"] = {{"keyword", "A-A-P,C"}, {"type", "Build Automation Tool"}};
+	keywords["Responsive Grid System"] = {{"keyword", "Responsive Grid System,CSS"}, {"type", "CSS Framework"}};
+	keywords["Informix"] = {{"keyword", "Informix,SQL"}, {"type", "Database"}};
+	keywords["jQuery"] = {{"keyword", "jQuery,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Bertrand"] = {{"keyword", "Bertrand"}, {"type", "Programming Language"}};
+	keywords["Ada"] = {{"keyword", "Ada"}, {"type", "Programming Language"}};
+	keywords["ABSET"] = {{"keyword", "ABSET"}, {"type", "Programming Language"}};
+	keywords["STAF"] = {{"keyword", "STAF"}, {"type", "Configuration Management Tools"}};
+	keywords["SciDB"] = {{"keyword", "SciDB,NoSQL"}, {"type", "Database"}};
+	keywords["Giraph"] = {{"keyword", "Apache Giraph"}, {"type", "Apache Framework"}};
+	keywords["JBoss EAP"] = {{"keyword", "JBoss EAP"}, {"type", "Web Server"}};
+	keywords["Maven"] = {{"keyword", "Apache Maven,Java"}, {"type", "Build Automation Tool,Apache Framework"}};
+	keywords["Snowball"] = {{"keyword", "Snowball"}, {"type", "Programming Language"}};
+	keywords["Percona"] = {{"keyword", "Percona,NewSQL"}, {"type", "Database"}};
+	keywords["MarkLogic"] = {{"keyword", "MarkLogic,Graph databases"}, {"type", "Database"}};
+	keywords["LilyPond"] = {{"keyword", "LilyPond"}, {"type", "Programming Language"}};
+	keywords["PortablE"] = {{"keyword", "PortablE"}, {"type", "Programming Language"}};
+	keywords["Angular.js"] = {{"keyword", "AngularJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["CSP"] = {{"keyword", "CSP"}, {"type", "Programming Language"}};
+	keywords["CSS"] = {{"keyword", "CSS"}, {"type", "Programming Language"}};
+	keywords["PHP"] = {{"keyword", "PHP"}, {"type", "Programming Language"}};
+	keywords["Ruby-on-Rails"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["Metafont"] = {{"keyword", "Metafont"}, {"type", "Programming Language"}};
+	keywords["FileMaker Pro"] = {{"keyword", "FileMaker Pro,SQL"}, {"type", "Database"}};
+	keywords["C#/.NET"] = {{"keyword", "C#"}, {"type", "Programming Language"}};
+	keywords["JustOneDB"] = {{"keyword", "JustOneDB,NewSQL"}, {"type", "Database"}};
+	keywords["BlueBream"] = {{"keyword", "BlueBream,Python"}, {"type", "Web Framework"}};
+	keywords["Cocoon"] = {{"keyword", "Apache Cocoon"}, {"type", "Apache Framework"}};
+	keywords["IBM Integration Bus"] = {{"keyword", "IBM Integration Bus"}, {"type", "Message Broker"}};
+	keywords["RethinkDB"] = {{"keyword", "RethinkDB,NoSQL"}, {"type", "Database"}};
+	keywords["ASP"] = {{"keyword", "ASP.NET,.NET"}, {"type", "Web Framework"}};
+	keywords["Excalibur"] = {{"keyword", "Apache Excalibur"}, {"type", "Apache Framework"}};
+	keywords["Vala"] = {{"keyword", "Vala"}, {"type", "Programming Language"}};
+	keywords["Oracle WebLogic Server"] = {{"keyword", "Oracle WebLogic Server"}, {"type", "Web Server"}};
+	keywords["CMS Pipelines"] = {{"keyword", "CMS Pipelines"}, {"type", "Programming Language"}};
+	keywords["R"] = {{"keyword", "R"}, {"type", "Programming Language"}};
+	keywords["Boomerang"] = {{"keyword", "Boomerang"}, {"type", "Programming Language"}};
+	keywords["REFAL"] = {{"keyword", "REFAL"}, {"type", "Programming Language"}};
+	keywords["Santuario"] = {{"keyword", "Apache Santuario"}, {"type", "Apache Framework"}};
+	keywords["Buildbot"] = {{"keyword", "Buildbot"}, {"type", "Continuous Integration Tools"}};
+	keywords["Turbo C++"] = {{"keyword", "Turbo C++,C++"}, {"type", "Programming Language"}};
+	keywords["Span"] = {{"keyword", "Span"}, {"type", "Programming Language"}};
+	keywords["Gearman"] = {{"keyword", "Gearman"}, {"type", "Message Broker"}};
+	keywords["Flex"] = {{"keyword", "Apache Flex"}, {"type", "Apache Framework"}};
+	keywords["Cascade Framework Light"] = {{"keyword", "Cascade Framework Light,CSS"}, {"type", "CSS Framework"}};
+	keywords["Require.js"] = {{"keyword", "Require.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["BackboneJS"] = {{"keyword", "Backbone.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["cdist"] = {{"keyword", "cdist"}, {"type", "Configuration Management Tools"}};
+	keywords["Action!"] = {{"keyword", "Action!"}, {"type", "Programming Language"}};
+	keywords["Buildr"] = {{"keyword", "Apache Buildr,Java"}, {"type", "Build Automation Tool,Apache Framework"}};
+	keywords["Lodash"] = {{"keyword", "Lodash.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Trac"] = {{"keyword", "Trac"}, {"type", "Programming Language"}};
+	keywords["C++"] = {{"keyword", "C++"}, {"type", "Programming Language"}};
+	keywords["Godiva"] = {{"keyword", "Godiva"}, {"type", "Programming Language"}};
+	keywords["Vaadin"] = {{"keyword", "Vaadin,Java"}, {"type", "Web Framework"}};
+	keywords["Buddy"] = {{"keyword", "Buddy"}, {"type", "Continuous Integration Tools"}};
+	keywords["UIMA"] = {{"keyword", "Apache UIMA"}, {"type", "Apache Framework"}};
+	keywords["BoxySheets"] = {{"keyword", "BoxySheets,CSS"}, {"type", "CSS Framework"}};
+	keywords["MIVA Script"] = {{"keyword", "MIVA Script"}, {"type", "Programming Language"}};
+	keywords["FORMAC"] = {{"keyword", "FORMAC"}, {"type", "Programming Language"}};
+	keywords["Kali Linux"] = {{"keyword", "Kali Linux,Linux"}, {"type", "Operating System"}};
+	keywords["Semaphore"] = {{"keyword", "Semaphore"}, {"type", "Continuous Integration Tools"}};
+	keywords["Zest"] = {{"keyword", "Apache Zest"}, {"type", "Apache Framework"}};
+	keywords["Android Studio/Java"] = {{"keyword", "Android,Java"}, {"type", "Mobile Operating System"}};
+	keywords["Ruby on Rails"] = {{"keyword", "Ruby on Rails,Ruby"}, {"type", "Web Framework"}};
+	keywords["Oracle RDBMS"] = {{"keyword", "Oracle,SQL"}, {"type", "Database"}};
+	keywords["GulpJS"] = {{"keyword", "Gulp.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Transcript"] = {{"keyword", "Transcript"}, {"type", "Programming Language"}};
+	keywords["ksh"] = {{"keyword", "ksh"}, {"type", "Programming Language"}};
+	keywords["Thrift"] = {{"keyword", "Apache Thrift"}, {"type", "Apache Framework"}};
+	keywords["Probo.CI"] = {{"keyword", "Probo.CI"}, {"type", "Continuous Integration Tools"}};
+	keywords["Objective-C"] = {{"keyword", "Objective C,iOS"}, {"type", "Programming Language"}};
+	keywords["Parquet"] = {{"keyword", "Apache Parquet,NoSQL"}, {"type", "Database,Apache Framework"}};
+	keywords["XHTML"] = {{"keyword", "XHTML"}, {"type", "Programming Language"}};
+	keywords["Objective-J"] = {{"keyword", "Objective J"}, {"type", "Programming Language"}};
+	keywords["Zsh"] = {{"keyword", "Zsh"}, {"type", "Programming Language"}};
+	keywords["GEORGE"] = {{"keyword", "GEORGE"}, {"type", "Programming Language"}};
+	keywords["SAP Sybase"] = {{"keyword", "SAP Sybase,SQL"}, {"type", "Database"}};
+	keywords["Gosu"] = {{"keyword", "Gosu"}, {"type", "Programming Language"}};
+	keywords["EmberJS"] = {{"keyword", "Ember.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Component Pascal"] = {{"keyword", "Component Pascal"}, {"type", "Programming Language"}};
+	keywords["Ansible"] = {{"keyword", "Ansible"}, {"type", "Configuration Management Tools"}};
+	keywords["OODT"] = {{"keyword", "Apache OODT"}, {"type", "Apache Framework"}};
+	keywords["Draco"] = {{"keyword", "Draco"}, {"type", "Programming Language"}};
+	keywords["KIF"] = {{"keyword", "KIF"}, {"type", "Programming Language"}};
+	keywords["Stackless Python"] = {{"keyword", "Stackless Python"}, {"type", "Programming Language"}};
+	keywords["Euphoria"] = {{"keyword", "Euphoria"}, {"type", "Programming Language"}};
+	keywords["Unity"] = {{"keyword", "Unity"}, {"type", "Programming Language"}};
+	keywords["CABIE"] = {{"keyword", "CABIE"}, {"type", "Continuous Integration Tools"}};
+	keywords["Lagoona"] = {{"keyword", "Lagoona"}, {"type", "Programming Language"}};
+	keywords["SQL Azure"] = {{"keyword", "SQL Azure,SQL"}, {"type", "Database"}};
+	keywords["Jenkins"] = {{"keyword", "Jenkins"}, {"type", "Continuous Integration Tools"}};
+	keywords["MIIS"] = {{"keyword", "MIIS"}, {"type", "Programming Language"}};
+	keywords["Python/Flask"] = {{"keyword", "Flask,Python"}, {"type", "Web Framework"}};
+	keywords["HLSL"] = {{"keyword", "HLSL"}, {"type", "Programming Language"}};
+	keywords["P4"] = {{"keyword", "Perforce"}, {"type", "Version Control"}};
+	keywords["Adenine"] = {{"keyword", "Adenine"}, {"type", "Programming Language"}};
+	keywords["G-code"] = {{"keyword", "G-code"}, {"type", "Programming Language"}};
+	keywords["DRAKON"] = {{"keyword", "DRAKON"}, {"type", "Programming Language"}};
+	keywords["Tcl/Tk"] = {{"keyword", "Tcl/Tk"}, {"type", "Programming Language"}};
+	keywords["P#"] = {{"keyword", "P#"}, {"type", "Programming Language"}};
+	keywords["S"] = {{"keyword", "S"}, {"type", "Programming Language"}};
+	keywords["A-0 System"] = {{"keyword", "A-0 System"}, {"type", "Programming Language"}};
+	keywords["Stanbol"] = {{"keyword", "Apache Stanbol"}, {"type", "Apache Framework"}};
+	keywords["MapReduce"] = {{"keyword", "MapReduce"}, {"type", "Keyword"}};
+	keywords["dBase"] = {{"keyword", "dBase,SQL"}, {"type", "Database"}};
+	keywords["Allura"] = {{"keyword", "Apache Allura"}, {"type", "Apache Framework"}};
+	keywords["OPL"] = {{"keyword", "OPL"}, {"type", "Programming Language"}};
+	keywords["Grunt.js"] = {{"keyword", "Grunt.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Axis"] = {{"keyword", "Apache Axis"}, {"type", "Apache Framework"}};
+	keywords["Model 204"] = {{"keyword", "Model 204"}, {"type", "Programming Language"}};
+	keywords["Solr/Lucene"] = {{"keyword", "Apache Solr,Lucene"}, {"type", "Search Server,Apache Framework"}};
+	keywords["Visual Fortran"] = {{"keyword", "Visual Fortran,Fortran"}, {"type", "Programming Language"}};
+	keywords["Xerces"] = {{"keyword", "Apache Xerces"}, {"type", "Apache Framework"}};
+	keywords["OpenLiteSpeed"] = {{"keyword", "OpenLiteSpeed"}, {"type", "Web Server"}};
+	keywords["Visual J++"] = {{"keyword", "Visual J++,Java"}, {"type", "Programming Language"}};
+	keywords["Net.Data"] = {{"keyword", "Net.Data"}, {"type", "Programming Language"}};
+	keywords["Fuse Message Broker"] = {{"keyword", "Fuse Message Broker"}, {"type", "Message Broker"}};
+	keywords["Oracle Spatial and Graph"] = {{"keyword", "Oracle Spatial and Graph,Graph databases"}, {"type", "Database"}};
+	keywords["SCSS"] = {{"keyword", "SCSS"}, {"type", "Programming Language"}};
+	keywords["HTML/DHTML"] = {{"keyword", "DHTML"}, {"type", "Programming Language"}};
+	keywords["Pylons"] = {{"keyword", "Pylons,Python"}, {"type", "Web Framework"}};
+	keywords["Neural-Networks"] = {{"keyword", "Neural Networks"}, {"type", "Keyword"}};
+	keywords["Not eXactly C"] = {{"keyword", "Not eXactly C,C"}, {"type", "Programming Language"}};
+	keywords[".NET"] = {{"keyword", ".NET"}, {"type", "Programming Language"}};
+	keywords["Bloodhound"] = {{"keyword", "Apache Bloodhound"}, {"type", "Apache Framework"}};
+	keywords["Cryptol"] = {{"keyword", "Cryptol"}, {"type", "Programming Language"}};
+	keywords["Resin"] = {{"keyword", "Resin"}, {"type", "Web Server"}};
+	keywords["JOVIAL"] = {{"keyword", "JOVIAL"}, {"type", "Programming Language"}};
+	keywords["MUMPS"] = {{"keyword", "MUMPS"}, {"type", "Programming Language"}};
+	keywords["Scilab"] = {{"keyword", "Scilab"}, {"type", "Programming Language"}};
+	keywords["PARI/GP"] = {{"keyword", "PARI/GP"}, {"type", "Programming Language"}};
+	keywords["ELAN"] = {{"keyword", "ELAN"}, {"type", "Programming Language"}};
+	keywords["Ant"] = {{"keyword", "Apache Ant,Java"}, {"type", "Build Automation Tool,Apache Framework"}};
+	keywords["RHEL"] = {{"keyword", "RedHat Linux,Linux"}, {"type", "Operating System"}};
+	keywords["Common.js"] = {{"keyword", "CommonJS,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Schema UI"] = {{"keyword", "Schema UI,CSS"}, {"type", "CSS Framework"}};
+	keywords["Machine-learning"] = {{"keyword", "Machine learning"}, {"type", "Keyword"}};
+	keywords["Profium"] = {{"keyword", "Profium,Graph databases"}, {"type", "Database"}};
+	keywords["Panorama"] = {{"keyword", "Panorama,SQL"}, {"type", "Database"}};
+	keywords["SP/k"] = {{"keyword", "SP/k"}, {"type", "Programming Language"}};
+	keywords["Umple"] = {{"keyword", "Umple"}, {"type", "Programming Language"}};
+	keywords["NEWP"] = {{"keyword", "NEWP"}, {"type", "Programming Language"}};
+	keywords["Hope"] = {{"keyword", "Hope"}, {"type", "Programming Language"}};
+	keywords["RhoMobile"] = {{"keyword", "RhoMobile,HTML,Ruby,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["Hopscotch"] = {{"keyword", "Hopscotch"}, {"type", "Programming Language"}};
+	keywords["SOL"] = {{"keyword", "SOL"}, {"type", "Programming Language"}};
+	keywords["PPL"] = {{"keyword", "PPL"}, {"type", "Programming Language"}};
+	keywords["Beam"] = {{"keyword", "Apache Beam"}, {"type", "Apache Framework"}};
+	keywords["FreeBSD"] = {{"keyword", "FreeBSD,BSD"}, {"type", "Operating System"}};
+	keywords["LuntBuild"] = {{"keyword", "LuntBuild"}, {"type", "Continuous Integration Tools"}};
+	keywords["Vue"] = {{"keyword", "Vue.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["ScaleDB"] = {{"keyword", "ScaleDB,NewSQL"}, {"type", "Database"}};
+	keywords["HTML/XHTML"] = {{"keyword", "XHTML"}, {"type", "Programming Language"}};
+	keywords["Reia"] = {{"keyword", "Reia"}, {"type", "Programming Language"}};
+	keywords["Logo"] = {{"keyword", "Logo"}, {"type", "Programming Language"}};
+	keywords["Netezza"] = {{"keyword", "Netezza,SQL"}, {"type", "Database"}};
+	keywords["Perforce Jam"] = {{"keyword", "Perforce Jam"}, {"type", "Build Automation Tool"}};
+	keywords["WebDNA"] = {{"keyword", "WebDNA"}, {"type", "Programming Language"}};
+	keywords["W3.CSS"] = {{"keyword", "W3.CSS,CSS"}, {"type", "CSS Framework"}};
+	keywords["CFML"] = {{"keyword", "CFML"}, {"type", "Programming Language"}};
+	keywords["Spring"] = {{"keyword", "Spring Framework,Java"}, {"type", "Web Framework"}};
+	keywords["ScaleBase"] = {{"keyword", "ScaleBase,NewSQL"}, {"type", "Database"}};
+	keywords["Julia"] = {{"keyword", "Julia"}, {"type", "Programming Language"}};
+	keywords["ABC ALGOL"] = {{"keyword", "ABC ALGOL"}, {"type", "Programming Language"}};
+	keywords["IBM DB2"] = {{"keyword", "IBM DB2,SQL"}, {"type", "Database"}};
+	keywords["Hypertable"] = {{"keyword", "Hypertable"}, {"type", "Database"}};
+	keywords["Visual FoxPro"] = {{"keyword", "Visual FoxPro"}, {"type", "Programming Language"}};
+	keywords["MacOS"] = {{"keyword", "OS X"}, {"type", "Operating System"}};
+	keywords["TypeScript"] = {{"keyword", "TypeScript,JavaScript"}, {"type", "Programming Language"}};
+	keywords["WebQL"] = {{"keyword", "WebQL"}, {"type", "Programming Language"}};
+	keywords["TIE"] = {{"keyword", "TIE"}, {"type", "Programming Language"}};
+	keywords["AspectJ"] = {{"keyword", "AspectJ"}, {"type", "Programming Language"}};
+	keywords["iOS"] = {{"keyword", "iOS"}, {"type", "Mobile Operating System"}};
+	keywords["Bistro"] = {{"keyword", "Bistro"}, {"type", "Programming Language"}};
+	keywords["Splunk"] = {{"keyword", "Splunk"}, {"type", "Search Server"}};
+	keywords["Visual Studio Team Services"] = {{"keyword", "Visual Studio Team Services"}, {"type", "Continuous Integration Tools"}};
+	keywords["TACPOL"] = {{"keyword", "TACPOL"}, {"type", "Programming Language"}};
+	keywords["Continuum"] = {{"keyword", "Apache Continuum"}, {"type", "Continuous Integration Tools"}};
+	keywords["Drupal"] = {{"keyword", "Drupal,PHP"}, {"type", "Web Framework"}};
+	keywords["CruiseControl.NET"] = {{"keyword", "CruiseControl.NET"}, {"type", "Continuous Integration Tools"}};
+	keywords["Gulp.js"] = {{"keyword", "Gulp.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["CentOS"] = {{"keyword", "CentOS,Linux"}, {"type", "Operating System"}};
+	keywords["SQR"] = {{"keyword", "SQR"}, {"type", "Programming Language"}};
+	keywords["Bash Scripting"] = {{"keyword", "Bash,Linux"}, {"type", "Programming Language"}};
+	keywords["NewtonScript"] = {{"keyword", "NewtonScript"}, {"type", "Programming Language"}};
+	keywords["Google Web Toolkit"] = {{"keyword", "Google Web Toolkit,Java"}, {"type", "Web Framework"}};
+	keywords["LYaPAS"] = {{"keyword", "LYaPAS"}, {"type", "Programming Language"}};
+	keywords["SQL"] = {{"keyword", "SQL"}, {"type", "Database Type"}};
+	keywords["Scala"] = {{"keyword", "Scala,Java"}, {"type", "Programming Language"}};
+	keywords["ICI"] = {{"keyword", "ICI"}, {"type", "Programming Language"}};
+	keywords["GT.M"] = {{"keyword", "GT.M,SQL"}, {"type", "Database"}};
+	keywords["Crosswalk"] = {{"keyword", "Crosswalk Project,HTML,CSS,JavaScript,Android,iOS"}, {"type", "Mobile Framework"}};
+	keywords["Forth"] = {{"keyword", "Forth"}, {"type", "Programming Language"}};
+	keywords["Wolfram"] = {{"keyword", "Wolfram"}, {"type", "Programming Language"}};
+	keywords["OSX"] = {{"keyword", "OS X"}, {"type", "Operating System"}};
+	keywords["FoxPro"] = {{"keyword", "FoxPro"}, {"type", "Programming Language"}};
+	keywords["NewLISP"] = {{"keyword", "NewLISP"}, {"type", "Programming Language"}};
+	keywords["Mustache.js"] = {{"keyword", "Mustache.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Zend Framework"] = {{"keyword", "Zend Framework,PHP"}, {"type", "Web Framework"}};
+	keywords["Strand"] = {{"keyword", "Strand"}, {"type", "Programming Language"}};
+	keywords["Planner"] = {{"keyword", "Planner"}, {"type", "Programming Language"}};
+	keywords["PCASTL"] = {{"keyword", "PCASTL"}, {"type", "Programming Language"}};
+	keywords["Prolog"] = {{"keyword", "Prolog"}, {"type", "Programming Language"}};
+	keywords["OpenJPA"] = {{"keyword", "Apache OpenJPA"}, {"type", "Apache Framework"}};
+	keywords["Qalb"] = {{"keyword", "Qalb"}, {"type", "Programming Language"}};
+	keywords["SocketIO"] = {{"keyword", "Socket.io,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Cayenne"] = {{"keyword", "Apache Cayenne"}, {"type", "Apache Framework"}};
+	keywords["IDL"] = {{"keyword", "IDL"}, {"type", "Programming Language"}};
+	keywords["CDuce"] = {{"keyword", "CDuce"}, {"type", "Programming Language"}};
+	keywords["Stripes"] = {{"keyword", "Stripes,Java"}, {"type", "Web Framework"}};
+	keywords["NetLogo"] = {{"keyword", "NetLogo"}, {"type", "Programming Language"}};
+	keywords["TACTIC"] = {{"keyword", "TACTIC,Python"}, {"type", "Web Framework"}};
+	keywords["Log4js"] = {{"keyword", "Log4js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Qpid"] = {{"keyword", "Apache Qpid"}, {"type", "Message Broker"}};
+	keywords["NXT-G"] = {{"keyword", "NXT-G"}, {"type", "Programming Language"}};
+	keywords["MINA"] = {{"keyword", "Apache MINA"}, {"type", "Apache Framework"}};
+	keywords["TeX"] = {{"keyword", "TeX"}, {"type", "Programming Language"}};
+	keywords["JScript .NET"] = {{"keyword", "JScript .NET,.NET"}, {"type", "Programming Language"}};
+	keywords["Mustache"] = {{"keyword", "Mustache.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Grunt"] = {{"keyword", "Grunt.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Tea"] = {{"keyword", "Tea"}, {"type", "Programming Language"}};
+	keywords["Golo"] = {{"keyword", "Golo"}, {"type", "Programming Language"}};
+	keywords["IBM RPG"] = {{"keyword", "IBM RPG"}, {"type", "Programming Language"}};
+	keywords["InterSystems Cache"] = {{"keyword", "InterSystems Cache,SQL"}, {"type", "Database"}};
+	keywords["Open Build Service"] = {{"keyword", "Open Build Service"}, {"type", "Build Automation Tool"}};
+	keywords["CIL"] = {{"keyword", "CIL"}, {"type", "Programming Language"}};
+	keywords["OpenEdge ABL"] = {{"keyword", "OpenEdge ABL"}, {"type", "Programming Language"}};
+	keywords["MSL"] = {{"keyword", "MSL"}, {"type", "Programming Language"}};
+	keywords["Topspeed"] = {{"keyword", "Topspeed"}, {"type", "Programming Language"}};
+	keywords["Lithium"] = {{"keyword", "Lithium,PHP"}, {"type", "Web Framework"}};
+	keywords["Natural-Language-Processing"] = {{"keyword", "Natural Language Processing"}, {"type", "Keyword"}};
+	keywords["Spread Toolkit"] = {{"keyword", "Spread Toolkit"}, {"type", "Message Broker"}};
+	keywords["Shale"] = {{"keyword", "Apache Shale"}, {"type", "Apache Framework"}};
+	keywords["Strider"] = {{"keyword", "Strider"}, {"type", "Continuous Integration Tools"}};
+	keywords["JEAN"] = {{"keyword", "JEAN"}, {"type", "Programming Language"}};
+	keywords["Polymer.js"] = {{"keyword", "Polymer.js,JavaScript"}, {"type", "Javascript Library"}};
+	keywords["Artificial-Intelligence"] = {{"keyword", "Artificial Intelligence"}, {"type", "Keyword"}};
+	keywords["@Formula"] = {{"keyword", "@Formula"}, {"type", "Programming Language"}};
+	keywords["Modest Grid"] = {{"keyword", "Modest Grid,CSS"}, {"type", "CSS Framework"}};
+	keywords["Visual DataFlex"] = {{"keyword", "Visual DataFlex"}, {"type", "Programming Language"}};
+	keywords["ABSYS"] = {{"keyword", "ABSYS"}, {"type", "Programming Language"}};
+	keywords["continuousphp"] = {{"keyword", "continuousphp"}, {"type", "Continuous Integration Tools"}};
+	keywords["Nemerle"] = {{"keyword", "Nemerle"}, {"type", "Programming Language"}};
+	keywords["Maple"] = {{"keyword", "Maple"}, {"type", "Programming Language"}};
+	keywords["Game Maker Language"] = {{"keyword", "Game Maker Language"}, {"type", "Programming Language"}};
+	keywords["Integrity"] = {{"keyword", "Integrity"}, {"type", "Continuous Integration Tools"}};
+}
 
 ME_Sample Keyword_Extractor_Model::generate_sample(classified_tokens_t & classified_words, int i){
     ME_Sample sample;
