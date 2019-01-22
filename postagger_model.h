@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <map>
 #include <unordered_map>
 
 using namespace std;
@@ -14,11 +15,15 @@ extern vector<string> keyword_insertion;
 
 class Postagger_Model {
     PerceptronTagger *postagger;
+    map<string, string> *specified_tags;
+    vector<pair<string, float> > *bias_weights;
+    vector<map<string, vector<pair<string, float> > > > *weights;
 
     void load_pos_tagger();
 
     public:
-        Postagger_Model(): postagger(nullptr) {}
+        Postagger_Model(): postagger(nullptr), specified_tags(nullptr), 
+            bias_weights(nullptr), weights(nullptr)  {}
         ~Postagger_Model();
 
         vector<pair<string, string> > tag_sentence(string str);

@@ -9,36 +9,37 @@
 using namespace std;
 
 Postagger_Model::~Postagger_Model(){
-    if (postagger != nullptr){
-        delete postagger;
-    }
+    if (postagger != nullptr) delete postagger;
+    if (weights != nullptr) delete weights;
+    if (specified_tags != nullptr) delete specified_tags;
+    if (bias_weights != nullptr) delete bias_weights;
 }
 
 void Postagger_Model::load_pos_tagger(){
     cout << "start loading pos tagger" << endl;
 
-    tagmap_in_t specified_tags;
+    tagmap_in_t *specified_tags = new tagmap_in_t;
     ifstream st_fs("data/specified_tags.txt");
     string k, v;
 
     while (st_fs >> k >> v){
-        specified_tags[k] = v;
+        (*specified_tags)[k] = v;
     }
 
     cout << "finish reading data/specified_tags.txt" << endl;
 
-    class_weights_in_t bias_weights;
+    class_weights_in_t *bias_weights = new class_weights_in_t;
     ifstream bw_fs("data/bias_weights.txt");
     string k2;
     float v2;
 
     while (bw_fs >> k2 >> v2){
-        bias_weights.push_back(make_pair(k2, v2));
+        (*bias_weights).push_back(make_pair(k2, v2));
     }
 
     cout << "finish reading data/bias_weights.txt" << endl;
 
-    weights_in_t weights;
+    weights_in_t *weights = new weights_in_t;
     ifstream w_fs("data/weights.txt");
     string k3, v3_1;
     float v3_2;
@@ -51,7 +52,7 @@ void Postagger_Model::load_pos_tagger(){
             iss >> k3;
 
             if (k3 == "####"){
-                weights.push_back(m);
+                (*weights).push_back(m);
                 break;
             }
 
@@ -66,7 +67,11 @@ void Postagger_Model::load_pos_tagger(){
 
     cout << "finish reading data/weights.txt" << endl;
 
-    postagger = new PerceptronTagger(weights, bias_weights, specified_tags);
+    postagger = new PerceptronTagger(*weights, *bias_weights, *specified_tags);
+    this->weights = weights;
+    this->bias_weights = bias_weights;
+    this->specified_tags = specified_tags;
+
     cout << "finish loading pos tagger" << endl;
 }
 
