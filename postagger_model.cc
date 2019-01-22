@@ -98,9 +98,9 @@ string make_regex(string keyword){
     string escaped_keyword = oss.str();
 
     ostringstream oss2;
-    oss2 << "[\\s|(|,|-|/](";
+    oss2 << "[\\s|(|,](";
     oss2 << escaped_keyword;
-    oss2 << ")[\\s|)|,|-|.|/]";
+    oss2 << ")[\\s|)|,|.]";
     return oss2.str();
 }
 
@@ -117,8 +117,8 @@ vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
 
     unordered_map<int, string> history;
     int i = 0;
-    for (unordered_map<string, unordered_map<string, string> >::iterator iter = keywords.begin(); iter != keywords.end(); ++iter){
-        string keyword = iter->first;
+    for (int j = 0; j < keyword_insertion.size(); j += 1){
+        string keyword = keyword_insertion[j];
         regex e(make_regex(keyword), regex_constants::icase);
         smatch m;
         regex_search(str, m, e);

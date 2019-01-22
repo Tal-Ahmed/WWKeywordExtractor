@@ -18,5 +18,14 @@ int main(int argc, char *argv[]){
         keyword_extractor_model.test();
     }
 
+    string str;
+    while (getline(cin, str)){
+        vector<Keyword_Extractor_Model::KeywordToken> keys = keyword_extractor_model.classify_line(str);
+        for (int i = 0; i < keys.size(); i += 1){
+            cout << keys[i].word << "/" << keys[i].is_keyword << " ";
+        }
+        cout << endl;
+    }
+
     return 0;
 }

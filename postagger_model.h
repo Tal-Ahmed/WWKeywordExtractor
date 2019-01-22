@@ -10,6 +10,7 @@ using namespace std;
 
 class PerceptronTagger;
 extern unordered_map<string, unordered_map<string, string> > keywords;
+extern vector<string> keyword_insertion;
 
 class Postagger_Model {
     PerceptronTagger *postagger;
