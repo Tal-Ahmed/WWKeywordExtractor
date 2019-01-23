@@ -17,4 +17,4 @@ ${EXEC} : ${OBJECTS} # link step
 -include ${DEPENDS} # include *.d files containing program dependences
 
 clean : # remove files that can be regenerated
-	rm -f ${DEPENDS} ${OBJECTS} ${EXEC}
+	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.model

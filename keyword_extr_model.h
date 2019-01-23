@@ -36,8 +36,9 @@ class Keyword_Extractor_Model {
             string word;
             bool is_keyword;
             string keywords, types;
-            KeywordToken(const string & w, bool isk, const string & k, const string & t):
-                word(w), is_keyword(isk), keywords(k), types(t) {}
+            string pos;
+            KeywordToken(const string & w, bool isk, const string & k, const string & t, const string & pos):
+                word(w), is_keyword(isk), keywords(k), types(t), pos(pos) {}
         };
 
         void test();

@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
     while (getline(cin, str)){
         vector<Keyword_Extractor_Model::KeywordToken> keys = keyword_extractor_model.classify_line(str);
         for (int i = 0; i < keys.size(); i += 1){
-            cout << keys[i].word << "/" << keys[i].is_keyword << " ";
+            cout << keys[i].word << "/" << keys[i].pos << "/" << keys[i].is_keyword << " ";
         }
         cout << endl;
     }

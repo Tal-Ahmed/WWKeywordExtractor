@@ -3083,14 +3083,16 @@ vector<Keyword_Extractor_Model::KeywordToken> Keyword_Extractor_Model::classify_
                 classified_words[i].word, 
                 true,
                 keywords[classified_words[i].word]["keyword"],
-                keywords[classified_words[i].word]["type"]
+                keywords[classified_words[i].word]["type"],
+				classified_words[i].pos_tag
             ));
         } else {
             ret.push_back(Keyword_Extractor_Model::KeywordToken(
                 classified_words[i].word, 
                 false,
                 "",
-                ""
+                "",
+				classified_words[i].pos_tag
             ));
         }
     }
