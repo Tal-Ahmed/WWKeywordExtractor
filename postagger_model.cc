@@ -161,6 +161,7 @@ vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
         sentence.push_back(word);
     }
 
+
     vector<tag_t> tagged_words = get_pos_tagger()->tag_sentence(sentence);
 
     return tagged_words;

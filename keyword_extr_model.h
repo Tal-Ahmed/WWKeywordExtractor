@@ -33,12 +33,8 @@ class Keyword_Extractor_Model {
         };
 
         struct KeywordToken {
-            string word;
+            string word, pos, keywords, types;
             bool is_keyword;
-            string keywords, types;
-            string pos;
-            KeywordToken(const string & w, bool isk, const string & k, const string & t, const string & pos):
-                word(w), is_keyword(isk), keywords(k), types(t), pos(pos) {}
         };
 
         void test();

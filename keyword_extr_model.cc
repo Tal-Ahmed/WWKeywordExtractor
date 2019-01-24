@@ -3079,21 +3079,19 @@ vector<Keyword_Extractor_Model::KeywordToken> Keyword_Extractor_Model::classify_
     vector<Keyword_Extractor_Model::KeywordToken> ret;
     for (int i = 0; i < classified_words.size(); i += 1){
         if (classified_words[i].type == "B-KEYWORD"){
-            ret.push_back(Keyword_Extractor_Model::KeywordToken(
-                classified_words[i].word, 
-                true,
-                keywords[classified_words[i].word]["keyword"],
-                keywords[classified_words[i].word]["type"],
-				classified_words[i].pos_tag
-            ));
+			Keyword_Extractor_Model::KeywordToken keyword_token;
+			keyword_token.word = classified_words[i].word;
+			keyword_token.is_keyword = true;
+			keyword_token.keywords = keywords[classified_words[i].word]["keyword"];
+			keyword_token.types = keywords[classified_words[i].word]["type"];
+			keyword_token.pos = classified_words[i].pos_tag;
+            ret.push_back(keyword_token);
         } else {
-            ret.push_back(Keyword_Extractor_Model::KeywordToken(
-                classified_words[i].word, 
-                false,
-                "",
-                "",
-				classified_words[i].pos_tag
-            ));
+			Keyword_Extractor_Model::KeywordToken keyword_token;
+			keyword_token.word = classified_words[i].word;
+			keyword_token.is_keyword = false;
+			keyword_token.pos = classified_words[i].pos_tag;
+            ret.push_back(keyword_token);
         }
     }
 

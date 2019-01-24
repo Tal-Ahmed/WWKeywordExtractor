@@ -2,6 +2,7 @@ CXX = g++ -std=c++11 # compiler
 CXXFLAGS = -g -O2 -Wall # compiler flags
 
 OBJECTS = maxent/maxent.o maxent/lbfgs.o maxent/owlqn.o maxent/sgd.o keyword_extr_model.o postagger_model.o main.o
+SOURCES = ${OBJECTS:.o=.cc}
 DEPENDS = ${OBJECTS:.o=.d} # substitute ".o" with ".d"
 EXEC = extractor # executable name
 
@@ -16,5 +17,8 @@ ${EXEC} : ${OBJECTS} # link step
 
 -include ${DEPENDS} # include *.d files containing program dependences
 
+wasm : # compile to webassembly module
+	emcc -std=c++11 --emrun --bind -o extractor.html ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s ALLOW_MEMORY_GROWTH=1 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt --preload-file extractor.model
+
 clean : # remove files that can be regenerated
-	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.model
+	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.* a.out
