@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
 }
 
 vector<Keyword_Extractor_Model::KeywordToken> generate_keywords(string str){
-    Keyword_Extractor_Model keyword_extractor_model("data/train.txt", "data/test.txt");
+    static Keyword_Extractor_Model keyword_extractor_model("data/train.txt", "data/test.txt");
     vector<Keyword_Extractor_Model::KeywordToken> keys = keyword_extractor_model.classify_line(str);
     for (int i = 0; i < keys.size(); i += 1){
         cout << keys[i].word << "/" << keys[i].pos << "/" << keys[i].is_keyword << " ";

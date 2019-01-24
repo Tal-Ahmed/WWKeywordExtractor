@@ -43,7 +43,9 @@ class Keyword_Extractor_Model {
         vector<Keyword_Extractor_Model::KeywordToken> classify_line(string str);
         ME_Model get_extractor_model(){
             if (!extractor_model_loaded){
-                if (!extractor_model.load_from_file("extractor.model")){
+                if (extractor_model.load_from_file("extractor.model")){
+                    cout << "loaded extractor.model from file" << endl;
+                } else {
                     train();
                 }
             }

@@ -18,7 +18,7 @@ ${EXEC} : ${OBJECTS} # link step
 -include ${DEPENDS} # include *.d files containing program dependences
 
 wasm : # compile to webassembly module
-	emcc -std=c++11 --emrun --bind -o extractor.html ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s ALLOW_MEMORY_GROWTH=1 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt --preload-file extractor.model
+	emcc -std=c++11 --emrun --bind -o extractor.html ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s TOTAL_MEMORY=104857600 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt
 
 clean : # remove files that can be regenerated
-	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.* a.out
+	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.* a.out repl.o
