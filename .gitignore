@@ -31,5 +31,8 @@
 *.out
 *.app
 
-extractor
+extractor.html
+extractor.model
+extractor.wasm
+extractor.data
 .vscode

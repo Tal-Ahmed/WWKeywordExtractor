@@ -1,0 +1,15 @@
+{
+    "manifest_version": 1,
+    "name": "Extractor",
+    "description": "Extract software engineering keywords like C++, Java, Scala etc. from websites.",
+    "version": "1",
+    "author": "Muhammad Talha",
+    "homepage_url": "https://github.com/Mo-Talha/WWKeywordExtractor",
+    "background": {
+        "scripts": [
+          "keyword_extractor.js"
+        ],
+        "persistent": false
+      },
+    "permissions": ["activeTab"]
+}

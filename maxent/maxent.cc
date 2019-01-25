@@ -84,7 +84,7 @@ ME_Model::perform_QUASI_NEWTON()
     cerr << "performing OWLQN" << endl;
     x = perform_OWLQN(x0, _l1reg);
   } else {
-    cerr << "performing LBFGS" << endl;
+    //cerr << "performing LBFGS" << endl;
     x = perform_LBFGS(x0);
   }
 
@@ -350,14 +350,14 @@ ME_Model::train()
   _l1reg /= _vs.size();
   _l2reg /= _vs.size();
 
-  cerr << "preparing for estimation...";
+  //cerr << "preparing for estimation...";
   make_feature_bag(cutoff);
   //  _vs.clear();
-  cerr << "done" << endl;
-  cerr << "number of samples = " << _vs.size() << endl;
-  cerr << "number of features = " << _fb.Size() << endl;
+  //cerr << "done" << endl;
+  //cerr << "number of samples = " << _vs.size() << endl;
+  //cerr << "number of features = " << _fb.Size() << endl;
 
-  cerr << "calculating empirical expectation...";
+  //cerr << "calculating empirical expectation...";
   _vee.resize(_fb.Size());
   for (int i = 0; i < _fb.Size(); i++) {
     _vee[i] = 0;
@@ -380,7 +380,7 @@ ME_Model::train()
   for (int i = 0; i < _fb.Size(); i++) {
     _vee[i] /= _vs.size();
   }
-  cerr << "done" << endl;
+  //cerr << "done" << endl;
   
   _vl.resize(_fb.Size());
   for (int i = 0; i < _fb.Size(); i++) _vl[i] = 0.0;
@@ -395,7 +395,7 @@ ME_Model::train()
   for (int i = 0; i < _fb.Size(); i++) {
     if (_vl[i] != 0) num_active++;
   }
-  cerr << "number of active features = " << num_active << endl;
+  //cerr << "number of active features = " << num_active << endl;
 
   return 0;
 }
@@ -439,7 +439,7 @@ ME_Model::load_from_file(const string & filename)
 {
   FILE * fp = fopen(filename.c_str(), "r");
   if (!fp) {
-    cout << "error: cannot open " << filename << "!" << endl;
+    //cout << "error: cannot open " << filename << "!" << endl;
     return false;
   }
 

@@ -4,7 +4,9 @@
 using namespace std;
 
 void log(string str){
+    #ifdef DEBUG
     cout << str << endl;
+    #endif
 }
 
 void error(string str){
