@@ -1,7 +1,7 @@
 CXX = g++ -std=c++11 # compiler
 CXXFLAGS = -g -O2 -Wall # compiler flags
 
-OBJECTS = maxent/maxent.o maxent/lbfgs.o maxent/owlqn.o maxent/sgd.o keyword_extr_model.o postagger_model.o main.o
+OBJECTS = maxent/maxent.o maxent/lbfgs.o maxent/owlqn.o maxent/sgd.o keyword_extr_model.o postagger_model.o util.o main.o
 SOURCES = ${OBJECTS:.o=.cc}
 DEPENDS = ${OBJECTS:.o=.d} # substitute ".o" with ".d"
 EXEC = extractor # executable name

@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "keyword_extr_model.h"
 #include "maxent/maxent.h"
+#include "util.h"
 
 using namespace std;
 
@@ -2967,17 +2968,16 @@ vector<Keyword_Extractor_Model::ClassifiedToken> Keyword_Extractor_Model::read_l
 }
 
 void Keyword_Extractor_Model::train(){
-    cout << "start training keyword extractor" << endl;
+	log("start training keyword extractor");
 
     ME_Model model;
     ifstream fs(train_file);
     
     if (!fs){
-        cerr << "could not open " + train_file << endl;
-        exit(1);
+		error("could not open " + train_file);
     }
 
-    cout << "start reading " + train_file << endl;
+	log("start reading " + train_file);
     string line;
     while (getline(fs, line)){
         vector<Keyword_Extractor_Model::ClassifiedToken> classified_tokens = read_line(line);
@@ -2987,7 +2987,7 @@ void Keyword_Extractor_Model::train(){
             model.add_training_sample(sample);
         }
     }
-    cout << "finished reading " + train_file << endl;
+	log("finished reading " + train_file);
 
     //model.use_l1_regularizer(1.0);
     //model.use_l2_regularizer(1.0);
@@ -2998,22 +2998,21 @@ void Keyword_Extractor_Model::train(){
     extractor_model = model;
     extractor_model_loaded = true;
 
-    cout << "saving model" << endl;
+	log("saving model");
 
     remove("extractor.model");
     model.save_to_file("extractor.model", 0.0);
-    cout << "finish training keyword extractor" << endl;
+	log("finish training keyword extractor");
 }
 
 void Keyword_Extractor_Model::test(){
-    cout << "start testing keyword extractor" << endl;
+	log("start testing keyword extractor");
     ME_Model extr_model = get_extractor_model();
 
     ifstream fs(test_file);
     
     if (!fs){
-        cerr << "could not open " + test_file << endl;
-        exit(1);
+		error("could not open " + test_file);
     }
 
     int num_samples = 0;
@@ -3021,7 +3020,7 @@ void Keyword_Extractor_Model::test(){
     int num_pos_samples = 0;
     int num_correct_pos_samples = 0;
 
-    cout << "start reading " + test_file << endl;
+	log("start reading " + test_file);
     string line;
     while (getline(fs, line)){
         vector<Keyword_Extractor_Model::ClassifiedToken> testing_data = read_line(line);
@@ -3044,15 +3043,21 @@ void Keyword_Extractor_Model::test(){
             num_samples += 1;
         }
     }
-    cout << "finished reading " + test_file << endl;
+	log("finished reading " + test_file);
 
-    cout << "Extractor model accuracy = " << num_correct << " / " << num_samples << " = ";
-    cout << 100 * ((double) num_correct / num_samples) << "%" << endl;
+	ostringstream oss;
+    oss << "Extractor model accuracy = " << num_correct << " / " << num_samples << " = ";
+    oss << 100 * ((double) num_correct / num_samples) << "%" << endl;
 
-    cout << "Percentage of POS Tags correct = " << num_correct_pos_samples << " / " << num_pos_samples << " = ";
-    cout << 100 * ((double) num_correct_pos_samples / num_pos_samples) << "%" << endl;
+	log(oss.str());
 
-    cout << "finish testing keyword extractor" << endl;
+	ostringstream oss2;
+    oss2 << "Percentage of POS Tags correct = " << num_correct_pos_samples << " / " << num_pos_samples << " = ";
+    oss2 << 100 * ((double) num_correct_pos_samples / num_pos_samples) << "%" << endl;
+	
+	log(oss2.str());
+
+	log("finish testing keyword extractor");
 }
 
 vector<Keyword_Extractor_Model::KeywordToken> Keyword_Extractor_Model::classify_line(string str){

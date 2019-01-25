@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <regex>
 #include "postagger_model.h"
+#include "util.h"
 #include "mltk/_ctagger.cc"
 
 using namespace std;
@@ -16,7 +17,7 @@ Postagger_Model::~Postagger_Model(){
 }
 
 void Postagger_Model::load_pos_tagger(){
-    cout << "start loading pos tagger" << endl;
+    log("start loading pos tagger");
 
     tagmap_in_t *specified_tags = new tagmap_in_t;
     ifstream st_fs("data/specified_tags.txt");
@@ -26,7 +27,7 @@ void Postagger_Model::load_pos_tagger(){
         (*specified_tags)[k] = v;
     }
 
-    cout << "finish reading data/specified_tags.txt" << endl;
+    log("finish reading data/specified_tags.txt");
 
     class_weights_in_t *bias_weights = new class_weights_in_t;
     ifstream bw_fs("data/bias_weights.txt");
@@ -37,7 +38,7 @@ void Postagger_Model::load_pos_tagger(){
         (*bias_weights).push_back(make_pair(k2, v2));
     }
 
-    cout << "finish reading data/bias_weights.txt" << endl;
+    log("finish reading data/bias_weights.txt");
 
     weights_in_t *weights = new weights_in_t;
     ifstream w_fs("data/weights.txt");
@@ -65,14 +66,14 @@ void Postagger_Model::load_pos_tagger(){
         }
     }
 
-    cout << "finish reading data/weights.txt" << endl;
+    log("finish reading data/weights.txt");
 
     postagger = new PerceptronTagger(*weights, *bias_weights, *specified_tags);
     this->weights = weights;
     this->bias_weights = bias_weights;
     this->specified_tags = specified_tags;
 
-    cout << "finish loading pos tagger" << endl;
+    log("finish loading pos tagger");
 }
 
 string make_regex(string keyword){
