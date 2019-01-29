@@ -84,12 +84,12 @@ ME_Model::perform_LBFGS(const vector<double> & x0)
 
   for (int iter = 0; iter < LBFGS_MAX_ITER; iter++) {
 
-    //fprintf(stderr, "%3d  obj(err) = %f (%6.4f)", iter+1, -f, _train_error);
+    fprintf(stderr, "%3d  obj(err) = %f (%6.4f)", iter+1, -f, _train_error);
     if (_nheldout > 0) {
       const double heldout_logl = heldout_likelihood();
-      //fprintf(stderr, "  heldout_logl(err) = %f (%6.4f)", heldout_logl, _heldout_error);
+      fprintf(stderr, "  heldout_logl(err) = %f (%6.4f)", heldout_logl, _heldout_error);
     }
-    //fprintf(stderr, "\n");
+    fprintf(stderr, "\n");
 
     if (sqrt(dot_product(grad, grad)) < MIN_GRAD_NORM) break;
 

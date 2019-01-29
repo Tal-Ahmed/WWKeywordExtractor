@@ -31,6 +31,7 @@
 *.out
 *.app
 
+extractor
 extractor.html
 extractor.model
 extractor.wasm

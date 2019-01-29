@@ -439,7 +439,7 @@ ME_Model::load_from_file(const string & filename)
 {
   FILE * fp = fopen(filename.c_str(), "r");
   if (!fp) {
-    //cout << "error: cannot open " << filename << "!" << endl;
+    cout << "error: cannot open " << filename << "!" << endl;
     return false;
   }
 

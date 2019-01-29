@@ -1,4 +1,4 @@
-CXX = g++ -std=c++11 # compiler
+CXX = g++ -std=c++11 -DDEBUG # compiler
 CXXFLAGS = -g -O2 -Wall # compiler flags
 
 OBJECTS = maxent/maxent.o maxent/lbfgs.o maxent/owlqn.o maxent/sgd.o keyword_extr_model.o postagger_model.o util.o main.o
@@ -18,10 +18,12 @@ ${EXEC} : ${OBJECTS} # link step
 -include ${DEPENDS} # include *.d files containing program dependences
 
 wasm : # compile to webassembly module
-	emcc -std=c++11 --emrun --bind -o extractor.html ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s TOTAL_MEMORY=104857600 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt
+	make && ./extractor train
+	emcc -std=c++11 -DWASM -DDEBUG --bind -o extractor.js ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s TOTAL_MEMORY=104857600 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt --preload-file extractor.model
+	python wasmcompile.py
 
 wasm_test : 
 	emcc -std=c++11 -DDEBUG --emrun --bind -o extractor.html ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s TOTAL_MEMORY=104857600 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt
 
 clean : # remove files that can be regenerated
-	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.* a.out repl.o
+	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.*

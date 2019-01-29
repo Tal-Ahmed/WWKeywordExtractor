@@ -5,6 +5,7 @@
 #include <vector>
 #include "maxent/maxent.h"
 #include "postagger_model.h"
+#include "util.h"
 
 using namespace std;
 
@@ -44,7 +45,7 @@ class Keyword_Extractor_Model {
         ME_Model get_extractor_model(){
             if (!extractor_model_loaded){
                 if (extractor_model.load_from_file("extractor.model")){
-                    cout << "loaded extractor.model from file" << endl;
+                    log("loaded extractor.model from file");
                 } else {
                     train();
                 }
