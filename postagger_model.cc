@@ -42,8 +42,7 @@ void Postagger_Model::load_pos_tagger(){
 
     weights_in_t *weights = new weights_in_t;
     ifstream w_fs("data/weights.txt");
-    string k3, v3_1;
-    float v3_2;
+    string k3; 
 
     while (w_fs.peek() != EOF){
         map<string, class_weights_in_t> m;
@@ -58,6 +57,8 @@ void Postagger_Model::load_pos_tagger(){
             }
 
             class_weights_in_t vec;
+            string v3_1;
+            float v3_2;
             while (iss >> v3_1 >> v3_2){
                 vec.push_back(make_pair(v3_1, v3_2));
             }
@@ -161,7 +162,6 @@ vector<pair<string, string> > Postagger_Model::tag_sentence(string str){
 
         sentence.push_back(word);
     }
-
 
     vector<tag_t> tagged_words = get_pos_tagger()->tag_sentence(sentence);
 

@@ -24,6 +24,7 @@ wasm : # compile to webassembly module
 
 wasm_test : 
 	emcc -std=c++11 -DDEBUG --emrun --bind -o extractor.html ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s TOTAL_MEMORY=104857600 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt
+	emrun --browser chrome extractor.htm
 
 clean : # remove files that can be regenerated
 	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.*
