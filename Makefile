@@ -19,12 +19,27 @@ ${EXEC} : ${OBJECTS} # link step
 
 wasm : # compile to webassembly module
 	make && ./extractor train
-	emcc -std=c++11 -DWASM -DDEBUG --bind -o extractor.js ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s TOTAL_MEMORY=104857600 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt --preload-file extractor.model
+	emcc -std=c++11 \
+	-DWASM \
+	-DDEBUG \
+	--bind \
+	-o extractor.js \
+	${SOURCES} \
+	-O2 \
+	-s STRICT=1 \
+	-s WASM=1 \
+	-s NO_EXIT_RUNTIME=1 \
+	-s DISABLE_EXCEPTION_CATCHING=2 \
+	-s TOTAL_MEMORY=104857600 \
+	-s MALLOC=emmalloc \
+	-s MODULARIZE=1 -s 'EXPORT_NAME="Extractor"' \
+	--preload-file data/bias_weights.txt \
+	--preload-file data/specified_tags.txt \
+	--preload-file data/weights.txt \
+	--preload-file data/train.txt \
+	--preload-file data/test.txt \
+	--preload-file extractor.model
 	python wasmcompile.py
 
-wasm_test : 
-	emcc -std=c++11 -DDEBUG --emrun --bind -o extractor.html ${SOURCES} -O2 -s WASM=1 -s NO_EXIT_RUNTIME=1 -s DISABLE_EXCEPTION_CATCHING=2 -s TOTAL_MEMORY=104857600 --preload-file data/bias_weights.txt --preload-file data/specified_tags.txt --preload-file data/weights.txt --preload-file data/train.txt --preload-file data/test.txt
-	emrun --browser chrome extractor.htm
-
 clean : # remove files that can be regenerated
-	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.*
+	rm -f ${DEPENDS} ${OBJECTS} ${EXEC} extractor.* main.js

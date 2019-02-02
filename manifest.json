@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Extractor",
     "description": "Extract software engineering keywords from websites.",
-    "version": "1",
+    "version": "1.0.0",
     "author": "Muhammad Talha",
     "homepage_url": "https://github.com/Mo-Talha/WWKeywordExtractor",
     "browser_action": {
@@ -11,10 +11,12 @@
     "content_scripts": [
         {
           "matches": ["*://*.facebook.com/careers/jobs/*"],
-          "js": ["extractor.js", "keyword_extractor.js"]
+          "js": ["main.js"]
         }
     ],
     "web_accessible_resources": [
-        "extractor.wasm", "extractor.data"
-    ]
+        "extractor.wasm",
+        "extractor.data"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
