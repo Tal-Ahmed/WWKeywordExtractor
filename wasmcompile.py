@@ -2,7 +2,7 @@
 
 wasm_js_file = "extractor.js"
 keyword_extractor_js_file = "keyword_extractor.js"
-main_js = "main.js"
+main_js = "content_script.js"
 
 def main():
   # correctly read extractor.wasm and extractor.data
