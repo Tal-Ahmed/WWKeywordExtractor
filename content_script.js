@@ -135,11 +135,23 @@ function inspectorMouseOut(e) {
     e.target.style.outline = '';
 }
 
+function getParsedURL(){
+    var url = window.location.href;
+    if (url.charAt(url.length - 1) == "/"){
+        url = url.substring(0, url.length - 1);
+    }
+
+    url = url.substring(0, url.lastIndexOf("/") + 1);
+    url = url + "*";
+    return url;
+}
+
 /**
  * Click action for hovered element
  */
 function inspectorOnClick(e) {
     e.preventDefault();
+    inspectorCancel();
 
     fetch(chrome.extension.getURL("popup.html"))
     .then(response => response.text())
@@ -153,10 +165,51 @@ function inspectorOnClick(e) {
             styleElement.setAttribute("id", "ww-extractor-style");
             styleElement.innerHTML = data;
             document.head.appendChild(styleElement);
+
+            // set url
+            var urlInputElement = document.getElementsByClassName("ww-extractor-site-selector-input")[0];
+            urlInputElement.value = getParsedURL();
+
+            // set css path of selected element
+            var cssSelectorInputElement = document.getElementsByClassName("ww-extractor-css-selector-input")[0];
+            cssSelectorInputElement.value = cssPath(e.target);
+
+            // set on cancel button click
+            var cancelButtonElement = document.getElementsByClassName("ww-extractor-cancel-button")[0];
+            cancelButtonElement.onclick = function(){
+                var aside = document.getElementById("ww-extractor-aside");
+                aside.parentNode.removeChild(aside);
+
+                var style = document.getElementById("ww-extractor-style");
+                style.parentNode.removeChild(style);
+            };
+
+            // set on extractor button click
+            var extractorButtonElement = document.getElementsByClassName("ww-extractor-extract-button")[0];
+            extractorButtonElement.onclick = function(){
+                var urlToStore = urlInputElement.value;
+                var cssSelectorToStore = cssSelectorInputElement.value;
+
+                chrome.storage.local.get([urlToStore], function(data){
+                    if (!(urlToStore in data)){
+                        chrome.storage.local.set({[urlToStore]: [cssSelectorToStore]}, function() {});
+                    } else {
+                        if (!data[[urlToStore]].includes(cssSelectorToStore)){
+                            data[[urlToStore]].push(cssSelectorToStore);
+                            chrome.storage.local.set({[urlToStore]: data.urlToStore});
+                        }
+                    }
+                });
+
+                var aside = document.getElementById("ww-extractor-aside");
+                aside.parentNode.removeChild(aside);
+
+                var style = document.getElementById("ww-extractor-style");
+                style.parentNode.removeChild(style);
+            };
         });
     });
 
-//    sendResponseCallback({cssPath: cssPath(e.target)});
     return false;
 }
 
@@ -172,7 +225,7 @@ function inspectorCancel(e) {
         document.detachEvent("click", inspectorOnClick);
         document.detachEvent("keydown", inspectorCancel);
         last.style.outlineStyle = 'none';
-    } else if(e.which === 27) { // Better browsers:
+    } else if(e == null || e.which === 27) { // Better browsers:
         document.removeEventListener("mouseover", inspectorMouseOver, true);
         document.removeEventListener("mouseout", inspectorMouseOut, true);
         document.removeEventListener("click", inspectorOnClick, true);
