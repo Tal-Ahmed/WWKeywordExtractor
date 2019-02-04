@@ -142,7 +142,6 @@ function getParsedURL(){
     }
 
     url = url.substring(0, url.lastIndexOf("/") + 1);
-    url = url + "*";
     return url;
 }
 
@@ -168,7 +167,8 @@ function inspectorOnClick(e) {
 
             // set url
             var urlInputElement = document.getElementsByClassName("ww-extractor-site-selector-input")[0];
-            urlInputElement.value = getParsedURL();
+            var url = getParsedURL();
+            urlInputElement.value = url + ".*";
 
             // set css path of selected element
             var cssSelectorInputElement = document.getElementsByClassName("ww-extractor-css-selector-input")[0];
@@ -187,7 +187,7 @@ function inspectorOnClick(e) {
             // set on extractor button click
             var extractorButtonElement = document.getElementsByClassName("ww-extractor-extract-button")[0];
             extractorButtonElement.onclick = function(){
-                var urlToStore = urlInputElement.value;
+                var urlToStore = url;
                 var cssSelectorToStore = cssSelectorInputElement.value;
 
                 chrome.storage.local.get([urlToStore], function(data){
@@ -256,8 +256,18 @@ function runInspector(){
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.runInspector){
-        window.focus();
-        document.body.focus();
         runInspector();
+    }
+});
+
+// check to see if we need to extract keywords from this site
+chrome.storage.local.get(null, function(data){
+    for (var url in data){        
+        if (data.hasOwnProperty(url)){
+            var reg = new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ".*");
+            if (reg.test(window.location.href)){
+                console.log("match");
+            }
+        }
     }
 });
