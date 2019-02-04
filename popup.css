@@ -1,9 +1,17 @@
-.body {
-    min-height:100px; 
-    max-height:600px; 
+.ww-extractor-aside {
+    background-color: #ffffff !important;
+    border: 1px solid #aaaaaa36 !important;
+    bottom: 4px !important;
+    box-sizing: border-box !important;
+    padding: 4px !important;
+    position: fixed !important;
+    right: 4px !important;
+    border-radius: 3px !important;
+    box-shadow: 0 0 1em 0.25em rgba(0,0,0,0.1) !important;
+    z-index: 100 !important;
 }
 
-.extract-button {
+.ww-extractor-extract-button {
     box-sizing: border-box;
     display: inline-block;
     padding: 6px 12px;
@@ -27,15 +35,15 @@
     transition: all .15s ease-in-out;
 }
 
-.extract-button:hover {
+.ww-extractor-extract-button:hover {
     background-color: #00a4df;
 }
 
-.extract-button:active {
+.ww-extractor-extract-button:active {
     background-color: #008ec0;
 }
 
-.cancel-button {
+.ww-extractor-cancel-button {
     box-sizing: border-box;
     display: inline-block;
     padding: 6px 12px;
@@ -59,19 +67,19 @@
     transition: all .15s ease-in-out;
 }
 
-.cancel-button:hover {
+.ww-extractor-cancel-button:hover {
     background-color: #00a4df;
 }
 
-.cancel-button:active {
+.ww-extractor-cancel-button:active {
     background-color: #008ec0;
 }
 
-.centered {
+.ww-extractor-centered {
     text-align: center;
 }
 
-.site-selector-input {
+.ww-extractor-site-selector-input {
     display: block;
     padding: 0.5em 0.25em;
     margin-top: 10px;
@@ -81,7 +89,7 @@
     box-shadow: 0 0 1em 0.25em rgba(0,0,0,0.1);
 }
 
-.css-selector-input {
+.ww-extractor-css-selector-input {
     display: block;
     padding: 0.5em 0.25em;
     margin-top: 10px;

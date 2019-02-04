@@ -2,5 +2,6 @@
 This is a keyword extractor for software engineering related keywords.
 
 # Requirements
-- C++ compiler like g++ or clang
+- C++11
 - Emscripten SDK
+- Python 3

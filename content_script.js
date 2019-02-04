@@ -140,8 +140,23 @@ function inspectorMouseOut(e) {
  */
 function inspectorOnClick(e) {
     e.preventDefault();
-    document.body.style.cursor = "default";
-    sendResponseCallback({cssPath: cssPath(e.target)});
+
+    fetch(chrome.extension.getURL("popup.html"))
+    .then(response => response.text())
+    .then(data => {
+        document.body.innerHTML += data;
+        fetch(chrome.extension.getURL("popup.css"))
+        .then(response => response.text())
+        .then(data => {
+            var styleElement = document.createElement("style");
+            styleElement.setAttribute("type", "text/css");
+            styleElement.setAttribute("id", "ww-extractor-style");
+            styleElement.innerHTML = data;
+            document.head.appendChild(styleElement);
+        });
+    });
+
+//    sendResponseCallback({cssPath: cssPath(e.target)});
     return false;
 }
 
@@ -149,6 +164,7 @@ function inspectorOnClick(e) {
  * Function to cancel inspector:
  */
 function inspectorCancel(e) {
+    document.body.style.cursor = "default";
     // Unbind inspector mouse and click events:
     if (e === null && event.keyCode === 27) { // IE (won't work yet):
         document.detachEvent("mouseover", inspectorMouseOver);
@@ -165,13 +181,13 @@ function inspectorCancel(e) {
         // Remove outline on last-selected element:
         last.style.outline = 'none';
     }
-    document.body.style.cursor = "default";
 }
 
 /**
  * Add event listeners for DOM-inspectorey actions
  */
 function runInspector(){
+    document.body.style.cursor = "crosshair";
     if ( document.addEventListener ) {
         document.addEventListener("mouseover", inspectorMouseOver, true);
         document.addEventListener("mouseout", inspectorMouseOut, true);
@@ -183,21 +199,12 @@ function runInspector(){
         document.attachEvent("click", inspectorOnClick);
         document.attachEvent("keydown", inspectorCancel);
     }
-    document.body.style.cursor = "crosshair";
 }
 
-/*
-When user clicks on extension icon run inspector
-1. Presses ESC to exit inspector
-2. Click on a element
-
-Have a dedicated channel for each tab to communicate between
-popup and content script.
-*/
-chrome.runtime.onConnect.addListener(function(port){
-    port.onMessage.addListener(function(msg) {
-        if (msg.runInspector){
-            runInspector();
-        }
-    });    
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.runInspector){
+        window.focus();
+        document.body.focus();
+        runInspector();
+    }
 });
