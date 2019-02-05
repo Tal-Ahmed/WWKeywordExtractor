@@ -190,15 +190,17 @@ function inspectorOnClick(e) {
                 var urlToStore = url;
                 var cssSelectorToStore = cssSelectorInputElement.value;
 
-                chrome.storage.local.get([urlToStore], function(data){
+                chrome.storage.sync.get([urlToStore], function(data){
                     if (!(urlToStore in data)){
-                        chrome.storage.local.set({[urlToStore]: [cssSelectorToStore]}, function() {});
+                        chrome.storage.sync.set({[urlToStore]: [cssSelectorToStore]}, function() {});
                     } else {
                         if (!data[[urlToStore]].includes(cssSelectorToStore)){
                             data[[urlToStore]].push(cssSelectorToStore);
-                            chrome.storage.local.set({[urlToStore]: data.urlToStore});
+                            chrome.storage.sync.set({[urlToStore]: data.urlToStore});
                         }
                     }
+
+                    generate_keywords();
                 });
 
                 var aside = document.getElementById("ww-extractor-aside");
@@ -260,14 +262,54 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
-// check to see if we need to extract keywords from this site
-chrome.storage.local.get(null, function(data){
-    for (var url in data){        
-        if (data.hasOwnProperty(url)){
-            var reg = new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ".*");
-            if (reg.test(window.location.href)){
-                console.log("match");
+function extractKeywords(cssSelectors){
+    Extractor().then(function(Module) {
+        for (var i = 0; i < cssSelectors.length; i += 1){
+            var cssSelector = cssSelectors[i];
+            var element = document.querySelector(cssSelector);
+            if (element != null){
+                var lines = element.innerHTML.split("<br>");
+                var replaceWithInnerHTML = [];
+                for (var j = 0; j < lines.length; j += 1){
+                    var line = lines[j];
+                    var keywordTokens = Module.generate_keywords(line);
+
+                    for (var k = 0; k < keywordTokens.size(); k += 1){
+                        var keywordToken = keywordTokens.get(k);
+                        if (keywordToken.is_keyword){
+                            replaceWithInnerHTML.push("<mark>" + keywordToken.word + "</mark>");
+                        } else {
+                            replaceWithInnerHTML.push(keywordToken.word);
+                        }
+                        
+                        if (k + 1 < keywordTokens.size()) replaceWithInnerHTML.push(" ");
+                    }
+
+                    if (j + 1 < lines.length){
+                        replaceWithInnerHTML.push("<br>");
+                    }
+                }
+
+                element.innerHTML = replaceWithInnerHTML.join("");
             }
         }
-    }
-});
+    });
+}
+
+// check to see if we need to extract keywords from this site
+function generate_keywords(){
+    chrome.storage.sync.get(null, function(data){
+        for (var url in data){        
+            if (data.hasOwnProperty(url)){
+                try {
+                    var reg = new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ".*");
+                    if (reg.test(window.location.href)){
+                        extractKeywords(data[url]);
+                    }    
+                } catch (e){}
+            }
+        }
+    });
+}
+
+generate_keywords();
