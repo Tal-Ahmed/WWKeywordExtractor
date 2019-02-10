@@ -240,37 +240,45 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
+function _extractKeywords(element, lines){
+    chrome.extension.sendMessage({extractKeywords: true, parseLines: lines}, function(response) {
+        var replaceWithInnerHTML = [];
+
+        var keywordLines = response.keywordLines;
+        for (var j = 0; j < keywordLines.length; j += 1){
+            var keywordTokens = keywordLines[j];
+            for (var k = 0; k < keywordTokens.length; k += 1){
+                var keywordToken = keywordTokens[k];
+                if (keywordToken.is_keyword){
+                    replaceWithInnerHTML.push("<mark>" + keywordToken.word + "</mark>");
+                } else {
+                    replaceWithInnerHTML.push(keywordToken.word);
+                }
+                
+                if (k + 1 < keywordTokens.length) replaceWithInnerHTML.push(" ");
+            }
+
+            if (j + 1 < lines.length){
+                replaceWithInnerHTML.push("<br>");
+            }
+        }
+
+        element.innerHTML = replaceWithInnerHTML.join("");
+    });
+}
+
 function extractKeywords(cssSelectors){
     for (var i = 0; i < cssSelectors.length; i += 1){
         var cssSelector = cssSelectors[i];
-        var element = document.querySelector(cssSelector);
-        if (element != null){
-            var lines = element.innerHTML.split("<br>");
+        var elements = document.querySelectorAll(cssSelector);
 
-            chrome.extension.sendMessage({extractKeywords: true, parseLines: lines}, function(response) {
-                var replaceWithInnerHTML = [];
+        for (var l = 0; l < elements.length; l += 1){
+            var element = elements[l];
 
-                var keywordLines = response.keywordLines;
-                for (var j = 0; j < keywordLines.length; j += 1){
-                    var keywordTokens = keywordLines[j];
-                    for (var k = 0; k < keywordTokens.length; k += 1){
-                        var keywordToken = keywordTokens[k];
-                        if (keywordToken.is_keyword){
-                            replaceWithInnerHTML.push("<mark>" + keywordToken.word + "</mark>");
-                        } else {
-                            replaceWithInnerHTML.push(keywordToken.word);
-                        }
-                        
-                        if (k + 1 < keywordTokens.length) replaceWithInnerHTML.push(" ");
-                    }
-    
-                    if (j + 1 < lines.length){
-                        replaceWithInnerHTML.push("<br>");
-                    }
-                }
-
-                element.innerHTML = replaceWithInnerHTML.join("");
-            });
+            if (element != null){
+                var lines = element.innerHTML.split("<br>");
+                _extractKeywords(element, lines);
+            }
         }
     }
 }
@@ -294,19 +302,3 @@ function generate_keywords(){
 //chrome.storage.sync.clear();
 
 generate_keywords();
-
-/*
-setTimeout(function(){
-    console.log("asking background for module");
-    chrome.extension.sendMessage({getModuleFromCache: true}, function(response) {
-        console.log(response);
-        console.log(response.generate_keywords);
-        if (response.noModuleInCache){
-            console.log("received response: no module in cache");
-        } else {
-            console.log("got module");  
-            console.log(response.moduleCache);
-        }
-    });
-}, 10000);
-*/
