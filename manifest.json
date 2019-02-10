@@ -11,7 +11,7 @@
     },
     "content_scripts": [
         {
-          "matches": ["*://*.facebook.com/careers/jobs/*"],
+          "matches": ["<all_urls>"],
           "js": ["content_script.js"]
         }
     ],
