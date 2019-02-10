@@ -17,7 +17,7 @@
     ],
     "background" : {
         "scripts" : ["background_script.js"],
-        "persistent": false
+        "persistent": true
     },
     "web_accessible_resources": [
         "extractor.wasm",

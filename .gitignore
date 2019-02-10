@@ -31,11 +31,4 @@
 *.out
 *.app
 
-main.js
-extractor
-extractor.js
-extractor.html
-extractor.model
-extractor.wasm
-extractor.data
 .vscode

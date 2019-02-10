@@ -618,3 +618,27 @@ Knowledge NN O  of IN O  Web NNP O  based VBN O  technologies NNS O  and CC O  J
 Familiarity/proficiency NN O  with IN O  RHEL NNP B-KEYWORD  . . O  
 Knowledge NN O  of IN O  web JJ O  application NN O  programming NN O  and CC O  scripting NN O  languages NNS O  ( ( O  Perl NNP B-KEYWORD  , , O  Python NNP B-KEYWORD  , , O  JavaScript NNP B-KEYWORD  ) ) O  . . O  
 Experience NN O  programming NN O  databases NNS O  ( ( O  SQL NNP B-KEYWORD  ) ) O  and CC O  building NN O  complex JJ O  queries NNS O  . . O  
+Experience NN O with IN O Java NNP B-KEYWORD
+Experience NN O with IN O C++ NNP B-KEYWORD
+Experience NN O with IN O C# NNP B-KEYWORD
+Experience NN O with IN O C NNP B-KEYWORD
+Experience NN O with IN O Go NNP B-KEYWORD
+Experience NN O with IN O PHP NNP B-KEYWORD
+Experience NN O with IN O Scala NNP B-KEYWORD
+Experience NN O with IN O Golang NNP B-KEYWORD
+Experience NN O with IN O Python NNP B-KEYWORD
+Experience NN O with IN O Racket NNP B-KEYWORD
+Experience NN O with IN O C-- NNP B-KEYWORD
+Experience NN O with IN O C/C++ NNP B-KEYWORD
+Experience NN O with IN O Java NNP B-KEYWORD
+Experience NN O with IN O C++ NNP B-KEYWORD
+Experience NN O with IN O C# NNP B-KEYWORD
+Experience NN O with IN O C NNP B-KEYWORD
+Experience NN O with IN O Go NNP B-KEYWORD
+Experience NN O with IN O PHP NNP B-KEYWORD
+Experience NN O with IN O Scala NNP B-KEYWORD
+Experience NN O with IN O Golang NNP B-KEYWORD
+Experience NN O with IN O Python NNP B-KEYWORD
+Experience NN O with IN O Racket NNP B-KEYWORD
+Experience NN O with IN O C-- NNP B-KEYWORD
+Experience NN O with IN O C/C++ NNP B-KEYWORD

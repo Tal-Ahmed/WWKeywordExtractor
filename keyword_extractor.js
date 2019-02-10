@@ -1,4 +1,5 @@
 var last;
+var module;
 
 /**
  * Simple Javascript DOM Selector
@@ -167,12 +168,13 @@ function inspectorOnClick(e) {
                 var cssSelectorToStore = cssSelectorInputElement.value;
 
                 chrome.storage.sync.get([urlToStore], function(data){
+                    console.log(data);
                     if (!(urlToStore in data)){
                         chrome.storage.sync.set({[urlToStore]: [cssSelectorToStore]}, function() {});
                     } else {
                         if (!data[[urlToStore]].includes(cssSelectorToStore)){
                             data[[urlToStore]].push(cssSelectorToStore);
-                            chrome.storage.sync.set({[urlToStore]: data.urlToStore});
+                            chrome.storage.sync.set({[urlToStore]: data[[urlToStore]]});
                         }
                     }
 
@@ -234,42 +236,41 @@ function runInspector(){
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.runInspector){
+        module = request.Module;
         runInspector();
     }
 });
 
 function extractKeywords(cssSelectors){
-    Extractor().then(function(Module) {
-        for (var i = 0; i < cssSelectors.length; i += 1){
-            var cssSelector = cssSelectors[i];
-            var element = document.querySelector(cssSelector);
-            if (element != null){
-                var lines = element.innerHTML.split("<br>");
-                var replaceWithInnerHTML = [];
-                for (var j = 0; j < lines.length; j += 1){
-                    var line = lines[j];
-                    var keywordTokens = Module.generate_keywords(line);
+    for (var i = 0; i < cssSelectors.length; i += 1){
+        var cssSelector = cssSelectors[i];
+        var element = document.querySelector(cssSelector);
+        if (element != null){
+            var lines = element.innerHTML.split("<br>");
+            var replaceWithInnerHTML = [];
+            for (var j = 0; j < lines.length; j += 1){
+                var line = lines[j];
+                var keywordTokens = module.generate_keywords(line);
 
-                    for (var k = 0; k < keywordTokens.size(); k += 1){
-                        var keywordToken = keywordTokens.get(k);
-                        if (keywordToken.is_keyword){
-                            replaceWithInnerHTML.push("<mark>" + keywordToken.word + "</mark>");
-                        } else {
-                            replaceWithInnerHTML.push(keywordToken.word);
-                        }
-                        
-                        if (k + 1 < keywordTokens.size()) replaceWithInnerHTML.push(" ");
+                for (var k = 0; k < keywordTokens.size(); k += 1){
+                    var keywordToken = keywordTokens.get(k);
+                    if (keywordToken.is_keyword){
+                        replaceWithInnerHTML.push("<mark>" + keywordToken.word + "</mark>");
+                    } else {
+                        replaceWithInnerHTML.push(keywordToken.word);
                     }
-
-                    if (j + 1 < lines.length){
-                        replaceWithInnerHTML.push("<br>");
-                    }
+                    
+                    if (k + 1 < keywordTokens.size()) replaceWithInnerHTML.push(" ");
                 }
 
-                element.innerHTML = replaceWithInnerHTML.join("");
+                if (j + 1 < lines.length){
+                    replaceWithInnerHTML.push("<br>");
+                }
             }
+
+            element.innerHTML = replaceWithInnerHTML.join("");
         }
-    });
+    }
 }
 
 // check to see if we need to extract keywords from this site
@@ -288,4 +289,16 @@ function generate_keywords(){
     });
 }
 
-generate_keywords();
+//chrome.storage.sync.clear();
+
+//generate_keywords();
+
+console.log("asking background for module");
+chrome.extension.sendMessage({getModuleFromCache: true}, function(response) {
+    if (response.noModuleInCache){
+        console.log("received response: no module in cache");
+    } else {
+        console.log("got module");
+        console.log(response.module);
+    }
+});
