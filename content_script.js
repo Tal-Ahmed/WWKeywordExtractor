@@ -246,28 +246,31 @@ function extractKeywords(cssSelectors){
         var element = document.querySelector(cssSelector);
         if (element != null){
             var lines = element.innerHTML.split("<br>");
-            var replaceWithInnerHTML = [];
-            for (var j = 0; j < lines.length; j += 1){
-                var line = lines[j];
-                var keywordTokens = Module.generate_keywords(line);
 
-                for (var k = 0; k < keywordTokens.size(); k += 1){
-                    var keywordToken = keywordTokens.get(k);
-                    if (keywordToken.is_keyword){
-                        replaceWithInnerHTML.push("<mark>" + keywordToken.word + "</mark>");
-                    } else {
-                        replaceWithInnerHTML.push(keywordToken.word);
+            chrome.extension.sendMessage({extractKeywords: true, parseLines: lines}, function(response) {
+                var replaceWithInnerHTML = [];
+
+                var keywordLines = response.keywordLines;
+                for (var j = 0; j < keywordLines.length; j += 1){
+                    var keywordTokens = keywordLines[j];
+                    for (var k = 0; k < keywordTokens.length; k += 1){
+                        var keywordToken = keywordTokens[k];
+                        if (keywordToken.is_keyword){
+                            replaceWithInnerHTML.push("<mark>" + keywordToken.word + "</mark>");
+                        } else {
+                            replaceWithInnerHTML.push(keywordToken.word);
+                        }
+                        
+                        if (k + 1 < keywordTokens.length) replaceWithInnerHTML.push(" ");
                     }
-                    
-                    if (k + 1 < keywordTokens.size()) replaceWithInnerHTML.push(" ");
+    
+                    if (j + 1 < lines.length){
+                        replaceWithInnerHTML.push("<br>");
+                    }
                 }
 
-                if (j + 1 < lines.length){
-                    replaceWithInnerHTML.push("<br>");
-                }
-            }
-
-            element.innerHTML = replaceWithInnerHTML.join("");
+                element.innerHTML = replaceWithInnerHTML.join("");
+            });
         }
     }
 }
@@ -290,18 +293,20 @@ function generate_keywords(){
 
 //chrome.storage.sync.clear();
 
-//generate_keywords();
+generate_keywords();
 
+/*
 setTimeout(function(){
     console.log("asking background for module");
     chrome.extension.sendMessage({getModuleFromCache: true}, function(response) {
+        console.log(response);
+        console.log(response.generate_keywords);
         if (response.noModuleInCache){
             console.log("received response: no module in cache");
         } else {
             console.log("got module");  
             console.log(response.moduleCache);
         }
-        
-        return true;
     });
 }, 10000);
+*/
