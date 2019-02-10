@@ -16,7 +16,7 @@
         }
     ],
     "background" : {
-        "scripts" : ["background_script.js"],
+        "scripts" : ["compiled_background_script.js"],
         "persistent": true
     },
     "web_accessible_resources": [
